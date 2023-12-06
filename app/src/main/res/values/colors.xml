@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="Theme.color.main">#2F2B51</color>
+    <color name="Theme.credentials.placeholder.bg">#f7f7f9</color>
+    <color name="Theme.disabled">#b3b3b3</color>
+    <color name="Theme.light">#e6e6e6</color>
+    <color name="Theme.dark.gray">#4a4f53</color>
+</resources>

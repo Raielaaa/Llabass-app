@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">LabAss</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    
+    <!-- General -->
+    <string name="dialog_sign_up_header">Sign up notice</string>
+    <string name="dialog_sign_up_body">For sign-up using Google and Facebook, only the Learner Reference Number is required.</string>
+    <string name="dialog_sign_up_ok">OK</string>
+
+    <!-- Account - Opening -->
+    <string name="account_opening_header_1">LabAss: Elevating Your Borrowing Experience - Scan, Safeguard, Succeed!</string>
+    <string name="account_opening_login">Log in</string>
+    <string name="account_opening_sign_up">Sign up</string>
+    <string name="account_opening_copyright">This app is owned by the rightful owners. All rights reserved.</string>
+    
+    <!-- Account - Login -->
+    <string name="account_login_header_1">Login</string>
+    <string name="account_login_header_2">Please login to continue</string>
+    <string name="account_login_username">Username@gmail.com</string>
+    <string name="account_login_password">Password</string>
+    <string name="account_login_button">Log in</string>
+    <string name="account_login_no_account">Don\'t have an account? REGISTER</string>
+    <string name="account_login_dropdown_student">STUDENT</string>
+    <string name="account_login_dropdown_teacher">TEACHER</string>
+    <string name="account_login_dropdown_admin">ADMIN</string>
+    <string-array name="account_login_spinner">
+        <item>STUDENT</item>
+        <item>TEACHER</item>
+        <item>ADMIN</item>
+    </string-array>
+    
+    <!-- Account - Register -->
+    <string name="account_register_header_1">Register</string>
+    <string name="account_register_header_2">Please register to continue</string>
+    <string name="account_register_sign_up">Sign up</string>
+    <string name="account_register_header_3">OR SIGN UP USING</string>
+    <string name="account_register_existing_account">Already have an account? LOGIN</string>
+    <string name="account_register_lrn">Learner Reference Number</string>
+    <string name="account_register_username">Username@gmail.com</string>
+    <string name="account_register_password">Password</string>
+    <string name="account_register_confirm_password">Confirm password</string>
+</resources>
