@@ -103,4 +103,23 @@
 
         \n\n5.5     We reserve the right to store and use your personal data solely for our own internal purposes and we reserve the right to access, monitor and retrieve password protected information in order to fulfil our obligations, both legal and as established under these Terms.
     </string>
+
+    <!-- student_teacher (st) - home -->
+    <string name="st_home_header_1">LabAss</string>
+    <string name="st_home_user_type_placeholder">STUDENT</string>
+    <string name="st_home_greetings_placeholder">Hello, User!</string>
+    <string name="st_home_scan">SCAN</string>
+    <string name="st_home_pending">Pending: </string>
+    <string name="st_home_pending_placeholder">Tools - Beaker</string>
+    <string name="st_home_status">Status: </string>
+    <string name="st_home_status_placeholder">On-borrow</string>
+    <string name="st_home_top_borrows">Top Borrows</string>
+    <string name="st_home_see_all">SEE ALL</string>
+    <string name="st_home_item_placeholder">Beaker</string>
+    <string name="st_home_borrows_placeholder">14 Borrows</string>
+    <string name="st_home_category">Category</string>
+    <string name="st_home_tools">TOOLS</string>
+    <string name="st_home_chem">CHEM</string>
+    <string name="st_home_list_item">List Items</string>
+    <string name="st_home_type_placeholder">TOOLS</string>
 </resources>
