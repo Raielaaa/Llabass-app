@@ -233,7 +233,7 @@
     <Button
         android:layout_marginBottom="@dimen/_20sdp"
         android:textSize="@dimen/_12ssp"
-        android:id="@+id/button"
+        android:id="@+id/btnSignUp"
         android:layout_width="0dp"
         android:layout_height="@dimen/_50sdp"
         android:text="@string/account_register_sign_up"

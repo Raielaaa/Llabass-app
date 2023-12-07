@@ -21,8 +21,17 @@ class RegisterFragment : Fragment() {
         binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
         displayDialog()
+        initClickableViews()
 
         return binding.root
+    }
+
+    private fun initClickableViews() {
+        binding.apply {
+            btnSignUp.setOnClickListener {
+                TermsOfServiceDialog().show(parentFragmentManager, "Register_BottomDialog")
+            }
+        }
     }
 
     private fun displayDialog() {
