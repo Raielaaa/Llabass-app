@@ -7,6 +7,12 @@
     <string name="dialog_sign_up_header">Sign up notice</string>
     <string name="dialog_sign_up_body">For sign-up using Google and Facebook, only the Learner Reference Number is required.</string>
     <string name="dialog_sign_up_ok">OK</string>
+    
+    <string name="nav_drawer_title">LabAss</string>
+    <string name="nav_drawer_dashboard">Dashboard</string>
+    <string name="nav_drawer_inventory">Inventory</string>
+    <string name="nav_drawer_status">Borrow Status</string>
+    <string name="nav_drawer_privacy">Privacy Settings</string>
 
     <!-- Account - Opening -->
     <string name="account_opening_header_1">LabAss: Elevating Your Borrowing Experience - Scan, Safeguard, Succeed!</string>

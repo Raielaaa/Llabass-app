@@ -13,10 +13,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.example.lab_ass_app.R
+import com.google.android.material.navigation.NavigationView
 
 object Helper {
+    lateinit var navDrawerInstance: DrawerLayout
+
     private var dialog: Dialog? = null
     val TAG: String = "MyTag"
 
