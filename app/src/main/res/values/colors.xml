@@ -7,5 +7,7 @@
     <color name="Theme.credentials.placeholder.bg">#f7f7f9</color>
     <color name="Theme.disabled">#b3b3b3</color>
     <color name="Theme.light">#e6e6e6</color>
+    <color name="Theme.dirty.white">#f7f7f7</color>
     <color name="Theme.dark.gray">#4a4f53</color>
+    <color name="Theme.green">#4AFF58</color>
 </resources>

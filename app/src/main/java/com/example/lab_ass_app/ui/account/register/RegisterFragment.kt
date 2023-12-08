@@ -29,7 +29,7 @@ class RegisterFragment : Fragment() {
     private fun initClickableViews() {
         binding.apply {
             btnSignUp.setOnClickListener {
-                TermsOfServiceDialog().show(parentFragmentManager, "Register_BottomDialog")
+                TermsOfServiceDialog(this@RegisterFragment).show(parentFragmentManager, "Register_BottomDialog")
             }
         }
     }
