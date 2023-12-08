@@ -1,4 +1,4 @@
-package com.example.lab_ass_app.ui.main.student_teacher.home
+package com.example.lab_ass_app.ui.main.student_teacher.privacy
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -8,40 +8,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
-import com.example.lab_ass_app.databinding.FragmentHomeBinding
+import com.example.lab_ass_app.databinding.FragmentPrivacyBinding
 import com.example.lab_ass_app.ui.Helper
 
-class HomeFragment : Fragment() {
-    private lateinit var binding: FragmentHomeBinding
-
-    private lateinit var viewModel: HomeViewModel
+class PrivacyFragment : Fragment() {
+    private lateinit var viewModel: PrivacyViewModel
+    private lateinit var binding: FragmentPrivacyBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentPrivacyBinding.inflate(inflater, container, false)
 
-        initNavigationDrawer()
-        initBottomNavigationDrawer()
+        initNavDrawer()
 
         return binding.root
     }
 
-    private fun initBottomNavigationDrawer() {
-        binding.apply {
-            btmDrawerPrivacy.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_privacyFragment)
-            }
-        }
-    }
-
-    private fun initNavigationDrawer() {
+    private fun initNavDrawer() {
         val drawerLayout: DrawerLayout = Helper.navDrawerInstance
 
-        binding.ivNavDrawer.setOnClickListener {
+        binding.ivPrivacyNavDrawer.setOnClickListener {
             // Toggle the drawer (open if closed, close if open)
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START)

@@ -658,7 +658,7 @@
                 <ImageView
                     android:layout_marginBottom="@dimen/_14sdp"
                     android:layout_weight="1"
-                    android:id="@+id/imageView23"
+                    android:id="@+id/btmDrawerHome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/home_home_colored" />
@@ -675,7 +675,7 @@
             <ImageView
                 android:padding="@dimen/_16sdp"
                 android:layout_weight="1"
-                android:id="@+id/imageView12"
+                android:id="@+id/btmDrawerList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/top_tools" />
@@ -691,7 +691,7 @@
             <ImageView
                 android:padding="@dimen/_16sdp"
                 android:layout_weight="1"
-                android:id="@+id/imageView24"
+                android:id="@+id/btnDrawerUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/home_user_white" />
@@ -699,7 +699,7 @@
             <ImageView
                 android:padding="@dimen/_16sdp"
                 android:layout_weight="1"
-                android:id="@+id/imageView25"
+                android:id="@+id/btmDrawerPrivacy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/home_privacy_white" />

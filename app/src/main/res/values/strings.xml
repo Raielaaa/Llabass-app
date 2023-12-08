@@ -128,4 +128,10 @@
     <string name="st_home_chem">CHEM</string>
     <string name="st_home_list_item">List Items</string>
     <string name="st_home_type_placeholder">TOOLS</string>
+
+    <!-- Privacy settings -->
+    <string name="privacy_title">PRIVACY SETTINGS</string>
+    <string name="privacy_header_1">Legal Information</string>
+    <string name="privacy_item_1">Terms of Service</string>
+    <string name="privacy_item_2">Privacy Policy</string>
 </resources>
