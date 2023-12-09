@@ -19,7 +19,8 @@ import com.example.lab_ass_app.R
 import com.google.android.material.navigation.NavigationView
 
 object Helper {
-    lateinit var navDrawerInstance: DrawerLayout
+    lateinit var drawerLayoutInstance: DrawerLayout
+    lateinit var navDrawerInstance: NavigationView
 
     private var dialog: Dialog? = null
     val TAG: String = "MyTag"

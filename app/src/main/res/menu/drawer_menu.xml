@@ -8,21 +8,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
         <item
+            android:id="@+id/nav_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/drawer_home_gray"
             android:title="@string/nav_drawer_dashboard" />
         <item
+            android:id="@+id/nav_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/drawer_list_gray"
             android:title="@string/nav_drawer_inventory" />
         <item
+            android:id="@+id/nav_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/drawer_user_gray"
             android:title="@string/nav_drawer_status" />
         <item
+            android:id="@+id/nav_privacy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/drawer_privacy_gray"

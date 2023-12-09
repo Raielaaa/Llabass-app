@@ -1,6 +1,5 @@
 package com.example.lab_ass_app.ui.main.student_teacher.home
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentHomeBinding
 import com.example.lab_ass_app.ui.Helper
+import com.google.android.material.navigation.NavigationView
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -45,7 +45,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun initNavigationDrawer() {
-        val drawerLayout: DrawerLayout = Helper.navDrawerInstance
+        val drawerLayout: DrawerLayout = Helper.drawerLayoutInstance
+        val navDrawerLayout: NavigationView = Helper.navDrawerInstance
+        navDrawerLayout.setCheckedItem(R.id.nav_home)
 
         binding.ivNavDrawer.setOnClickListener {
             // Toggle the drawer (open if closed, close if open)
