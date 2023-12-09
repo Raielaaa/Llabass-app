@@ -189,4 +189,7 @@
     <string name="list_search">Search in Tools</string>
     <string name="list_list_item">List Items</string>
     <string name="list_type_placeholder">TOOLS</string>
+
+    <!-- User -->
+    <string name="user_actionbar_header">USER BORROW SETTINGS</string>
 </resources>

@@ -23,10 +23,25 @@ class PrivacyFragment : Fragment() {
     ): View {
         binding = FragmentPrivacyBinding.inflate(inflater, container, false)
 
-        initNavDrawer()
+        initNavigationDrawer()
         initTermsAndPolicyClickListener()
+        initBottomNavDrawer()
 
         return binding.root
+    }
+
+    private fun initBottomNavDrawer() {
+        binding.apply {
+            btmDrawerHome.setOnClickListener {
+                findNavController().navigate(R.id.action_privacyFragment_to_homeFragment)
+            }
+            btmDrawerList.setOnClickListener {
+                findNavController().navigate(R.id.action_privacyFragment_to_listFragment)
+            }
+            btmDrawerUser.setOnClickListener {
+                findNavController().navigate(R.id.action_privacyFragment_to_profileFragment)
+            }
+        }
     }
 
     private fun initTermsAndPolicyClickListener() {
@@ -46,7 +61,7 @@ class PrivacyFragment : Fragment() {
         }
     }
 
-    private fun initNavDrawer() {
+    private fun initNavigationDrawer() {
         val drawerLayout: DrawerLayout = Helper.navDrawerInstance
 
         binding.ivPrivacyNavDrawer.setOnClickListener {

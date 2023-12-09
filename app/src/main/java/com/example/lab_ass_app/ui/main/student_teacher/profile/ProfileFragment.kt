@@ -1,4 +1,4 @@
-package com.example.lab_ass_app.ui.main.student_teacher.list
+package com.example.lab_ass_app.ui.main.student_teacher.profile
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -10,18 +10,18 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
-import com.example.lab_ass_app.databinding.FragmentListBinding
+import com.example.lab_ass_app.databinding.FragmentProfileBinding
 import com.example.lab_ass_app.ui.Helper
 
-class ListFragment : Fragment() {
-    private lateinit var viewModel: ListViewModel
-    private lateinit var binding: FragmentListBinding
+class ProfileFragment : Fragment() {
+    private lateinit var viewModel: ProfileViewModel
+    private lateinit var binding: FragmentProfileBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentListBinding.inflate(inflater, container, false)
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         initBottomNavDrawer()
         initNavigationDrawer()
@@ -45,13 +45,13 @@ class ListFragment : Fragment() {
     private fun initBottomNavDrawer() {
         binding.apply {
             btmDrawerHome.setOnClickListener {
-                findNavController().navigate(R.id.action_listFragment_to_homeFragment)
+                findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
             }
             btmDrawerPrivacy.setOnClickListener {
-                findNavController().navigate(R.id.action_listFragment_to_privacyFragment)
+                findNavController().navigate(R.id.action_profileFragment_to_privacyFragment)
             }
-            btmDrawerUser.setOnClickListener {
-                findNavController().navigate(R.id.action_listFragment_to_profileFragment)
+            btmDrawerList.setOnClickListener {
+                findNavController().navigate(R.id.action_profileFragment_to_listFragment)
             }
         }
     }

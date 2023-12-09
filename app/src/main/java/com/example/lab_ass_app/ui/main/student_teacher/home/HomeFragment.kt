@@ -35,6 +35,12 @@ class HomeFragment : Fragment() {
             btmDrawerPrivacy.setOnClickListener {
                 findNavController().navigate(R.id.action_homeFragment_to_privacyFragment)
             }
+            btmDrawerList.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_listFragment)
+            }
+            btmDrawerUser.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+            }
         }
     }
 

@@ -21,9 +21,9 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/ivBack"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
+                android:id="@+id/ivNavDrawer"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
                 android:src="@drawable/menu_white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline12"
@@ -91,13 +91,31 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/home_home_white" />
 
-            <ImageView
-                android:padding="@dimen/_16sdp"
+            <LinearLayout
+                android:paddingStart="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_16sdp"
+                android:paddingTop="@dimen/_16sdp"
                 android:layout_weight="1"
-                android:id="@+id/btmDrawerList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/top_tools" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_marginBottom="@dimen/_11sdp"
+                    android:layout_weight="1"
+                    android:id="@+id/btmDrawerList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/home_list_colored" />
+
+                <View
+                    android:background="@drawable/home_selected_bottom_bg"
+                    android:layout_weight="1"
+                    android:id="@+id/view5"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_5sdp" />
+
+            </LinearLayout>
 
             <ImageView
                 android:padding="@dimen/_12sdp"
@@ -110,36 +128,18 @@
             <ImageView
                 android:padding="@dimen/_16sdp"
                 android:layout_weight="1"
-                android:id="@+id/btnDrawerUser"
+                android:id="@+id/btmDrawerUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/home_user_white" />
 
-            <LinearLayout
-                android:paddingStart="@dimen/_16sdp"
-                android:paddingEnd="@dimen/_16sdp"
-                android:paddingTop="@dimen/_16sdp"
+            <ImageView
+                android:padding="@dimen/_16sdp"
                 android:layout_weight="1"
+                android:id="@+id/btmDrawerPrivacy"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_marginBottom="@dimen/_13sdp"
-                    android:layout_weight="1"
-                    android:id="@+id/btmDrawerPrivacy"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/privacy_colored" />
-
-                <View
-                    android:background="@drawable/home_selected_bottom_bg"
-                    android:layout_weight="1"
-                    android:id="@+id/view5"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_5sdp" />
-
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:src="@drawable/home_privacy_white" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
