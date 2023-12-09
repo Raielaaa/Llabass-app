@@ -148,5 +148,46 @@
             app:exitAnim="@anim/push_right_out"
             app:popEnterAnim="@anim/push_left_in"
             app:popExitAnim="@anim/push_left_out" />
+        <action
+            android:id="@+id/action_privacyFragment_to_TOSFragment"
+            app:destination="@id/TOSFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_privacyFragment_to_PPFragment"
+            app:destination="@id/PPFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/TOSFragment"
+        android:name="com.example.lab_ass_app.ui.main.student_teacher.privacy.TOSFragment"
+        android:label="fragment_t_o_s"
+        tools:layout="@layout/fragment_t_o_s" >
+        <action
+            android:id="@+id/action_TOSFragment_to_privacyFragment"
+            app:destination="@id/privacyFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/PPFragment"
+        android:name="com.example.lab_ass_app.ui.main.student_teacher.privacy.PPFragment"
+        android:label="fragment_p_p"
+        tools:layout="@layout/fragment_p_p" >
+        <action
+            android:id="@+id/action_PPFragment_to_privacyFragment"
+            app:destination="@id/privacyFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 </navigation>

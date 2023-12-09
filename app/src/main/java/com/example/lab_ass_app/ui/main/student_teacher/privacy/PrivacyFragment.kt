@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentPrivacyBinding
 import com.example.lab_ass_app.ui.Helper
@@ -23,8 +24,26 @@ class PrivacyFragment : Fragment() {
         binding = FragmentPrivacyBinding.inflate(inflater, container, false)
 
         initNavDrawer()
+        initTermsAndPolicyClickListener()
 
         return binding.root
+    }
+
+    private fun initTermsAndPolicyClickListener() {
+        binding.apply {
+            tvTOS.setOnClickListener {
+                findNavController().navigate(R.id.action_privacyFragment_to_TOSFragment)
+            }
+            ivTOS.setOnClickListener {
+                findNavController().navigate(R.id.action_privacyFragment_to_TOSFragment)
+            }
+            tvPP.setOnClickListener {
+                findNavController().navigate(R.id.action_privacyFragment_to_PPFragment)
+            }
+            ivPP.setOnClickListener {
+                findNavController().navigate(R.id.action_privacyFragment_to_PPFragment)
+            }
+        }
     }
 
     private fun initNavDrawer() {
