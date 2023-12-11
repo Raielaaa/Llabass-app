@@ -24,10 +24,19 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        initNavigationDrawer()
-        initBottomNavigationDrawer()
+        initClickableViews()
 
         return binding.root
+    }
+
+    private fun initClickableViews() {
+        initNavigationDrawer()
+        initBottomNavigationDrawer()
+        initFAB()
+    }
+
+    private fun initFAB() {
+        findNavController().navigate(R.id.action_homeFragment_to_experimentsFragment)
     }
 
     private fun initBottomNavigationDrawer() {

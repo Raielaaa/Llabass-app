@@ -192,4 +192,14 @@
 
     <!-- User -->
     <string name="user_actionbar_header">USER BORROW SETTINGS</string>
+
+    <!-- Experiments -->
+    <string name="experiments_appbar_title">Experiments</string>
+    <string name="experiments_date_placeholder">Updated as of November 30, 2023</string>
+    <string name="experiments_refresh_button">REFRESH</string>
+    <string name="experiments_search">Search in Experiments</string>
+    <string name="experiments_list_item">List Items</string>
+    <string name="experiments_name_placeholder">Experiment Name</string>
+    <string name="experiments_required">Required Items</string>
+    <string name="experiments_button_scan">CLICK ME TO SCAN</string>
 </resources>

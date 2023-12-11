@@ -129,6 +129,13 @@
             app:exitAnim="@anim/push_left_out"
             app:popEnterAnim="@anim/push_right_in"
             app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_homeFragment_to_experimentsFragment"
+            app:destination="@id/experimentsFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
     <dialog
         android:id="@+id/termsOfServiceDialog"
@@ -278,5 +285,38 @@
             app:exitAnim="@anim/push_left_out"
             app:popEnterAnim="@anim/push_right_in"
             app:popExitAnim="@anim/push_right_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/experimentsFragment"
+        android:name="com.example.lab_ass_app.ui.main.student_teacher.experiments.homeList.ExperimentsFragment"
+        android:label="fragment_experiments"
+        tools:layout="@layout/fragment_experiments" >
+        <action
+            android:id="@+id/action_experimentsFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_experimentsFragment_to_experimentsItemFragment"
+            app:destination="@id/experimentsItemFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/experimentsItemFragment"
+        android:name="com.example.lab_ass_app.ui.main.student_teacher.experiments.info.ExperimentsItemFragment"
+        android:label="fragment_experiments_item"
+        tools:layout="@layout/fragment_experiments_item" >
+        <action
+            android:id="@+id/action_experimentsItemFragment_to_experimentsFragment"
+            app:destination="@id/experimentsFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 </navigation>
