@@ -204,6 +204,12 @@
     <string name="user_borrow_count_placeholder">2/3</string>
     <string name="user_borrow_info">Borrow Info</string>
     <string name="user_refresh_button">REFRESH</string>
+    <string name="user_borrow_status">Status: </string>
+    <string name="user_borrow_status_placeholder">ON-BORROW</string>
+    <string name="user_borrow_date">Borrow Date: </string>
+    <string name="user_borrow_date_placeholder">12/02/23, 04:35:16 PM</string>
+    <string name="user_borrow_deadline">Borrow Deadline: </string>
+    <string name="user_borrow_deadline_placeholder">01/25/24, 04:35:16</string>
 
     <!-- Experiments -->
     <string name="experiments_appbar_title">Experiments</string>
