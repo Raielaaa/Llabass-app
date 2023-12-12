@@ -36,7 +36,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun initFAB() {
-        findNavController().navigate(R.id.action_homeFragment_to_experimentsFragment)
+        binding.fabExperiments.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_experimentsFragment)
+        }
     }
 
     private fun initBottomNavigationDrawer() {
