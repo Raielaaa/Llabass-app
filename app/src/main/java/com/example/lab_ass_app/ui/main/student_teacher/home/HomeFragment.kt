@@ -1,5 +1,6 @@
 package com.example.lab_ass_app.ui.main.student_teacher.home
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,8 +12,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentHomeBinding
 import com.example.lab_ass_app.ui.Helper
+import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
+import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModel
 import com.example.lab_ass_app.ui.main.student_teacher.home.see_all.SeeAllDialog
 import com.google.android.material.navigation.NavigationView
+import java.util.Arrays
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -35,10 +39,84 @@ class HomeFragment : Fragment() {
         initBottomNavigationDrawer()
         initFAB()
         initSeeAllButton()
+        initListItemExpand()
+        initListItemRV()
+    }
+
+    private fun initListItemRV() {
+        val listItemsAdapter = HomeAdapter()
+        listItemsAdapter.setItem(
+            ArrayList(
+                listOf(
+                    HomeModel(
+                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
+                        "PETRI DISH",
+                        "384732",
+                        "14 Borrows",
+                        "AVAILABLE"
+                    ),
+                    HomeModel(
+                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
+                        "PETRI DISH",
+                        "384732",
+                        "14 Borrows",
+                        "AVAILABLE"
+                    ),
+                    HomeModel(
+                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
+                        "PETRI DISH",
+                        "384732",
+                        "14 Borrows",
+                        "AVAILABLE"
+                    )
+                )
+            )
+        )
+
+        binding.rvListItems.adapter = listItemsAdapter
+    }
+
+    private fun initListItemExpand() {
+        binding.ivListItemExpand.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_listFragment)
+        }
     }
 
     private fun initSeeAllButton() {
-        SeeAllDialog().show(parentFragmentManager, "SeeAllDialog")
+        val seeAllAdapter = HomeAdapter()
+        seeAllAdapter.setItem(
+            ArrayList(
+                listOf(
+                    HomeModel(
+                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
+                        "PETRI DISH",
+                        "384732",
+                        "14 Borrows",
+                        "AVAILABLE"
+                    ),
+                    HomeModel(
+                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
+                        "PETRI DISH",
+                        "384732",
+                        "14 Borrows",
+                        "AVAILABLE"
+                    ),
+                    HomeModel(
+                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
+                        "PETRI DISH",
+                        "384732",
+                        "14 Borrows",
+                        "AVAILABLE"
+                    )
+                )
+            )
+        )
+
+        SeeAllDialog(seeAllAdapter).show(parentFragmentManager, "SeeAllDialog")
+
+        binding.btnHomeSeeAll.setOnClickListener {
+            SeeAllDialog(seeAllAdapter).show(parentFragmentManager, "SeeAllDialog")
+        }
     }
 
     private fun initFAB() {

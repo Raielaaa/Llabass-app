@@ -129,7 +129,7 @@
     <string name="st_home_list_item">List Items</string>
     <string name="st_home_type_placeholder">TOOLS</string>
     <string name="st_home_list_title">PETRI DISH</string>
-    <string name="st_home_list_tool_code">Tool code: </string>
+    <string name="st_home_list_tool_code">Item code: </string>
     <string name="st_home_list_tool_code_placeholder">384024</string>
     <string name="st_home_list_borrow_count">14 Borrows</string>
 

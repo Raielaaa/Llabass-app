@@ -285,7 +285,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnHomeSeeAll"
         android:layout_width="0dp"
         android:layout_height="@dimen/_30sdp"
         android:layout_marginBottom="@dimen/_5sdp"
@@ -763,7 +763,7 @@
                 app:layout_constraintTop_toTopOf="@+id/imageView20" />
 
             <ImageView
-                android:id="@+id/imageView21"
+                android:id="@+id/ivListItemExpand"
                 android:layout_width="@dimen/_12sdp"
                 android:layout_height="@dimen/_12sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
@@ -774,10 +774,11 @@
                 app:layout_constraintTop_toTopOf="@+id/textView44" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:id="@+id/rvListItems"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"

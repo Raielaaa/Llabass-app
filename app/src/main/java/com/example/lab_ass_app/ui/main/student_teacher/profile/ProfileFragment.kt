@@ -1,5 +1,6 @@
 package com.example.lab_ass_app.ui.main.student_teacher.profile
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentProfileBinding
 import com.example.lab_ass_app.ui.Helper
+import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
+import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModel
 import com.google.android.material.navigation.NavigationView
 
 class ProfileFragment : Fragment() {
@@ -25,8 +28,42 @@ class ProfileFragment : Fragment() {
 
         initBottomNavDrawer()
         initNavigationDrawer()
+        initRV()
 
         return binding.root
+    }
+
+    private fun initRV() {
+        val listItemsAdapter = HomeAdapter()
+        listItemsAdapter.setItem(
+            ArrayList(
+                listOf(
+                    HomeModel(
+                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
+                        "PETRI DISH",
+                        "384732",
+                        "14 Borrows",
+                        "AVAILABLE"
+                    ),
+                    HomeModel(
+                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
+                        "PETRI DISH",
+                        "384732",
+                        "14 Borrows",
+                        "AVAILABLE"
+                    ),
+                    HomeModel(
+                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
+                        "PETRI DISH",
+                        "384732",
+                        "14 Borrows",
+                        "AVAILABLE"
+                    )
+                )
+            )
+        )
+
+        binding.rvProfileList.adapter = listItemsAdapter
     }
 
     private fun initNavigationDrawer() {
