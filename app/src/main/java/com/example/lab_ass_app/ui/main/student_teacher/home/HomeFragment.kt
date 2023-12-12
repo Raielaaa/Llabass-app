@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentHomeBinding
 import com.example.lab_ass_app.ui.Helper
+import com.example.lab_ass_app.ui.main.student_teacher.home.see_all.SeeAllDialog
 import com.google.android.material.navigation.NavigationView
 
 class HomeFragment : Fragment() {
@@ -33,6 +34,11 @@ class HomeFragment : Fragment() {
         initNavigationDrawer()
         initBottomNavigationDrawer()
         initFAB()
+        initSeeAllButton()
+    }
+
+    private fun initSeeAllButton() {
+        SeeAllDialog().show(parentFragmentManager, "SeeAllDialog")
     }
 
     private fun initFAB() {
