@@ -192,6 +192,14 @@
 
     <!-- User -->
     <string name="user_actionbar_header">USER BORROW SETTINGS</string>
+    <string name="user_greetings_placeholder">Hello, User!</string>
+    <string name="user_pending">Pending: </string>
+    <string name="user_pending_placeholder">Tools - Beaker</string>
+    <string name="user_status">Status: </string>
+    <string name="user_status_placeholder">On-borrow</string>
+    <string name="user_borrow_count_placeholder">2/3</string>
+    <string name="user_borrow_info">Borrow Info</string>
+    <string name="user_refresh_button">REFRESH</string>
 
     <!-- Experiments -->
     <string name="experiments_appbar_title">Experiments</string>
