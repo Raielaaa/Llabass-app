@@ -4,7 +4,10 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Context.WINDOW_SERVICE
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
+import android.provider.MediaStore
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.ViewGroup
@@ -12,6 +15,8 @@ import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -85,7 +90,7 @@ object Helper {
 
     private fun displayToastMessage(
         context: Context,
-        message: String
+        message: String?
     ) {
         Toast.makeText(
             context,
@@ -96,5 +101,33 @@ object Helper {
 
     fun dismissDialog() {
         dialog?.dismiss()
+    }
+
+    fun takeQR(activity: Activity) {
+        //  Method for starting the camera
+        cameraPermission(activity)
+    }
+
+    //  Requesting for permission
+    private fun cameraPermission(activity: Activity) {
+        val cameraPermission: String = android.Manifest.permission.CAMERA
+        val permissionGranted: Int = PackageManager.PERMISSION_GRANTED
+
+        if (ContextCompat.checkSelfPermission(activity, cameraPermission) != permissionGranted) {
+            ActivityCompat.requestPermissions(activity, arrayOf(cameraPermission), 111)
+        } else {
+            takeImage(activity)
+        }
+    }
+
+    //  Opening Camera if permission is granted
+    private fun takeImage(activity: Activity) {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        try {
+            activity.startActivityForResult(intent, 1)
+        } catch (err: Exception) {
+            displayToastMessage(activity, err.localizedMessage)
+            Log.e(TAG, "takeImage: ${err.message}", )
+        }
     }
 }

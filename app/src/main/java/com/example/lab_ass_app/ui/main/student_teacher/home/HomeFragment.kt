@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentHomeBinding
@@ -20,7 +21,6 @@ import java.util.Arrays
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-
     private lateinit var viewModel: HomeViewModel
 
     override fun onCreateView(
@@ -28,6 +28,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this@HomeFragment)[HomeViewModel::class.java]
 
         initClickableViews()
 
@@ -41,6 +42,13 @@ class HomeFragment : Fragment() {
         initSeeAllButton()
         initListItemExpand()
         initListItemRV()
+        initCVQR()
+    }
+
+    private fun initCVQR() {
+        binding.cvTakeQR.setOnClickListener {
+            viewModel.takeQR(requireActivity())
+        }
     }
 
     private fun initListItemRV() {

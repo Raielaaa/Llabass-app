@@ -236,7 +236,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
+        android:id="@+id/cvTakeQR"
         android:layout_width="0dp"
         android:layout_height="@dimen/_70sdp"
         android:layout_marginStart="@dimen/_17sdp"
