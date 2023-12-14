@@ -1,7 +1,10 @@
 package com.example.lab_ass_app
 
+import android.content.Intent
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
@@ -14,6 +17,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
@@ -64,8 +68,41 @@ class MainActivity : AppCompatActivity() {
             .build()
     }
 
+    // For QR code
+    private var imageBitmap: Bitmap? = null
+
     private fun initNavHostFragment() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_main) as NavHostFragment
         navController = navHostFragment.navController
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == Helper.CAMERA_PERMISSION_CODE) {
+            val extras: Bundle? = data?.extras
+
+            try {
+                imageBitmap = extras?.get("data") as Bitmap
+
+                Helper.displayBorrowReturnDialog(
+                    supportFragmentManager,
+                    imageBitmap
+                )
+            } catch (err: Exception) {
+                displayToastMessage("An error occurred: ${err.localizedMessage}")
+
+                return
+            }
+        }
+    }
+
+    private fun displayToastMessage(message: String) {
+        Toast.makeText(
+            this@MainActivity,
+            message,
+            Toast.LENGTH_LONG
+        ).show()
     }
 }

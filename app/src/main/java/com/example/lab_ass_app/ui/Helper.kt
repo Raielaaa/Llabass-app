@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Context.WINDOW_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Build
 import android.provider.MediaStore
 import android.util.DisplayMetrics
@@ -20,7 +21,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.lab_ass_app.R
+import com.example.lab_ass_app.ui.main.borrow_return_dialog.BorrowReturnDialogFragment
 import com.google.android.material.navigation.NavigationView
 
 object Helper {
@@ -29,6 +32,9 @@ object Helper {
 
     private var dialog: Dialog? = null
     val TAG: String = "MyTag"
+
+    //  CONSTANTS
+    const val CAMERA_PERMISSION_CODE: Int = 1
 
     fun displayCustomDialog(
         hostFragment: Fragment,
@@ -79,6 +85,13 @@ object Helper {
                 "Error: ${err.localizedMessage}"
             )
         }
+    }
+
+    fun displayBorrowReturnDialog(
+        fragmentManager: FragmentManager,
+        bitmap: Bitmap?
+    ) {
+        BorrowReturnDialogFragment(bitmap).show(fragmentManager, "BorrowReturn_Dialog")
     }
 
     private fun getScreenWidth(activity: Activity): Int {

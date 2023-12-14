@@ -17,7 +17,6 @@ import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModel
 import com.example.lab_ass_app.ui.main.student_teacher.home.see_all.SeeAllDialog
 import com.google.android.material.navigation.NavigationView
-import java.util.Arrays
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -143,6 +142,9 @@ class HomeFragment : Fragment() {
             }
             btmDrawerUser.setOnClickListener {
                 findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+            }
+            ivTakeQR.setOnClickListener {
+                Helper.takeQR(requireActivity())
             }
         }
     }

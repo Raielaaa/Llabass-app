@@ -220,4 +220,27 @@
     <string name="experiments_name_placeholder">Experiment Name</string>
     <string name="experiments_required">Required Items</string>
     <string name="experiments_button_scan">CLICK ME TO SCAN</string>
+
+    <!-- Borrow-Return dialog -->
+    <string name="borrow_return_header">VALIDATE TRANSACTION INFO</string>
+    <string name="borrow_return_borrow">BORROW</string>
+    <string name="borrow_return_return">RETURN</string>
+    <string name="borrow_return_item_name">PETRI DISH</string>
+    <string name="borrow_return_name">Name: </string>
+    <string name="borrow_return_name_placeholder">Borrower Name</string>
+    <string name="borrow_return_lrn">LRN: </string>
+    <string name="borrow_return_lrn_placeholder">3847364924746</string>
+    <string name="borrow_return_category">Category: </string>
+    <string name="borrow_return_category_placeholder">Tools</string>
+    <string name="borrow_return_status">Status: </string>
+    <string name="borrow_return_status_placeholder">Available</string>
+    <string name="borrow_return_date">Set Date</string>
+    <string name="borrow_return_time">Set Time</string>
+    <string name="borrow_return_consent">
+        By proceeding, you are providing consent for the transfer of peripherals/chemical information along with your personal details, including your name, username, and student number to be securely transferred and stored in our database. Do you agree to this data transfer?
+    </string>
+    <string name="borrow_return_proceed">PROCEED</string>
+    <string name="borrow_return_cancel">CANCEL</string>
+    <string name="borrow_return_report_1">Encountered a problem? </string>
+    <string name="borrow_return_report_2">REPORT NOW!</string>
 </resources>

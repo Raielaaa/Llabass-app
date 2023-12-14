@@ -41,6 +41,9 @@ class PrivacyFragment : Fragment() {
             btmDrawerUser.setOnClickListener {
                 findNavController().navigate(R.id.action_privacyFragment_to_profileFragment)
             }
+            ivTakeQR.setOnClickListener {
+                Helper.takeQR(requireActivity())
+            }
         }
     }
 

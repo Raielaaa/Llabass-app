@@ -178,7 +178,7 @@
             <ImageView
                 android:padding="@dimen/_12sdp"
                 android:layout_weight="1"
-                android:id="@+id/imageView22"
+                android:id="@+id/ivTakeQR"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/home_scan" />

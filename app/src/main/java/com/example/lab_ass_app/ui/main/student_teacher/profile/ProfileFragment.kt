@@ -92,6 +92,9 @@ class ProfileFragment : Fragment() {
             btmDrawerList.setOnClickListener {
                 findNavController().navigate(R.id.action_profileFragment_to_listFragment)
             }
+            ivTakeQR.setOnClickListener {
+                Helper.takeQR(requireActivity())
+            }
         }
     }
 }
