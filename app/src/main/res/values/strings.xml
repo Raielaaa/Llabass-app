@@ -241,6 +241,21 @@
     </string>
     <string name="borrow_return_proceed">PROCEED</string>
     <string name="borrow_return_cancel">CANCEL</string>
-    <string name="borrow_return_report_1">Encountered a problem? </string>
-    <string name="borrow_return_report_2">REPORT NOW!</string>
+    <string name="borrow_return_report">Encountered a problem? REPORT NOW!</string>
+    <string-array name="borrow_return_option">
+        <item>BORROW</item>
+        <item>RETURN</item>
+    </string-array>
+
+    <!-- Report -->
+    <string name="report_header">Item Information</string>
+    <string name="report_name">Name: </string>
+    <string name="report_name_placeholder">Tool/Chemical Name</string>
+    <string name="report_item_num">Item#: </string>
+    <string name="report_item_num_placeholder">4859374</string>
+    <string name="report_category">Category: </string>
+    <string name="report_category_placeholder">Tools</string>
+    <string name="report_title">Report Title</string>
+    <string name="report_description">Description</string>
+    <string name="report_submit">SUBMIT REPORT</string>
 </resources>

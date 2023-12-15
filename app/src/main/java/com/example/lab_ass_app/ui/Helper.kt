@@ -23,7 +23,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.lab_ass_app.R
-import com.example.lab_ass_app.ui.main.borrow_return_dialog.BorrowReturnDialogFragment
+import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.BorrowReturnDialogFragment
 import com.google.android.material.navigation.NavigationView
 
 object Helper {

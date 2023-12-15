@@ -296,7 +296,6 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/textView17"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
-        app:layout_constraintStart_toStartOf="@+id/cardView2"
         app:layout_constraintTop_toTopOf="@+id/textView17" />
 
     <ImageView

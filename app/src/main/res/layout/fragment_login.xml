@@ -146,17 +146,17 @@
         android:text="@string/account_login_button"
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView6"
+        app:layout_constraintBottom_toTopOf="@+id/tvNoAccount"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline3" />
 
     <TextView
         android:layout_marginBottom="@dimen/_10sdp"
-        android:id="@+id/textView6"
+        android:id="@+id/tvNoAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins"
+        android:fontFamily="@font/poppins_bold"
         android:text="@string/account_login_no_account"
         android:textColor="@color/Theme.disabled"
         android:textSize="@dimen/_7ssp"

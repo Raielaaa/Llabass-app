@@ -160,11 +160,11 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/tvExistingAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:fontFamily="@font/poppins"
+        android:fontFamily="@font/poppins_bold"
         android:text="@string/account_register_existing_account"
         android:textSize="@dimen/_7ssp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -178,7 +178,7 @@
         android:layout_width="@dimen/_25sdp"
         android:layout_height="@dimen/_25sdp"
         android:src="@drawable/google"
-        app:layout_constraintBottom_toTopOf="@+id/textView9"
+        app:layout_constraintBottom_toTopOf="@+id/tvExistingAccount"
         app:layout_constraintEnd_toStartOf="@+id/guideline5" />
 
     <ImageView
@@ -207,8 +207,8 @@
         android:layout_height="wrap_content"
         android:text="@string/account_register_header_3"
         app:layout_constraintBottom_toTopOf="@+id/ivGoogle"
-        app:layout_constraintEnd_toEndOf="@+id/textView9"
-        app:layout_constraintStart_toStartOf="@+id/textView9" />
+        app:layout_constraintEnd_toEndOf="@+id/tvExistingAccount"
+        app:layout_constraintStart_toStartOf="@+id/tvExistingAccount" />
 
     <View
         android:layout_marginTop="@dimen/_5sdp"
