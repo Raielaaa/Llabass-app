@@ -88,7 +88,8 @@ class MainActivity : AppCompatActivity() {
 
                 Helper.displayBorrowReturnDialog(
                     supportFragmentManager,
-                    imageBitmap
+                    imageBitmap,
+                    this@MainActivity
                 )
             } catch (err: Exception) {
                 displayToastMessage("An error occurred: ${err.localizedMessage}")

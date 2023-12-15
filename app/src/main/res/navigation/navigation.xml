@@ -136,6 +136,16 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_homeFragment_to_borrowReturnDialogFragment"
+            app:destination="@id/borrowReturnDialogFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_reportFragment"
+            app:destination="@id/reportFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
     <dialog
         android:id="@+id/termsOfServiceDialog"
@@ -314,6 +324,39 @@
         <action
             android:id="@+id/action_experimentsItemFragment_to_experimentsFragment"
             app:destination="@id/experimentsFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <dialog
+        android:id="@+id/borrowReturnDialogFragment"
+        android:name="com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.BorrowReturnDialogFragment"
+        android:label="fragment_borrow_return_dialog"
+        tools:layout="@layout/fragment_borrow_return_dialog" >
+        <action
+            android:id="@+id/action_borrowReturnDialogFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_borrowReturnDialogFragment_to_reportFragment"
+            app:destination="@id/reportFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </dialog>
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.ReportFragment"
+        android:label="fragment_report"
+        tools:layout="@layout/fragment_report" >
+        <action
+            android:id="@+id/action_reportFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"

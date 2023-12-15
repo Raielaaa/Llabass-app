@@ -1,27 +1,28 @@
 package com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog
 
-import android.app.Dialog
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.FrameLayout
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.text.color
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.lab_ass_app.MainActivity
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentBorrowReturnDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class BorrowReturnDialogFragment(
-    private val bitmap: Bitmap?
+    private val bitmap: Bitmap?,
+    private val mainActivity: MainActivity
 ) : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentBorrowReturnDialogBinding
 
@@ -41,6 +42,9 @@ class BorrowReturnDialogFragment(
 
     private fun initReportTv() {
         binding.tvReport.setOnClickListener {
+            Toast.makeText(mainActivity, "clicked", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.reportFragment)
+            this.dismiss()
         }
     }
 

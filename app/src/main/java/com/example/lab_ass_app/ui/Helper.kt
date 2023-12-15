@@ -22,6 +22,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.example.lab_ass_app.MainActivity
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.BorrowReturnDialogFragment
 import com.google.android.material.navigation.NavigationView
@@ -89,9 +90,10 @@ object Helper {
 
     fun displayBorrowReturnDialog(
         fragmentManager: FragmentManager,
-        bitmap: Bitmap?
+        bitmap: Bitmap?,
+        mainActivity: MainActivity
     ) {
-        BorrowReturnDialogFragment(bitmap).show(fragmentManager, "BorrowReturn_Dialog")
+        BorrowReturnDialogFragment(bitmap, mainActivity).show(fragmentManager, "BorrowReturn_Dialog")
     }
 
     private fun getScreenWidth(activity: Activity): Int {
