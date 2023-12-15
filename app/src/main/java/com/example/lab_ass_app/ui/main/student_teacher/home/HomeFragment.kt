@@ -51,7 +51,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun initListItemRV() {
-        val listItemsAdapter = HomeAdapter()
+        val listItemsAdapter = HomeAdapter {
+            Helper.displayCustomDialog(
+                this@HomeFragment,
+                R.layout.selected_item_dialog
+            )
+        }
         listItemsAdapter.setItem(
             ArrayList(
                 listOf(
@@ -90,7 +95,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun initSeeAllButton() {
-        val seeAllAdapter = HomeAdapter()
+        val seeAllAdapter = HomeAdapter {
+            Helper.displayCustomDialog(
+                this@HomeFragment,
+                R.layout.selected_item_dialog
+            )
+        }
         seeAllAdapter.setItem(
             ArrayList(
                 listOf(

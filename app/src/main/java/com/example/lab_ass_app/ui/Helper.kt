@@ -13,6 +13,7 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -64,6 +65,10 @@ object Helper {
                     val minWidth = (screenWidth * minWidthPercentage).toInt()
 
                     dialog?.findViewById<ConstraintLayout>(R.id.clMain)?.minWidth = minWidth
+                    dialog?.findViewById<ConstraintLayout>(R.id.clMainSelectedItem)?.minWidth = minWidth
+                    dialog?.findViewById<ImageView>(R.id.ivExitDialog)?.setOnClickListener {
+                        dialog!!.dismiss()
+                    }
                     show()
                 }
             }

@@ -34,7 +34,12 @@ class ListFragment : Fragment() {
     }
 
     private fun initListRV() {
-        val listItemsAdapter = HomeAdapter()
+        val listItemsAdapter = HomeAdapter {
+            Helper.displayCustomDialog(
+                this,
+                R.layout.selected_item_dialog
+            )
+        }
         listItemsAdapter.setItem(
             ArrayList(
                 listOf(

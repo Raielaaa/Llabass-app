@@ -6,7 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab_ass_app.databinding.RvHomeBinding
 
-class HomeAdapter() : RecyclerView.Adapter<HomeAdapter.HomeAdapterViewModel>() {
+class HomeAdapter(
+    private val clickedListener: () -> Unit
+) : RecyclerView.Adapter<HomeAdapter.HomeAdapterViewModel>() {
     private val collections: ArrayList<HomeModel> = ArrayList()
     @SuppressLint("NotifyDataSetChanged")
     fun setItem(list: ArrayList<HomeModel>) {
@@ -20,9 +22,12 @@ class HomeAdapter() : RecyclerView.Adapter<HomeAdapter.HomeAdapterViewModel>() {
     }
 
     inner class HomeAdapterViewModel(private val binding: RvHomeBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(items: HomeModel) {
+        fun bind(items: HomeModel, clickedListener: () -> Unit) {
             binding.apply {
 
+            }
+            binding.root.setOnClickListener {
+                clickedListener()
             }
         }
     }
@@ -37,6 +42,6 @@ class HomeAdapter() : RecyclerView.Adapter<HomeAdapter.HomeAdapterViewModel>() {
     }
 
     override fun onBindViewHolder(holder: HomeAdapterViewModel, position: Int) {
-        holder.bind(collections[position])
+        holder.bind(collections[position], clickedListener)
     }
 }

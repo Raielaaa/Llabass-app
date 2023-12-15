@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentExperimentsBinding
+import com.example.lab_ass_app.ui.Helper
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModel
 
@@ -26,7 +27,12 @@ class ExperimentsFragment : Fragment() {
             findNavController().navigate(R.id.action_experimentsFragment_to_homeFragment)
         }
 
-        val listItemsAdapter = HomeAdapter()
+        val listItemsAdapter = HomeAdapter {
+            Helper.displayCustomDialog(
+                this,
+                R.layout.selected_item_dialog
+            )
+        }
         listItemsAdapter.setItem(
             ArrayList(
                 listOf(
