@@ -14,6 +14,21 @@
     <string name="nav_drawer_status">Borrow Status</string>
     <string name="nav_drawer_privacy">Privacy Settings</string>
 
+    <!-- SelectedItemDialog -->
+    <string name="selected_item_title">PETRI DISH</string>
+    <string name="selected_item_category">Category</string>
+    <string name="selected_item_category_placeholder">Tools</string>
+    <string name="selected_item_status">Status: </string>
+    <string name="selected_item_status_placeholder">Available</string>
+    <string name="selected_item_scan">SCAN</string>
+    <string name="selected_item_small">S</string>
+    <string name="selected_item_medium">M</string>
+    <string name="selected_item_large">L</string>
+    <string name="selected_item_xlarge">XL</string>
+    <string name="selected_item_description">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent purus tortor, scelerisque quis mattis vel, feugiat sed est. Aenean fringilla purus ac est lobortis, a accumsan mauris blandit. Duis viverra, dui ac finibus imperdiet, ligula massa imperdiet nisi, maximus ultricies nunc diam in neque. Mauris varius ipsum eu elit mollis, a scelerisque massa pretium. Vivamus sodales, mauris aliquet euismod tincidunt, massa cursus turpis, sed efficitur dolor odio nec ligula.
+    </string>
+
     <!-- Account - Opening -->
     <string name="account_opening_header_1">LabAss: Elevating Your Borrowing Experience - Scan, Safeguard, Succeed!</string>
     <string name="account_opening_login">Log in</string>

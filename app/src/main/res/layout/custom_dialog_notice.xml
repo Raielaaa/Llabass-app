@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
         android:fontFamily="@font/poppins"
+        android:justificationMode="inter_word"
         android:text="@string/dialog_sign_up_body"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"

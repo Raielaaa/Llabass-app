@@ -109,6 +109,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:justificationMode="inter_word"
                 android:id="@+id/textView57"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -130,6 +131,7 @@
                 android:text="@string/privacy_policy_header_5" />
 
             <TextView
+                android:justificationMode="inter_word"
                 android:id="@+id/textView59"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
