@@ -188,14 +188,6 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/ivTakeQR"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/_12sdp"
-                android:src="@drawable/home_scan" />
-
-            <ImageView
                 android:id="@+id/btmDrawerUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
