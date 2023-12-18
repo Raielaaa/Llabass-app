@@ -30,8 +30,15 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(this@HomeFragment)[HomeViewModel::class.java]
 
         initClickableViews()
+        initUserType()
 
         return binding.root
+    }
+
+    private fun initUserType() {
+        binding.tvUserType.text = arguments?.getString("user_type")
+        //  SharedPref implementation to store the user type in the home page
+        TODO()
     }
 
     private fun initClickableViews() {

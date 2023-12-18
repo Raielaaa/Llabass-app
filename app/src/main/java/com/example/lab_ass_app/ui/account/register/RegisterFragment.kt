@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.text.color
+import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentRegisterBinding
 import com.example.lab_ass_app.ui.Helper
@@ -34,6 +35,10 @@ class RegisterFragment : Fragment() {
         binding.tvExistingAccount.text = SpannableStringBuilder()
             .append("Already have an account? ")
             .color(ContextCompat.getColor(requireContext(), R.color.Theme_color_main)) { append("LOGIN") }
+
+        binding.tvExistingAccount.setOnClickListener {
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+        }
     }
 
     private fun initClickableViews() {

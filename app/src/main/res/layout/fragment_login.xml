@@ -132,14 +132,14 @@
         android:paddingBottom="@dimen/_12sdp"
         android:textColorHint="@color/Theme.dark.gray"
         android:textSize="@dimen/_8ssp"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline3" />
 
     <Button
         android:layout_marginBottom="@dimen/_10sdp"
-        android:id="@+id/button3"
+        android:id="@+id/btnLogin"
         android:layout_width="0dp"
         android:layout_height="@dimen/_50sdp"
         android:fontFamily="@font/poppins"

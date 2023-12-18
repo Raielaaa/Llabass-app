@@ -10,7 +10,9 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.text.color
+import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentLoginBinding
 
@@ -26,14 +28,33 @@ class LoginFragment : Fragment() {
 
         initSpinner()
         initNoAccountTV()
+        initLoginButton()
 
         return binding.root
+    }
+
+    private fun initLoginButton() {
+        binding.apply {
+            btnLogin.setOnClickListener {
+                if (spUser.selectedItem == "ADMIN") {
+                    findNavController().navigate(R.id.action_loginFragment_to_homeAdminFragment2)
+                } else if (spUser.selectedItem == "STUDENT") {
+                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment, bundleOf(Pair("user_type", "STUDENT")))
+                } else if (spUser.selectedItem == "TEACHER") {
+                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment, bundleOf(Pair("user_type", "TEACHER")))
+                }
+            }
+        }
     }
 
     private fun initNoAccountTV() {
         binding.tvNoAccount.text = SpannableStringBuilder()
             .append("Don't have an account? ")
             .color(ContextCompat.getColor(requireContext(), R.color.Theme_color_main)) { append("REGISTER") }
+
+        binding.tvNoAccount.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        }
     }
 
     private fun initSpinner() {

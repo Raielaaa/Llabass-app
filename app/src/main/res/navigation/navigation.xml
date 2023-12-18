@@ -11,53 +11,19 @@
         android:label="fragment_account_opening"
         tools:layout="@layout/fragment_account_opening" >
         <action
-            android:id="@+id/action_accountOpeningFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:enterAnim="@anim/push_left_in"
-            app:exitAnim="@anim/push_left_out"
-            app:popEnterAnim="@anim/push_right_in"
-            app:popExitAnim="@anim/push_right_out" />
-        <action
             android:id="@+id/action_accountOpeningFragment_to_registerFragment"
             app:destination="@id/registerFragment"
             app:enterAnim="@anim/push_left_in"
             app:exitAnim="@anim/push_left_out"
             app:popEnterAnim="@anim/push_right_in"
             app:popExitAnim="@anim/push_right_out" />
-    </fragment>
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.lab_ass_app.ui.account.login.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_accountOpeningFragment"
-            app:destination="@id/accountOpeningFragment"
-            app:enterAnim="@anim/push_right_in"
-            app:exitAnim="@anim/push_right_out"
-            app:popEnterAnim="@anim/push_left_in"
-            app:popExitAnim="@anim/push_left_out" />
-        <action
-            android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment"
+            android:id="@+id/action_accountOpeningFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
             app:enterAnim="@anim/push_left_in"
             app:exitAnim="@anim/push_left_out"
             app:popEnterAnim="@anim/push_right_in"
             app:popExitAnim="@anim/push_right_out" />
-        <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:enterAnim="@anim/push_left_in"
-            app:exitAnim="@anim/push_left_out"
-            app:popEnterAnim="@anim/push_right_in"
-            app:popExitAnim="@anim/push_right_out" />
-        <action
-            android:id="@+id/action_loginFragment_to_homeAdminFragment"
-            app:destination="@id/homeAdminFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -67,13 +33,6 @@
         <action
             android:id="@+id/action_registerFragment_to_accountOpeningFragment"
             app:destination="@id/accountOpeningFragment" />
-        <action
-            android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:enterAnim="@anim/push_right_in"
-            app:exitAnim="@anim/push_right_out"
-            app:popEnterAnim="@anim/push_left_in"
-            app:popExitAnim="@anim/push_left_out" />
         <action
             android:id="@+id/action_registerFragment_to_termsOfServiceDialog"
             app:destination="@id/termsOfServiceDialog"
@@ -88,19 +47,19 @@
             app:exitAnim="@anim/push_left_out"
             app:popEnterAnim="@anim/push_right_in"
             app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.lab_ass_app.ui.main.student_teacher.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:enterAnim="@anim/push_right_in"
-            app:exitAnim="@anim/push_right_out"
-            app:popEnterAnim="@anim/push_left_in"
-            app:popExitAnim="@anim/push_left_out" />
         <action
             android:id="@+id/action_homeFragment_to_termsOfServiceDialog"
             app:destination="@id/termsOfServiceDialog"
@@ -149,6 +108,13 @@
         <action
             android:id="@+id/action_homeFragment_to_reportFragment"
             app:destination="@id/reportFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_homeFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
@@ -375,13 +341,6 @@
         android:label="fragment_home_admin"
         tools:layout="@layout/fragment_home_admin" >
         <action
-            android:id="@+id/action_homeAdminFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out" />
-        <action
             android:id="@+id/action_homeAdminFragment_to_adminReportFragment"
             app:destination="@id/adminReportFragment"
             app:enterAnim="@anim/fade_in"
@@ -409,6 +368,13 @@
             app:exitAnim="@anim/push_left_out"
             app:popEnterAnim="@anim/push_right_in"
             app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_homeAdminFragment_to_loginFragment2"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/adminProfileFragment"
@@ -498,6 +464,40 @@
         tools:layout="@layout/fragment_admin_report" >
         <action
             android:id="@+id/action_adminReportFragment_to_homeAdminFragment"
+            app:destination="@id/homeAdminFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.lab_ass_app.ui.account.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_accountOpeningFragment"
+            app:destination="@id/accountOpeningFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_in"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeAdminFragment2"
             app:destination="@id/homeAdminFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"

@@ -76,7 +76,7 @@
             android:paddingBottom="@dimen/_5sdp">
 
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/tvUserType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_1sdp"
