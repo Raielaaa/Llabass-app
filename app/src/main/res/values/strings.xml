@@ -273,4 +273,41 @@
     <string name="report_title">Report Title</string>
     <string name="report_description">Description</string>
     <string name="report_submit">SUBMIT REPORT</string>
+
+    <!-- Admin -->
+    <string name="admin_home_greet">Hello, Admin!</string>
+    <string name="admin_home_user_type">ADMIN</string>
+
+    <string name="admin_profile_refresh">REFRESH</string>
+    <string name="admin_profile_search">Search Student Number</string>
+    <string name="admin_profile_borrow_count">Borrow Count: </string>
+    <string name="admin_profile_borrow_count_placeholder">47</string>
+    <string name="admin_profile_borrow_info_header">Student Borrow Info</string>
+    <string name="admin_profile_item_title">PETRI DISH</string>
+    <string name="admin_profile_item_student_number">Student#: </string>
+    <string name="admin_profile_item_student_number_placeholder">94857</string>
+    <string name="admin_profile_item_borrow_date">Borrow Date: </string>
+    <string name="admin_profile_item_borrow_date_placeholder">01/25/24, 04:35:16 PM</string>
+    <string name="admin_profile_item_borrow_deadline">Borrow Deadline: </string>
+    <string name="admin_profile_item_borrow_deadline_placeholder">01/29/24, 04:35:16 PM</string>
+    <string name="admin_profile_item_borrow_return">Returned Date: </string>
+    <string name="admin_profile_item_borrow_return_placeholder">02/25/24, 04:35:16 PM</string>
+    <string name="admin_profile_item_remarks">Remarks: </string>
+    <string name="admin_profile_item_remarks_placeholder">NONE</string>
+    
+    <string name="admin_report_app_bar">REPORT</string>
+    <string name="admin_report_date">Updated as of November 30, 2023</string>
+    <string name="admin_report_refresh_button">REFRESH</string>
+    <string name="admin_report_report_date">December 05, 2023, 04:35:16 PM</string>
+    <string name="admin_report_title">Report Title</string>
+    <string name="admin_report_category">Category: </string>
+    <string name="admin_report_category_placeholder">Tools</string>
+    <string name="admin_report_name">Name: </string>
+    <string name="admin_report_name_placeholder">Tools/Chemical Name</string>
+    <string name="admin_report_item">Item#: </string>
+    <string name="admin_report_item_placeholder">82945</string>
+    <string name="admin_report_content">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent purus tortor, scelerisque quis mattis vel, feugiat sed est. Aenean fringilla purus ac est lobortis, a accumsan mauris blandit. Duis viverra, dui ac finibus imperdiet, ligula massa imperdiet nisi, maximus ultricies nunc diam in neque. Mauris varius ipsum eu elit mollis, a scelerisque massa pretium.
+    </string>
+    <string name="admin_report_mark">MARK AS RESOLVED?</string>
 </resources>
