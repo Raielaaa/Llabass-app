@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingBottom="@dimen/_15sdp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        app:cardElevation="0dp"
+        android:backgroundTint="@android:color/transparent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:paddingBottom="@dimen/_15sdp"
+            android:background="@drawable/rv_report_item_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline33"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.93" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline34"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.07" />
+
+            <TextView
+                android:textColor="@color/black"
+                android:id="@+id/textView112"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/poppins"
+                android:text="@string/admin_report_report_date"
+                android:textSize="@dimen/_8ssp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline33"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/guideline34"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:textColor="@color/black"
+                android:id="@+id/textView113"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/report_title"
+                android:textSize="@dimen/_16ssp"
+                app:layout_constraintStart_toStartOf="@+id/guideline34"
+                app:layout_constraintTop_toBottomOf="@+id/textView112" />
+
+            <TextView
+                android:textColor="@color/Theme.color.main"
+                android:fontFamily="@font/poppins_bold"
+                android:textStyle="bold"
+                android:textSize="@dimen/_8ssp"
+                android:id="@+id/textView114"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="@string/report_category"
+                app:layout_constraintStart_toStartOf="@+id/guideline34"
+                app:layout_constraintTop_toBottomOf="@+id/textView113" />
+
+            <TextView
+                android:textColor="@color/Theme.color.main"
+                android:fontFamily="@font/poppins_bold"
+                android:textStyle="bold"
+                android:textSize="@dimen/_8ssp"
+                android:id="@+id/textView115"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/report_name"
+                app:layout_constraintStart_toStartOf="@+id/guideline34"
+                app:layout_constraintTop_toBottomOf="@+id/textView114" />
+
+            <TextView
+                android:textColor="@color/Theme.color.main"
+                android:fontFamily="@font/poppins_bold"
+                android:textStyle="bold"
+                android:textSize="@dimen/_8ssp"
+                android:id="@+id/textView116"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/report_item_num"
+                app:layout_constraintStart_toStartOf="@+id/guideline34"
+                app:layout_constraintTop_toBottomOf="@+id/textView115" />
+
+            <TextView
+                android:textColor="@color/Theme.color.main"
+                android:fontFamily="@font/poppins_bold"
+                android:textStyle="bold"
+                android:textSize="@dimen/_8ssp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:id="@+id/textView117"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/report_category_placeholder"
+                app:layout_constraintBottom_toBottomOf="@+id/textView114"
+                app:layout_constraintStart_toEndOf="@+id/textView114"
+                app:layout_constraintTop_toTopOf="@+id/textView114" />
+
+            <TextView
+                android:textColor="@color/Theme.color.main"
+                android:fontFamily="@font/poppins_bold"
+                android:textStyle="bold"
+                android:textSize="@dimen/_8ssp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:id="@+id/textView118"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/report_name_placeholder"
+                app:layout_constraintBottom_toBottomOf="@+id/textView115"
+                app:layout_constraintStart_toEndOf="@+id/textView115"
+                app:layout_constraintTop_toTopOf="@+id/textView115" />
+
+            <TextView
+                android:textColor="@color/Theme.color.main"
+                android:fontFamily="@font/poppins_bold"
+                android:textStyle="bold"
+                android:textSize="@dimen/_8ssp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:id="@+id/textView119"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/report_item_num_placeholder"
+                app:layout_constraintBottom_toBottomOf="@+id/textView116"
+                app:layout_constraintStart_toEndOf="@+id/textView116"
+                app:layout_constraintTop_toTopOf="@+id/textView116" />
+
+            <TextView
+                android:layout_marginTop="@dimen/_20sdp"
+                android:id="@+id/textView120"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/admin_report_content"
+                android:fontFamily="@font/poppins"
+                android:textSize="@dimen/_8ssp"
+                android:justificationMode="inter_word"
+                app:layout_constraintEnd_toStartOf="@+id/guideline33"
+                app:layout_constraintStart_toStartOf="@+id/guideline34"
+                app:layout_constraintTop_toBottomOf="@+id/textView116" />
+
+            <Button
+                android:layout_marginTop="@dimen/_20sdp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/Theme.red"
+                android:fontFamily="@font/poppins_bold"
+                android:id="@+id/button6"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_35sdp"
+                android:text="@string/admin_report_mark"
+                app:layout_constraintEnd_toStartOf="@+id/guideline33"
+                app:layout_constraintTop_toBottomOf="@+id/textView120" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

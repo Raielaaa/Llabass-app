@@ -278,6 +278,7 @@
     <string name="admin_home_greet">Hello, Admin!</string>
     <string name="admin_home_user_type">ADMIN</string>
 
+    <string name="admin_profile_app_bar_text">USER BORROW STATUS</string>
     <string name="admin_profile_refresh">REFRESH</string>
     <string name="admin_profile_search">Search Student Number</string>
     <string name="admin_profile_borrow_count">Borrow Count: </string>
