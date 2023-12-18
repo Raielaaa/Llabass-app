@@ -51,6 +51,13 @@
             app:exitAnim="@anim/push_left_out"
             app:popEnterAnim="@anim/push_right_in"
             app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeAdminFragment"
+            app:destination="@id/homeAdminFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -357,6 +364,141 @@
         <action
             android:id="@+id/action_reportFragment_to_homeFragment"
             app:destination="@id/homeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeAdminFragment"
+        android:name="com.example.lab_ass_app.ui.main.admin.home.HomeAdminFragment"
+        android:label="fragment_home_admin"
+        tools:layout="@layout/fragment_home_admin" >
+        <action
+            android:id="@+id/action_homeAdminFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_homeAdminFragment_to_adminReportFragment"
+            app:destination="@id/adminReportFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_homeAdminFragment_to_adminListFragment"
+            app:destination="@id/adminListFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_homeAdminFragment_to_adminProfileFragment"
+            app:destination="@id/adminProfileFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_homeAdminFragment_to_adminPrivacyFragment"
+            app:destination="@id/adminPrivacyFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminProfileFragment"
+        android:name="com.example.lab_ass_app.ui.main.admin.profile.AdminProfileFragment"
+        android:label="fragment_admin_profile"
+        tools:layout="@layout/fragment_admin_profile" >
+        <action
+            android:id="@+id/action_adminProfileFragment_to_homeAdminFragment"
+            app:destination="@id/homeAdminFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
+        <action
+            android:id="@+id/action_adminProfileFragment_to_adminListFragment"
+            app:destination="@id/adminListFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
+        <action
+            android:id="@+id/action_adminProfileFragment_to_adminPrivacyFragment"
+            app:destination="@id/adminPrivacyFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminPrivacyFragment"
+        android:name="com.example.lab_ass_app.ui.main.admin.privacy.AdminPrivacyFragment"
+        android:label="fragment_admin_privacy"
+        tools:layout="@layout/fragment_admin_privacy" >
+        <action
+            android:id="@+id/action_adminPrivacyFragment_to_homeAdminFragment"
+            app:destination="@id/homeAdminFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
+        <action
+            android:id="@+id/action_adminPrivacyFragment_to_adminProfileFragment"
+            app:destination="@id/adminProfileFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
+        <action
+            android:id="@+id/action_adminPrivacyFragment_to_adminListFragment"
+            app:destination="@id/adminListFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminListFragment"
+        android:name="com.example.lab_ass_app.ui.main.admin.list.AdminListFragment"
+        android:label="fragment_admin_list"
+        tools:layout="@layout/fragment_admin_list" >
+        <action
+            android:id="@+id/action_adminListFragment_to_homeAdminFragment"
+            app:destination="@id/homeAdminFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
+        <action
+            android:id="@+id/action_adminListFragment_to_adminProfileFragment"
+            app:destination="@id/adminProfileFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_adminListFragment_to_adminPrivacyFragment"
+            app:destination="@id/adminPrivacyFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminReportFragment"
+        android:name="com.example.lab_ass_app.ui.main.admin.report.AdminReportFragment"
+        android:label="fragment_admin_report"
+        tools:layout="@layout/fragment_admin_report" >
+        <action
+            android:id="@+id/action_adminReportFragment_to_homeAdminFragment"
+            app:destination="@id/homeAdminFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
