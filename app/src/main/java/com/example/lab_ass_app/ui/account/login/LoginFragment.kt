@@ -1,16 +1,22 @@
 package com.example.lab_ass_app.ui.account.login
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.renderscript.ScriptGroup.Input
+import android.text.InputType
 import android.text.SpannableStringBuilder
+import android.text.method.PasswordTransformationMethod
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Spinner
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -42,8 +48,29 @@ class LoginFragment : Fragment() {
         initSpinner()
         initNoAccountTV()
         initLoginButton()
+        initPasswordVisibility()
 
         return binding.root
+    }
+
+    private fun initPasswordVisibility() {
+        binding.apply {
+            textInputLayoutPassword.setEndIconOnClickListener {
+                val passwordType = tilPassword.inputType
+
+                if (passwordType and InputType.TYPE_TEXT_VARIATION_PASSWORD != 0) {
+                    // Password input type (visible or not visible)
+                    tilPassword.inputType = InputType.TYPE_CLASS_TEXT
+                    tilPassword.transformationMethod = null
+                    textInputLayoutPassword.setEndIconDrawable(R.drawable.account_show_password_resize)
+                } else {
+                    // Other input types (not password)
+                    tilPassword.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    tilPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+                    textInputLayoutPassword.setEndIconDrawable(R.drawable.account_hide_password_resize)
+                }
+            }
+        }
     }
 
     private fun initLoginButton() {
