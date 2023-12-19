@@ -1,5 +1,8 @@
 package com.example.lab_ass_app.ui.account.login
 
+import android.content.Context
+import android.content.SharedPreferences
+import android.content.SharedPreferences.Editor
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.text.SpannableStringBuilder
@@ -17,14 +20,24 @@ import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
+    //  General
     private lateinit var viewModel: LoginViewModel
     private lateinit var binding: FragmentLoginBinding
+
+    //  SharedPref
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var editor: Editor
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // Init General
         binding = FragmentLoginBinding.inflate(inflater, container, false)
+
+        //  Init SharedPref
+        sharedPreferences = requireActivity().getSharedPreferences("UserType_Pref", Context.MODE_PRIVATE)
+        editor = sharedPreferences.edit()
 
         initSpinner()
         initNoAccountTV()
@@ -36,12 +49,21 @@ class LoginFragment : Fragment() {
     private fun initLoginButton() {
         binding.apply {
             btnLogin.setOnClickListener {
-                if (spUser.selectedItem == "ADMIN") {
-                    findNavController().navigate(R.id.action_loginFragment_to_homeAdminFragment2)
-                } else if (spUser.selectedItem == "STUDENT") {
-                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment, bundleOf(Pair("user_type", "STUDENT")))
-                } else if (spUser.selectedItem == "TEACHER") {
-                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment, bundleOf(Pair("user_type", "TEACHER")))
+                when (spUser.selectedItem) {
+                    "ADMIN" -> {
+                        findNavController().navigate(R.id.action_loginFragment_to_homeAdminFragment2)
+                    }
+                    "STUDENT" -> {
+                        findNavController().navigate(R.id.action_loginFragment_to_homeFragment, bundleOf(Pair("user_type", "STUDENT")))
+                    }
+                    "TEACHER" -> {
+                        findNavController().navigate(R.id.action_loginFragment_to_homeFragment, bundleOf(Pair("user_type", "TEACHER")))
+                    }
+                }
+
+                editor.apply {
+                    putString("user_type", spUser.selectedItem.toString())
+                    commit()
                 }
             }
         }

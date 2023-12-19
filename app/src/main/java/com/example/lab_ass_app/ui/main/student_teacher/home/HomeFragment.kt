@@ -1,5 +1,7 @@
 package com.example.lab_ass_app.ui.main.student_teacher.home
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -19,15 +21,25 @@ import com.example.lab_ass_app.ui.main.student_teacher.home.see_all.SeeAllDialog
 import com.google.android.material.navigation.NavigationView
 
 class HomeFragment : Fragment() {
+    //  Binding and ViewModel
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: HomeViewModel
+
+    //  SharedPref
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        //  Binding and ViewModel
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this@HomeFragment)[HomeViewModel::class.java]
+
+        //  Init sharedPref
+        sharedPreferences = requireActivity().getSharedPreferences("UserType_Pref", Context.MODE_PRIVATE)
+        editor = sharedPreferences.edit()
 
         initClickableViews()
         initUserType()
@@ -36,9 +48,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initUserType() {
-        binding.tvUserType.text = arguments?.getString("user_type")
-        //  SharedPref implementation to store the user type in the home page
-        TODO()
+        binding.tvUserType.text = sharedPreferences.getString("user_type", "USER")
     }
 
     private fun initClickableViews() {
