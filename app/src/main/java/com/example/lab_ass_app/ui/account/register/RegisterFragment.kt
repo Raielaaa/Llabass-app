@@ -29,6 +29,7 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        registerViewModel = ViewModelProvider(this@RegisterFragment)[RegisterViewModel::class.java]
 
         displayDialog()
         initClickableViews()
@@ -41,6 +42,15 @@ class RegisterFragment : Fragment() {
     }
 
     private fun initSignUpButton() {
+        binding.apply {
+            registerViewModel.signUpUser(
+                etLRN,
+                etEmail,
+                tilPassword,
+                tilConfirmPassword,
+                this@RegisterFragment
+            )
+        }
     }
 
     private fun initPasswordVisibility() {
