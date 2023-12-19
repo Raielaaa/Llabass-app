@@ -19,9 +19,10 @@ import com.example.lab_ass_app.databinding.FragmentRegisterBinding
 import com.example.lab_ass_app.ui.Helper
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 
-@HiltAndroidApp
+@AndroidEntryPoint
 class RegisterFragment : Fragment() {
     private lateinit var registerViewModel: RegisterViewModel
     private lateinit var binding: FragmentRegisterBinding

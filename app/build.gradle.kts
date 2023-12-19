@@ -7,6 +7,7 @@ plugins {
 
     //  Dagger and Hilt
     id("dagger.hilt.android.plugin")
+    id("kotlin-kapt")
 
     //  Add the Google services Gradle plugin
     id("com.google.gms.google-services")
