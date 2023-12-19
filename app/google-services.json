@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1083361619771",
+    "project_id": "labass-app",
+    "storage_bucket": "labass-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083361619771:android:37cd99361a9d3c70c8911e",
+        "android_client_info": {
+          "package_name": "com.example.lab_ass_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083361619771-rkhs8erdfff1ccm2ifoboeiukt6qvt6a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lab_ass_app",
+            "certificate_hash": "371409ea204f0e6bea1f4ac1d6006c7d6d6de346"
+          }
+        },
+        {
+          "client_id": "1083361619771-elfj7rq7jriqas2og1kstt4o0je4u2tc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTu-jf-_HpGWt9JLJMI7Wjid43DAyMozQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083361619771-elfj7rq7jriqas2og1kstt4o0je4u2tc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

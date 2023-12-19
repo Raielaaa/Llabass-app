@@ -8,8 +8,8 @@ plugins {
     //  Dagger and Hilt
     id("dagger.hilt.android.plugin")
 
-//    //  Add the Google services Gradle plugin
-//    id("com.google.gms.google-services")
+    //  Add the Google services Gradle plugin
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -84,18 +84,18 @@ dependencies {
     //  Justify TextView
     implementation("com.uncopt:android.justified:1.0")
 
-//    //  Firebase BoM
-//    implementation(platform("com.google.firebase:firebase-bom:32.4.0"))
-//
-//    //  Firebase Authentication
-//    implementation("com.google.firebase:firebase-auth-ktx")
-//
-//    //  Firebase FireStore
-//    implementation("com.google.firebase:firebase-firestore-ktx")
-//
-//    //  Firebase Cloud Storage
-//    implementation("com.google.firebase:firebase-storage-ktx")
-//
-//    //  Google Play services authentication library
-//    implementation("com.google.android.gms:play-services-auth:20.7.0")
+    //  Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:32.4.0"))
+
+    //  Firebase Authentication
+    implementation("com.google.firebase:firebase-auth-ktx")
+
+    //  Firebase FireStore
+    implementation("com.google.firebase:firebase-firestore-ktx")
+
+    //  Firebase Cloud Storage
+    implementation("com.google.firebase:firebase-storage-ktx")
+
+    //  Google Play services authentication library
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
 }

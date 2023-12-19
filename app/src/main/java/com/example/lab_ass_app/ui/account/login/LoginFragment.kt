@@ -1,22 +1,17 @@
 package com.example.lab_ass_app.ui.account.login
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.renderscript.ScriptGroup.Input
 import android.text.InputType
 import android.text.SpannableStringBuilder
 import android.text.method.PasswordTransformationMethod
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.EditText
 import android.widget.Spinner
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
