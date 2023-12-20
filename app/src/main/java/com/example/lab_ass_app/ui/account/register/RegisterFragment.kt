@@ -35,7 +35,6 @@ class RegisterFragment : Fragment() {
         registerViewModel = ViewModelProvider(this@RegisterFragment)[RegisterViewModel::class.java]
 
         displayDialog()
-        initClickableViews()
         initExistingAccountTV()
         initSpinner()
         initPasswordVisibility()
@@ -46,13 +45,17 @@ class RegisterFragment : Fragment() {
 
     private fun initSignUpButton() {
         binding.apply {
-            registerViewModel.signUpUser(
-                etLRN,
-                etEmail,
-                tilPassword,
-                tilConfirmPassword,
-                this@RegisterFragment
-            )
+            btnSignUp.setOnClickListener {
+                registerViewModel.validateEntries(
+                    etLRN,
+                    etEmail,
+                    tilPassword,
+                    tilConfirmPassword,
+                    this@RegisterFragment,
+                    registerViewModel,
+                    binding
+                )
+            }
         }
     }
 
@@ -68,6 +71,7 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    //  Function for switching password type
     private fun iniTextInputEditText(
         textInputEditText: TextInputEditText,
         textInputLayout: TextInputLayout
@@ -107,14 +111,6 @@ class RegisterFragment : Fragment() {
 
         binding.tvExistingAccount.setOnClickListener {
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
-        }
-    }
-
-    private fun initClickableViews() {
-        binding.apply {
-            btnSignUp.setOnClickListener {
-                TermsOfServiceDialog(this@RegisterFragment).show(parentFragmentManager, "Register_BottomDialog")
-            }
         }
     }
 

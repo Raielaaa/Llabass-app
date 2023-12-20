@@ -7,6 +7,9 @@
     <string name="dialog_sign_up_header">Sign up notice</string>
     <string name="dialog_sign_up_body">For sign-up using Google and Facebook, only the Learner Reference Number is required.</string>
     <string name="dialog_sign_up_ok">OK</string>
+    
+    <string name="dialog_loading_header">Please wait</string>
+    <string name="dialog_loading_content">Establishing a secure connection with our servers . . .</string>
 
     <string name="nav_drawer_title">LabAss</string>
     <string name="nav_drawer_dashboard">Dashboard</string>

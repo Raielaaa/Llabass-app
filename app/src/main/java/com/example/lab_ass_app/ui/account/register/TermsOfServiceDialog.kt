@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.example.lab_ass_app.R
+import android.widget.Toast
+import com.example.lab_ass_app.databinding.FragmentRegisterBinding
 import com.example.lab_ass_app.databinding.FragmentRegisterTermsOfServiceBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class TermsOfServiceDialog(
-    private val hostFragment: Fragment
+    private val hostFragment: RegisterFragment,
+    private val registerViewModel: RegisterViewModel,
+    private val registerBinding: FragmentRegisterBinding
 ) : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentRegisterTermsOfServiceBinding
 
@@ -22,8 +23,26 @@ class TermsOfServiceDialog(
     ): View {
         binding = FragmentRegisterTermsOfServiceBinding.inflate(inflater, container, false)
 
+        //  Inserting values to Firebase FireStore
         binding.btnAccept.setOnClickListener {
-            hostFragment.findNavController().navigate(R.id.action_registerFragment_to_homeFragment)
+            registerViewModel.insertDataToAuth(
+                registerBinding.etLRN.text.toString(),
+                registerBinding.etEmail.text.toString(),
+                registerBinding.tilPassword.text.toString(),
+                registerBinding.spUserRegister.selectedItem.toString(),
+                hostFragment
+            )
+
+            this.dismiss()
+        }
+
+        binding.btnDecline.setOnClickListener {
+            Toast.makeText(
+                hostFragment.requireContext(),
+                "Acceptance of terms and conditions is required to proceed.",
+                Toast.LENGTH_LONG
+            ).show()
+
             this.dismiss()
         }
 
