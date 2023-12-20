@@ -16,16 +16,20 @@ import android.widget.Spinner
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.text.color
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentLoginBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
-    //  General
-    private lateinit var viewModel: LoginViewModel
+
+    // ViewModel and View Binding
+    private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: FragmentLoginBinding
 
-    //  SharedPref
+    // SharedPreferences for User Type
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor: Editor
 
@@ -33,21 +37,24 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Init General
+        // Initialize ViewModel and View Binding
         binding = FragmentLoginBinding.inflate(inflater, container, false)
+        loginViewModel = ViewModelProvider(this@LoginFragment)[LoginViewModel::class.java]
 
-        //  Init SharedPref
+        // Initialize SharedPreferences for User Type
         sharedPreferences = requireActivity().getSharedPreferences("UserType_Pref", Context.MODE_PRIVATE)
         editor = sharedPreferences.edit()
 
+        // Initialize UI elements and listeners
         initSpinner()
-        initNoAccountTV()
+        initNoAccountTextView()
         initLoginButton()
         initPasswordVisibility()
 
         return binding.root
     }
 
+    // Initialize the password visibility toggle
     private fun initPasswordVisibility() {
         binding.apply {
             textInputLayoutPassword.setEndIconOnClickListener {
@@ -68,30 +75,23 @@ class LoginFragment : Fragment() {
         }
     }
 
+    // Initialize the login button and trigger the login process
     private fun initLoginButton() {
         binding.apply {
             btnLogin.setOnClickListener {
-                when (spUser.selectedItem) {
-                    "ADMIN" -> {
-                        findNavController().navigate(R.id.action_loginFragment_to_homeAdminFragment2)
-                    }
-                    "STUDENT" -> {
-                        findNavController().navigate(R.id.action_loginFragment_to_homeFragment, bundleOf(Pair("user_type", "STUDENT")))
-                    }
-                    "TEACHER" -> {
-                        findNavController().navigate(R.id.action_loginFragment_to_homeFragment, bundleOf(Pair("user_type", "TEACHER")))
-                    }
-                }
-
-                editor.apply {
-                    putString("user_type", spUser.selectedItem.toString())
-                    commit()
-                }
+                loginViewModel.loginUsingFirebase(
+                    etEmail,
+                    tilPassword,
+                    spUser.selectedItem.toString(),
+                    this@LoginFragment,
+                    editor
+                )
             }
         }
     }
 
-    private fun initNoAccountTV() {
+    // Initialize the "No Account" TextView and navigate to the registration screen
+    private fun initNoAccountTextView() {
         binding.tvNoAccount.text = SpannableStringBuilder()
             .append("Don't have an account? ")
             .color(ContextCompat.getColor(requireContext(), R.color.Theme_color_main)) { append("REGISTER") }
@@ -101,6 +101,7 @@ class LoginFragment : Fragment() {
         }
     }
 
+    // Initialize the user type spinner
     private fun initSpinner() {
         binding.apply {
             val spinner: Spinner = spUser

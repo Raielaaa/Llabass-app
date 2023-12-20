@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentExperimentsBinding
-import com.example.lab_ass_app.ui.Helper
+import com.example.lab_ass_app.utils.Helper
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModel
 

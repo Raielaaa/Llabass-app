@@ -1,7 +1,7 @@
 package com.example.lab_ass_app.di
 
 import android.content.Context
-import com.example.lab_ass_app.Constants
+import com.example.lab_ass_app.utils.Constants
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth

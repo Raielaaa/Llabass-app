@@ -1,4 +1,4 @@
-package com.example.lab_ass_app.ui
+package com.example.lab_ass_app.utils
 
 import android.app.Activity
 import android.app.Dialog

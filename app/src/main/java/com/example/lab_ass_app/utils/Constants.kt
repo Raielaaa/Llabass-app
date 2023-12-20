@@ -1,4 +1,4 @@
-package com.example.lab_ass_app
+package com.example.lab_ass_app.utils
 
 class Constants {
     companion object {

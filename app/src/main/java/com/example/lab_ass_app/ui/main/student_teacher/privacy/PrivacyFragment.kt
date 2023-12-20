@@ -10,7 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentPrivacyBinding
-import com.example.lab_ass_app.ui.Helper
+import com.example.lab_ass_app.utils.Helper
 import com.google.android.material.navigation.NavigationView
 
 class PrivacyFragment : Fragment() {

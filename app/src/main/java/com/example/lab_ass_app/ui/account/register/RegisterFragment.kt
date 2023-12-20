@@ -16,14 +16,15 @@ import androidx.core.text.color
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentRegisterBinding
-import com.example.lab_ass_app.ui.Helper
+import com.example.lab_ass_app.utils.Helper
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
+
+    // ViewModel and View Binding
     private lateinit var registerViewModel: RegisterViewModel
     private lateinit var binding: FragmentRegisterBinding
 
@@ -31,11 +32,15 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // Initialize ViewModel and View Binding
         binding = FragmentRegisterBinding.inflate(inflater, container, false)
         registerViewModel = ViewModelProvider(this@RegisterFragment)[RegisterViewModel::class.java]
 
+        // Display a notice dialog during registration
         displayDialog()
-        initExistingAccountTV()
+
+        // Initialize UI elements and listeners
+        initExistingAccountTextView()
         initSpinner()
         initPasswordVisibility()
         initSignUpButton()
@@ -43,6 +48,7 @@ class RegisterFragment : Fragment() {
         return binding.root
     }
 
+    // Initialize the sign-up button and trigger the registration process
     private fun initSignUpButton() {
         binding.apply {
             btnSignUp.setOnClickListener {
@@ -59,20 +65,21 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    // Initialize the password visibility toggle
     private fun initPasswordVisibility() {
         binding.apply {
             textInputLayoutPassword.setEndIconOnClickListener {
-                iniTextInputEditText(tilPassword, textInputLayoutPassword)
+                togglePasswordVisibility(tilPassword, textInputLayoutPassword)
             }
 
             textInputLayoutConfirmPassword.setEndIconOnClickListener {
-                iniTextInputEditText(tilConfirmPassword, textInputLayoutConfirmPassword)
+                togglePasswordVisibility(tilConfirmPassword, textInputLayoutConfirmPassword)
             }
         }
     }
 
-    //  Function for switching password type
-    private fun iniTextInputEditText(
+    // Function for switching password visibility
+    private fun togglePasswordVisibility(
         textInputEditText: TextInputEditText,
         textInputLayout: TextInputLayout
     ) {
@@ -91,6 +98,7 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    // Initialize the user type spinner
     private fun initSpinner() {
         binding.apply {
             val spinner: Spinner = spUserRegister
@@ -104,7 +112,8 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun initExistingAccountTV() {
+    // Initialize the "Existing Account" TextView and navigate to the login screen
+    private fun initExistingAccountTextView() {
         binding.tvExistingAccount.text = SpannableStringBuilder()
             .append("Already have an account? ")
             .color(ContextCompat.getColor(requireContext(), R.color.Theme_color_main)) { append("LOGIN") }
@@ -114,6 +123,7 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    // Display a notice dialog during registration
     private fun displayDialog() {
         Helper.displayCustomDialog(
             this@RegisterFragment,

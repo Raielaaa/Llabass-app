@@ -14,6 +14,8 @@ class TermsOfServiceDialog(
     private val registerViewModel: RegisterViewModel,
     private val registerBinding: FragmentRegisterBinding
 ) : BottomSheetDialogFragment() {
+
+    // View Binding
     private lateinit var binding: FragmentRegisterTermsOfServiceBinding
 
     override fun onCreateView(
@@ -21,31 +23,45 @@ class TermsOfServiceDialog(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // Inflate the layout for this fragment
         binding = FragmentRegisterTermsOfServiceBinding.inflate(inflater, container, false)
 
-        //  Inserting values to Firebase FireStore
-        binding.btnAccept.setOnClickListener {
-            registerViewModel.insertDataToAuth(
-                registerBinding.etLRN.text.toString(),
-                registerBinding.etEmail.text.toString(),
-                registerBinding.tilPassword.text.toString(),
-                registerBinding.spUserRegister.selectedItem.toString(),
-                hostFragment
-            )
-
-            this.dismiss()
-        }
-
-        binding.btnDecline.setOnClickListener {
-            Toast.makeText(
-                hostFragment.requireContext(),
-                "Acceptance of terms and conditions is required to proceed.",
-                Toast.LENGTH_LONG
-            ).show()
-
-            this.dismiss()
-        }
+        // Set up click listeners for accept and decline buttons
+        setupButtonListeners()
 
         return binding.root
+    }
+
+    // Set up click listeners for accept and decline buttons
+    private fun setupButtonListeners() {
+        binding.apply {
+            // Accept button click listener
+            btnAccept.setOnClickListener {
+                // Insert user data to Firebase FireStore and navigate to the next screen
+                registerViewModel.insertDataToAuth(
+                    registerBinding.etLRN.text.toString(),
+                    registerBinding.etEmail.text.toString(),
+                    registerBinding.tilPassword.text.toString(),
+                    registerBinding.spUserRegister.selectedItem.toString(),
+                    hostFragment
+                )
+
+                // Dismiss the dialog
+                this@TermsOfServiceDialog.dismiss()
+            }
+
+            // Decline button click listener
+            btnDecline.setOnClickListener {
+                // Show a toast message indicating that acceptance is required
+                Toast.makeText(
+                    hostFragment.requireContext(),
+                    "Acceptance of terms and conditions is required to proceed.",
+                    Toast.LENGTH_LONG
+                ).show()
+
+                // Dismiss the dialog
+                this@TermsOfServiceDialog.dismiss()
+            }
+        }
     }
 }
