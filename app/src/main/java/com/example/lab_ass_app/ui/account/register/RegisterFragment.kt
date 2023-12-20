@@ -1,7 +1,11 @@
 package com.example.lab_ass_app.ui.account.register
 
+import android.content.Context
+import android.content.SharedPreferences
+import android.content.SharedPreferences.Editor
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.os.Message
 import android.text.InputType
 import android.text.SpannableStringBuilder
 import android.text.method.PasswordTransformationMethod
@@ -11,18 +15,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.text.color
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentRegisterBinding
+import com.example.lab_ass_app.ui.account.register.google_facebook.GoogleDataModel
+import com.example.lab_ass_app.ui.account.register.google_facebook.TermsOfServiceDialogFacebook
+import com.example.lab_ass_app.ui.account.register.google_facebook.TermsOfServiceDialogGoogle
 import com.example.lab_ass_app.utils.Helper
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegisterFragment : Fragment() {
+class RegisterFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+    //  SharedPref variable
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var editor: Editor
 
     // ViewModel and View Binding
     private lateinit var registerViewModel: RegisterViewModel
@@ -35,6 +46,11 @@ class RegisterFragment : Fragment() {
         // Initialize ViewModel and View Binding
         binding = FragmentRegisterBinding.inflate(inflater, container, false)
         registerViewModel = ViewModelProvider(this@RegisterFragment)[RegisterViewModel::class.java]
+
+        //  Initialize SharedPref
+        sharedPreferences = requireActivity().getSharedPreferences("GoogleSignIn", Context.MODE_PRIVATE)
+        editor = sharedPreferences.edit()
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this@RegisterFragment)
 
         // Display a notice dialog during registration
         displayDialog()
@@ -62,7 +78,30 @@ class RegisterFragment : Fragment() {
                     binding
                 )
             }
+            ivGoogle.setOnClickListener {
+                if (etLRN.text.toString().isNotEmpty()) {
+                    TermsOfServiceDialogGoogle(this@RegisterFragment).show(parentFragmentManager, "Register_BottomDialog_Google")
+                } else {
+                    displayToastMessage("Error: Please provide your LRN for Google/Facebook sign-up.")
+                }
+            }
+            ivFacebook.setOnClickListener {
+                if (etLRN.text.toString().isNotEmpty()) {
+                    TermsOfServiceDialogFacebook(this@RegisterFragment).show(parentFragmentManager, "Register_BottomDialog_Facebook")
+                } else {
+                    displayToastMessage("Error: Please provide your LRN for Google/Facebook sign-up.")
+                }
+            }
         }
+    }
+
+    //  Display Toast message
+    private fun displayToastMessage(message: String) {
+        Toast.makeText(
+            requireContext(),
+            message,
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     // Initialize the password visibility toggle
@@ -126,8 +165,25 @@ class RegisterFragment : Fragment() {
     // Display a notice dialog during registration
     private fun displayDialog() {
         Helper.displayCustomDialog(
-            this@RegisterFragment,
+            requireActivity(),
             R.layout.custom_dialog_notice
         )
+    }
+
+    override fun onSharedPreferenceChanged(sharedPref: SharedPreferences?, key: String?) {
+        if (key == "booleanKeyGoogle") {
+            Helper.displayCustomDialog(
+                requireActivity(),
+                R.layout.custom_dialog_loading
+            )
+            registerViewModel.signInUsingGoogle(requireActivity())
+
+            binding.apply {
+                Helper.setUserTypeAndLRNForGoogleSignIn(
+                    etLRN.text.toString(),
+                    spUserRegister.selectedItem.toString()
+                )
+            }
+        }
     }
 }

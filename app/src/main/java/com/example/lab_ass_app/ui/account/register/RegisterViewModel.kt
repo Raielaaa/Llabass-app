@@ -1,5 +1,6 @@
 package com.example.lab_ass_app.ui.account.register
 
+import android.app.Activity
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
@@ -9,7 +10,9 @@ import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentRegisterBinding
 import com.example.lab_ass_app.utils.Helper
-import com.example.lab_ass_app.ui.account.register.UserAccountInitial.UserAccountInitialModel
+import com.example.lab_ass_app.ui.account.register.user_account_initial.UserAccountInitialModel
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -22,9 +25,10 @@ class RegisterViewModel @Inject constructor(
     @Named("FirebaseAuth.Instance")
     val firebaseAuth: FirebaseAuth,
     @Named("FirebaseFireStore.Instance")
-    val firebaseFireStore: FirebaseFirestore
+    val firebaseFireStore: FirebaseFirestore,
+    @Named("GoogleSignInClient.Instance")
+    val googleSignInClient: GoogleSignInClient
 ) : ViewModel() {
-
     // Function for displaying toast messages on the screen
     private fun displayToastMessage(message: String, registerFragment: RegisterFragment) {
         Toast.makeText(
@@ -44,7 +48,7 @@ class RegisterViewModel @Inject constructor(
     ) {
         // Display loading dialog
         Helper.displayCustomDialog(
-            registerFragment,
+            registerFragment.requireActivity(),
             R.layout.custom_dialog_loading
         )
 
@@ -128,5 +132,10 @@ class RegisterViewModel @Inject constructor(
             // Displays if there is an empty field
             displayToastMessage("All fields are required", registerFragment)
         }
+    }
+
+    fun signInUsingGoogle(activity: Activity) {
+        val signInIntent = googleSignInClient.signInIntent
+        activity.startActivityForResult(signInIntent, Constants.GOOGLE_SIGN_IN)
     }
 }

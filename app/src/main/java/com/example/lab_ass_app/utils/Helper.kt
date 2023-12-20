@@ -35,24 +35,21 @@ object Helper {
     private var dialog: Dialog? = null
     val TAG: String = "MyTag"
 
-    //  CONSTANTS
-    const val CAMERA_PERMISSION_CODE: Int = 1
-
     fun displayCustomDialog(
-        hostFragment: Fragment,
+        activity: Activity,
         layoutDialog: Int,
         minWidthPercentage: Float = 0.75f
     ) {
         try {
-            if (!hostFragment.requireActivity().isFinishing) {
-                dialog = Dialog(hostFragment.requireActivity())
+            if (!activity.isFinishing) {
+                dialog = Dialog(activity)
 
                 dialog?.apply {
                     setContentView(layoutDialog)
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         window!!.setBackgroundDrawable(ResourcesCompat.getDrawable(
-                            hostFragment.requireActivity().resources,
+                            activity.resources,
                             R.drawable.custom_dialog_bg,
                             null))
                     }
@@ -61,7 +58,7 @@ object Helper {
                     window!!.attributes.windowAnimations = R.style.animation
 
                     // Calculate the minWidth in pixels based on the percentage of the screen width
-                    val screenWidth = getScreenWidth(hostFragment.requireActivity())
+                    val screenWidth = getScreenWidth(activity)
                     val minWidth = (screenWidth * minWidthPercentage).toInt()
 
                     dialog?.findViewById<ConstraintLayout>(R.id.clMain)?.minWidth = minWidth
@@ -75,7 +72,7 @@ object Helper {
         } catch (err: Exception) {
             Log.e(TAG, "displayCustomDialog: ${err.message}")
             displayToastMessage(
-                hostFragment.requireContext(),
+                activity,
                 "Error: ${err.localizedMessage}"
             )
         }
@@ -87,7 +84,7 @@ object Helper {
         } catch (err: Exception) {
             Log.e(TAG, "displayCustomDialog: ${err.message}")
             displayToastMessage(
-                hostFragment.requireContext(),
+                activity,
                 "Error: ${err.localizedMessage}"
             )
         }
@@ -149,5 +146,16 @@ object Helper {
             displayToastMessage(activity, err.localizedMessage)
             Log.e(TAG, "takeImage: ${err.message}", )
         }
+    }
+
+    var lrn: String = ""
+    var userType: String = ""
+
+    fun setUserTypeAndLRNForGoogleSignIn(
+        lrn: String,
+        userType: String
+    ) {
+        this.lrn = lrn
+        this.userType = userType
     }
 }

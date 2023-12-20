@@ -36,7 +36,7 @@ class ProfileFragment : Fragment() {
     private fun initRV() {
         val listItemsAdapter = HomeAdapter {
             Helper.displayCustomDialog(
-                this,
+                requireActivity(),
                 R.layout.selected_item_dialog
             )
         }

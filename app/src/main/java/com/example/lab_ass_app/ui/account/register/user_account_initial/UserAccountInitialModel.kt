@@ -1,4 +1,4 @@
-package com.example.lab_ass_app.ui.account.register.UserAccountInitial
+package com.example.lab_ass_app.ui.account.register.user_account_initial
 
 data class UserAccountInitialModel(
     val userIDModel: String,

@@ -70,7 +70,7 @@ class HomeFragment : Fragment() {
     private fun initListItemRV() {
         val listItemsAdapter = HomeAdapter {
             Helper.displayCustomDialog(
-                this@HomeFragment,
+                requireActivity(),
                 R.layout.selected_item_dialog
             )
         }
@@ -114,7 +114,7 @@ class HomeFragment : Fragment() {
     private fun initSeeAllButton() {
         val seeAllAdapter = HomeAdapter {
             Helper.displayCustomDialog(
-                this@HomeFragment,
+                requireActivity(),
                 R.layout.selected_item_dialog
             )
         }

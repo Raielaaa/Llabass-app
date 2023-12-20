@@ -1,26 +1,47 @@
 package com.example.lab_ass_app
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.example.lab_ass_app.databinding.ActivityMainBinding
+import com.example.lab_ass_app.ui.account.register.google_facebook.GoogleDataModel
+import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.Helper
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Named
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    //  Firebase auth
+    @Inject
+    @Named("FirebaseAuth.Instance")
+    lateinit var firebaseAuth: FirebaseAuth
+
+    //  Firebase fireStore
+    @Inject
+    @Named("FirebaseFireStore.Instance")
+    lateinit var firebaseFireStore: FirebaseFirestore
 
     // View Binding and NavController
     private lateinit var binding: ActivityMainBinding
@@ -94,12 +115,12 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
     }
 
-    // Handle result from QR code scanner
+    // Handle result from Google/Facebook sign-in and QR code scanner
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == Helper.CAMERA_PERMISSION_CODE) {
+        if (requestCode == Constants.CAMERA_PERMISSION_CODE) {
             val extras: Bundle? = data?.extras
 
             try {
@@ -118,6 +139,65 @@ class MainActivity : AppCompatActivity() {
                 return
             }
         }
+
+        if (requestCode == Constants.GOOGLE_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                firebaseAuthWithGoogle(account.idToken!!)
+            } catch (exception: Exception) {
+                Helper.dismissDialog()
+                endTaskNotify(exception)
+            }
+        }
+    }
+
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+
+        firebaseAuth.signInWithCredential(credential)
+            .addOnCompleteListener(this@MainActivity) { task ->
+                if (task.isSuccessful) {
+                    //  Displaying the current user
+                    val user = firebaseAuth.currentUser
+                    displayToastMessage("Signed in as ${user?.displayName}")
+
+                    //  Insert data from Google sign-in to FIreStore
+                    val dataToBeInserted = GoogleDataModel(
+                        user!!.email!!,
+                        user.uid,
+                        Helper.lrn,
+                        Helper.userType
+                    )
+                    val userID = task.result.user!!.uid
+                    insertGoogleDataToFireStore(userID, dataToBeInserted)
+                } else {
+                    displayToastMessage("Authentication failed")
+                    Helper.dismissDialog()
+                }
+            }
+    }
+
+    private fun insertGoogleDataToFireStore(userID: String, data: GoogleDataModel) {
+        firebaseFireStore.collection("labass-app-user-account-initial")
+            .document(userID)
+            .set(data)
+            .addOnSuccessListener {
+                displayToastMessage("Google sign-in successful")
+                navController.navigate(R.id.action_registerFragment_to_homeFragment)
+                Helper.dismissDialog()
+            }.addOnFailureListener { exception ->
+                Helper.dismissDialog()
+                endTaskNotify(exception)
+            }
+    }
+
+    // Function to handle the end of tasks and notify the user about errors
+    private fun endTaskNotify(exception: Exception) {
+        // Display an error message, log the exception, and dismiss the loading dialog
+        displayToastMessage("Error: ${exception.localizedMessage}")
+        Log.e(Constants.TAG, "isCredentialsWithUserTypeExist: ${exception.message}")
+        Helper.dismissDialog()
     }
 
     // Display toast message

@@ -56,7 +56,7 @@ class LoginViewModel @Inject constructor(
         editor: Editor
     ) {
         // Display a loading dialog during the validation process
-        Helper.displayCustomDialog(hostFragment, R.layout.custom_dialog_loading)
+        Helper.displayCustomDialog(hostFragment.requireActivity(), R.layout.custom_dialog_loading)
         try {
             // Query FireStore to check if the account exists
             firebaseFireStore.collection("labass-app-user-account-initial")
@@ -99,27 +99,32 @@ class LoginViewModel @Inject constructor(
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // Navigate to the appropriate screen based on the user type
-                    when (userType) {
-                        "ADMIN" -> {
-                            hostFragment.findNavController().navigate(R.id.action_loginFragment_to_homeAdminFragment2)
-                        }
-                        "STUDENT" -> {
-                            hostFragment.findNavController().navigate(R.id.action_loginFragment_to_homeFragment, bundleOf(Pair("user_type", "STUDENT")))
-                            insertUserTypeToSharedPref(userType, editor)
-                        }
-                        "TEACHER" -> {
-                            hostFragment.findNavController().navigate(R.id.action_loginFragment_to_homeFragment, bundleOf(Pair("user_type", "TEACHER")))
-                            insertUserTypeToSharedPref(userType, editor)
-                        }
-                    }
-                    // Dismiss the loading dialog and display a success message
-                    Helper.dismissDialog()
-                    displayToastMessage("Login successful", hostFragment)
+                    handleNavigation(userType, hostFragment, editor)
                 }
             }.addOnFailureListener { exception ->
                 // Handle authentication failure
                 endTaskNotify(exception, hostFragment)
             }
+        TODO("Configure Sign in using Google")
+    }
+
+    private fun handleNavigation(userType: String, hostFragment: Fragment, editor: Editor) {
+        when (userType) {
+            "ADMIN" -> {
+                hostFragment.findNavController().navigate(R.id.action_loginFragment_to_homeAdminFragment2)
+            }
+            "STUDENT" -> {
+                hostFragment.findNavController().navigate(R.id.action_loginFragment_to_homeFragment, bundleOf(Pair("user_type", "STUDENT")))
+                insertUserTypeToSharedPref(userType, editor)
+            }
+            "TEACHER" -> {
+                hostFragment.findNavController().navigate(R.id.action_loginFragment_to_homeFragment, bundleOf(Pair("user_type", "TEACHER")))
+                insertUserTypeToSharedPref(userType, editor)
+            }
+        }
+        // Dismiss the loading dialog and display a success message
+        Helper.dismissDialog()
+        displayToastMessage("Login successful", hostFragment)
     }
 
     // Function to insert the user type into shared preferences
