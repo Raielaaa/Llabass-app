@@ -25,9 +25,7 @@ class RegisterViewModel @Inject constructor(
     @Named("FirebaseAuth.Instance")
     val firebaseAuth: FirebaseAuth,
     @Named("FirebaseFireStore.Instance")
-    val firebaseFireStore: FirebaseFirestore,
-    @Named("GoogleSignInClient.Instance")
-    val googleSignInClient: GoogleSignInClient
+    val firebaseFireStore: FirebaseFirestore
 ) : ViewModel() {
     // Function for displaying toast messages on the screen
     private fun displayToastMessage(message: String, registerFragment: RegisterFragment) {
@@ -132,10 +130,5 @@ class RegisterViewModel @Inject constructor(
             // Displays if there is an empty field
             displayToastMessage("All fields are required", registerFragment)
         }
-    }
-
-    fun signInUsingGoogle(activity: Activity) {
-        val signInIntent = googleSignInClient.signInIntent
-        activity.startActivityForResult(signInIntent, Constants.GOOGLE_SIGN_IN)
     }
 }

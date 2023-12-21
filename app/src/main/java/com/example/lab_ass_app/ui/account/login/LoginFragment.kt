@@ -14,16 +14,16 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.core.text.color
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentLoginBinding
+import com.example.lab_ass_app.utils.Helper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     // ViewModel and View Binding
     private lateinit var loginViewModel: LoginViewModel
@@ -32,6 +32,10 @@ class LoginFragment : Fragment() {
     // SharedPreferences for User Type
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor: Editor
+
+    // SharedPreferences for Google
+    private lateinit var sharedPreferencesGoogle: SharedPreferences
+    private lateinit var editorGoogle: Editor
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,13 +49,28 @@ class LoginFragment : Fragment() {
         sharedPreferences = requireActivity().getSharedPreferences("UserType_Pref", Context.MODE_PRIVATE)
         editor = sharedPreferences.edit()
 
+        //  Initialize SharedPref
+        sharedPreferencesGoogle = requireActivity().getSharedPreferences("GoogleSignIn", Context.MODE_PRIVATE)
+        editorGoogle = sharedPreferences.edit()
+        sharedPreferencesGoogle.registerOnSharedPreferenceChangeListener(this@LoginFragment)
+
         // Initialize UI elements and listeners
         initSpinner()
         initNoAccountTextView()
         initLoginButton()
         initPasswordVisibility()
+        initGoogleFacebookLogin()
 
         return binding.root
+    }
+
+    private fun initGoogleFacebookLogin() {
+        binding.apply {
+            ivGoogle.setOnClickListener {
+                // Display a notice dialog during registration
+                displayDialog()
+            }
+        }
     }
 
     // Initialize the password visibility toggle
@@ -101,6 +120,17 @@ class LoginFragment : Fragment() {
         }
     }
 
+    // Display a notice dialog during registration
+    private fun displayDialog() {
+        Helper.displayCustomDialog(
+            this@LoginFragment,
+            R.layout.custom_dialog_notice,
+            binding.spUser,
+            this@LoginFragment,
+            loginViewModel
+        )
+    }
+
     // Initialize the user type spinner
     private fun initSpinner() {
         binding.apply {
@@ -112,6 +142,16 @@ class LoginFragment : Fragment() {
             )
 
             spinner.adapter = spinnerAdapter
+        }
+    }
+
+    override fun onSharedPreferenceChanged(sharedPref: SharedPreferences?, key: String?) {
+        if (key == "booleanKeyGoogle") {
+            Helper.displayCustomDialog(
+                requireActivity(),
+                R.layout.custom_dialog_loading
+            )
+            loginViewModel.signInUsingGoogle(requireActivity())
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.lab_ass_app.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
@@ -14,6 +15,7 @@ import android.util.Log
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -25,6 +27,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.lab_ass_app.MainActivity
 import com.example.lab_ass_app.R
+import com.example.lab_ass_app.ui.account.login.LoginFragment
+import com.example.lab_ass_app.ui.account.login.LoginViewModel
+import com.example.lab_ass_app.ui.account.login.google_facebook_bottom_dialog.InputLRNFragment
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.BorrowReturnDialogFragment
 import com.google.android.material.navigation.NavigationView
 
@@ -35,6 +40,7 @@ object Helper {
     private var dialog: Dialog? = null
     val TAG: String = "MyTag"
 
+    @SuppressLint("ObsoleteSdkInt")
     fun displayCustomDialog(
         activity: Activity,
         layoutDialog: Int,
@@ -85,6 +91,57 @@ object Helper {
             Log.e(TAG, "displayCustomDialog: ${err.message}")
             displayToastMessage(
                 activity,
+                "Error: ${err.localizedMessage}"
+            )
+        }
+    }
+
+    @SuppressLint("ObsoleteSdkInt")
+    fun displayCustomDialog(
+        hostFragment: Fragment,
+        layoutDialog: Int,
+        spinner: Spinner,
+        loginFragment: LoginFragment,
+        loginViewModel: LoginViewModel,
+        minWidthPercentage: Float = 0.75f
+    ) {
+        try {
+            dialog = Dialog(hostFragment.requireActivity())
+
+            dialog?.apply {
+                setContentView(layoutDialog)
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    window!!.setBackgroundDrawable(ResourcesCompat.getDrawable(
+                        hostFragment.requireActivity().resources,
+                        R.drawable.custom_dialog_bg,
+                        null))
+                }
+                window!!.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                setCancelable(false)
+                window!!.attributes.windowAnimations = R.style.animation
+
+                // Calculate the minWidth in pixels based on the percentage of the screen width
+                val screenWidth = getScreenWidth(hostFragment.requireActivity())
+                val minWidth = (screenWidth * minWidthPercentage).toInt()
+
+                dialog?.apply {
+                    findViewById<TextView>(R.id.tvDialogOk)?.setOnClickListener {
+                        dismiss()
+                        InputLRNFragment(spinner, loginFragment, loginViewModel).show(hostFragment.parentFragmentManager, "LRN_Bottom_Dialog")
+                    }
+                    findViewById<ConstraintLayout>(R.id.clMain)?.minWidth = minWidth
+                    findViewById<ConstraintLayout>(R.id.clMainSelectedItem)?.minWidth = minWidth
+                    findViewById<ImageView>(R.id.ivExitDialog)?.setOnClickListener {
+                        dismiss()
+                    }
+                }
+                show()
+            }
+        } catch (err: Exception) {
+            Log.e(TAG, "displayCustomDialog: ${err.message}")
+            displayToastMessage(
+                hostFragment.requireContext(),
                 "Error: ${err.localizedMessage}"
             )
         }

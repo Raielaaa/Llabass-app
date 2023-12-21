@@ -9,11 +9,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.lab_ass_app.databinding.FragmentRegisterBinding
 import com.example.lab_ass_app.databinding.FragmentRegisterTermsOfServiceBinding
+import com.example.lab_ass_app.ui.account.login.LoginFragment
 import com.example.lab_ass_app.ui.account.register.RegisterFragment
 import com.example.lab_ass_app.ui.account.register.RegisterViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class TermsOfServiceDialogGoogle(private val hostFragment: RegisterFragment) : BottomSheetDialogFragment() {
+class TermsOfServiceDialogGoogle(private val hostFragment: LoginFragment) : BottomSheetDialogFragment() {
     //  View Binding
     private lateinit var binding: FragmentRegisterTermsOfServiceBinding
 

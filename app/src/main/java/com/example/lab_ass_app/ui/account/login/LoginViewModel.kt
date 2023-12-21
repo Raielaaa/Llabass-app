@@ -1,5 +1,7 @@
 package com.example.lab_ass_app.ui.account.login
 
+import android.app.Activity
+import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import android.util.Log
 import android.widget.EditText
@@ -9,8 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
+import com.example.lab_ass_app.ui.account.register.google_facebook.TermsOfServiceDialogGoogle
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.Helper
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.common.api.ApiException
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,9 +29,10 @@ class LoginViewModel @Inject constructor(
     @Named("FirebaseAuth.Instance")
     val firebaseAuth: FirebaseAuth,
     @Named("FirebaseFireStore.Instance")
-    val firebaseFireStore: FirebaseFirestore
+    val firebaseFireStore: FirebaseFirestore,
+    @Named("GoogleSignInClient.Instance")
+    val googleSignInClient: GoogleSignInClient
 ) : ViewModel() {
-
     // Function to initiate the login process using Firebase
     fun loginUsingFirebase(
         etEmail: EditText,
@@ -105,7 +112,6 @@ class LoginViewModel @Inject constructor(
                 // Handle authentication failure
                 endTaskNotify(exception, hostFragment)
             }
-        TODO("Configure Sign in using Google")
     }
 
     private fun handleNavigation(userType: String, hostFragment: Fragment, editor: Editor) {
@@ -150,5 +156,18 @@ class LoginViewModel @Inject constructor(
             message,
             Toast.LENGTH_LONG
         ).show()
+    }
+
+    fun loginViaGoogle(loginFragment: LoginFragment, lrn: String) {
+        if (lrn.isNotEmpty()) {
+            TermsOfServiceDialogGoogle(loginFragment).show(loginFragment.parentFragmentManager, "Register_BottomDialog_Google")
+        } else {
+            displayToastMessage("Error: Please provide your LRN for Google/Facebook sign-up.", loginFragment)
+        }
+    }
+
+    fun signInUsingGoogle(activity: Activity) {
+        val signInIntent = googleSignInClient.signInIntent
+        activity.startActivityForResult(signInIntent, Constants.GOOGLE_SIGN_IN)
     }
 }

@@ -2,6 +2,8 @@ package com.example.lab_ass_app
 
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
+import android.content.SharedPreferences.Editor
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -50,17 +52,25 @@ class MainActivity : AppCompatActivity() {
     // Bitmap for QR code
     private var imageBitmap: Bitmap? = null
 
+    //  SharedPref
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var editor: Editor
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Initialize navigation host fragment and navigation drawer
+        //  Initialize SharedPref
+        sharedPreferences = getSharedPreferences("GoogleSignIn", MODE_PRIVATE)
+        editor = sharedPreferences.edit()
+
+        //  Initialize navigation host fragment and navigation drawer
         initNavHostFragment()
         initNavDrawer()
     }
 
-    // Initialize navigation drawer
+    //  Initialize navigation drawer
     private fun initNavDrawer() {
         binding.apply {
             // Set up instances for DrawerLayout and NavigationView in Helper class
@@ -145,11 +155,20 @@ class MainActivity : AppCompatActivity() {
             try {
                 val account = task.getResult(ApiException::class.java)
                 firebaseAuthWithGoogle(account.idToken!!)
+
+                // Save Google Sign-In information to SharedPreferences
+                saveGoogleSignInInfo(account.idToken!!)
             } catch (exception: Exception) {
                 Helper.dismissDialog()
                 endTaskNotify(exception)
             }
         }
+    }
+
+    // Function to save Google Sign-In information to SharedPreferences
+    private fun saveGoogleSignInInfo(idToken: String) {
+        editor.putString("GoogleSignIn_Token", idToken)
+        editor.apply()
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {
@@ -160,15 +179,17 @@ class MainActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     //  Displaying the current user
                     val user = firebaseAuth.currentUser
-                    displayToastMessage("Signed in as ${user?.displayName}")
 
-                    //  Insert data from Google sign-in to FIreStore
-                    val dataToBeInserted = GoogleDataModel(
-                        user!!.email!!,
-                        user.uid,
-                        Helper.lrn,
-                        Helper.userType
-                    )
+                    // Get information from the GoogleSignInAccount
+                    val email = user?.email
+                    val displayName = user?.displayName
+                    val uid = user?.uid
+
+                    // Display a message or use the information as needed
+                    displayToastMessage("Signed in as $displayName (Email: $email)")
+
+                    // Insert data from Google sign-in to FireStore
+                    val dataToBeInserted = GoogleDataModel(email!!, uid!!, Helper.lrn, Helper.userType)
                     val userID = task.result.user!!.uid
                     insertGoogleDataToFireStore(userID, dataToBeInserted)
                 } else {
@@ -184,7 +205,7 @@ class MainActivity : AppCompatActivity() {
             .set(data)
             .addOnSuccessListener {
                 displayToastMessage("Google sign-in successful")
-                navController.navigate(R.id.action_registerFragment_to_homeFragment)
+                navController.navigate(R.id.action_loginFragment_to_homeFragment)
                 Helper.dismissDialog()
             }.addOnFailureListener { exception ->
                 Helper.dismissDialog()

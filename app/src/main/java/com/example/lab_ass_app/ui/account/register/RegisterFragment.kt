@@ -30,11 +30,7 @@ import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegisterFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
-    //  SharedPref variable
-    private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var editor: Editor
-
+class RegisterFragment : Fragment() {
     // ViewModel and View Binding
     private lateinit var registerViewModel: RegisterViewModel
     private lateinit var binding: FragmentRegisterBinding
@@ -46,14 +42,6 @@ class RegisterFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
         // Initialize ViewModel and View Binding
         binding = FragmentRegisterBinding.inflate(inflater, container, false)
         registerViewModel = ViewModelProvider(this@RegisterFragment)[RegisterViewModel::class.java]
-
-        //  Initialize SharedPref
-        sharedPreferences = requireActivity().getSharedPreferences("GoogleSignIn", Context.MODE_PRIVATE)
-        editor = sharedPreferences.edit()
-        sharedPreferences.registerOnSharedPreferenceChangeListener(this@RegisterFragment)
-
-        // Display a notice dialog during registration
-        displayDialog()
 
         // Initialize UI elements and listeners
         initExistingAccountTextView()
@@ -77,20 +65,6 @@ class RegisterFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
                     registerViewModel,
                     binding
                 )
-            }
-            ivGoogle.setOnClickListener {
-                if (etLRN.text.toString().isNotEmpty()) {
-                    TermsOfServiceDialogGoogle(this@RegisterFragment).show(parentFragmentManager, "Register_BottomDialog_Google")
-                } else {
-                    displayToastMessage("Error: Please provide your LRN for Google/Facebook sign-up.")
-                }
-            }
-            ivFacebook.setOnClickListener {
-                if (etLRN.text.toString().isNotEmpty()) {
-                    TermsOfServiceDialogFacebook(this@RegisterFragment).show(parentFragmentManager, "Register_BottomDialog_Facebook")
-                } else {
-                    displayToastMessage("Error: Please provide your LRN for Google/Facebook sign-up.")
-                }
             }
         }
     }
@@ -159,31 +133,6 @@ class RegisterFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
 
         binding.tvExistingAccount.setOnClickListener {
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
-        }
-    }
-
-    // Display a notice dialog during registration
-    private fun displayDialog() {
-        Helper.displayCustomDialog(
-            requireActivity(),
-            R.layout.custom_dialog_notice
-        )
-    }
-
-    override fun onSharedPreferenceChanged(sharedPref: SharedPreferences?, key: String?) {
-        if (key == "booleanKeyGoogle") {
-            Helper.displayCustomDialog(
-                requireActivity(),
-                R.layout.custom_dialog_loading
-            )
-            registerViewModel.signInUsingGoogle(requireActivity())
-
-            binding.apply {
-                Helper.setUserTypeAndLRNForGoogleSignIn(
-                    etLRN.text.toString(),
-                    spUserRegister.selectedItem.toString()
-                )
-            }
         }
     }
 }
