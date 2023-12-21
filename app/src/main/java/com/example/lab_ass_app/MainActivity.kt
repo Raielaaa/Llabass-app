@@ -185,16 +185,53 @@ class MainActivity : AppCompatActivity() {
                     val displayName = user?.displayName
                     val uid = user?.uid
 
-                    // Display a message or use the information as needed
-                    displayToastMessage("Signed in as $displayName (Email: $email)")
-
                     // Insert data from Google sign-in to FireStore
                     val dataToBeInserted = GoogleDataModel(email!!, uid!!, Helper.lrn, Helper.userType)
                     val userID = task.result.user!!.uid
-                    insertGoogleDataToFireStore(userID, dataToBeInserted)
+
+                    googleSignInAccountValidation(email, userID, dataToBeInserted, displayName.toString())
                 } else {
                     displayToastMessage("Authentication failed")
                     Helper.dismissDialog()
+                }
+            }
+    }
+
+    private fun googleSignInAccountValidation(email: String, userID: String, dataToBeInserted: GoogleDataModel, displayName: String) {
+        firebaseFireStore.collection("labass-app-user-account-initial")
+            .whereEqualTo("userEmailModel", email)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val documents = task.result
+
+                    if (documents != null && !documents.isEmpty) {
+                        // Assuming there is only one document, you can access its fields
+                        val document = documents.documents[0]
+
+                        // Accessing the values
+                        val userEmailModel = document.getString("userEmailModel")
+                        val userLRNModel = document.getString("userLRNModel")
+                        val userTypeModel = document.getString("userTypeModel")
+
+                        if (userEmailModel == email && userLRNModel == Helper.lrn && userTypeModel == Helper.userType) {
+                            // Display a message or use the information as needed
+                            displayToastMessage("Signed in as $displayName (Email: $email)")
+                            displayToastMessage("Google sign-in successful")
+                            navController.navigate(R.id.action_loginFragment_to_homeFragment)
+                            Helper.dismissDialog()
+                        } else {
+                            Helper.dismissDialog()
+                            //  Existing account's other info does not match with info on the server
+                            Helper.displayCustomDialog(
+                                this@MainActivity,
+                                R.layout.custom_dialog_not_found
+                            )
+                        }
+                    } else {
+                        // Document not found, insert the data
+                        insertGoogleDataToFireStore(userID, dataToBeInserted)
+                    }
                 }
             }
     }

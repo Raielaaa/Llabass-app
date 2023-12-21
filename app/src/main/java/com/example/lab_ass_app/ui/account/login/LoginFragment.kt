@@ -127,7 +127,7 @@ class LoginFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
             R.layout.custom_dialog_notice,
             binding.spUser,
             this@LoginFragment,
-            loginViewModel
+            loginViewModel,
         )
     }
 

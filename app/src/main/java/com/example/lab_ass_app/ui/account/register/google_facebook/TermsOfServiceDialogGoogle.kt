@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentRegisterBinding
 import com.example.lab_ass_app.databinding.FragmentRegisterTermsOfServiceBinding
 import com.example.lab_ass_app.ui.account.login.LoginFragment
 import com.example.lab_ass_app.ui.account.register.RegisterFragment
 import com.example.lab_ass_app.ui.account.register.RegisterViewModel
+import com.example.lab_ass_app.utils.Helper
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class TermsOfServiceDialogGoogle(private val hostFragment: LoginFragment) : BottomSheetDialogFragment() {

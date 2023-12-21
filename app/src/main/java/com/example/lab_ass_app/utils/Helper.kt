@@ -67,10 +67,16 @@ object Helper {
                     val screenWidth = getScreenWidth(activity)
                     val minWidth = (screenWidth * minWidthPercentage).toInt()
 
-                    dialog?.findViewById<ConstraintLayout>(R.id.clMain)?.minWidth = minWidth
-                    dialog?.findViewById<ConstraintLayout>(R.id.clMainSelectedItem)?.minWidth = minWidth
-                    dialog?.findViewById<ImageView>(R.id.ivExitDialog)?.setOnClickListener {
-                        dialog!!.dismiss()
+                    dialog?.apply {
+                        setCancelable(true)
+                        findViewById<ConstraintLayout>(R.id.clMain)?.minWidth = minWidth
+                        findViewById<ConstraintLayout>(R.id.clMain)?.setOnClickListener {
+                            dismiss()
+                        }
+                        findViewById<ConstraintLayout>(R.id.clMainSelectedItem)?.minWidth = minWidth
+                        findViewById<ImageView>(R.id.ivExitDialog)?.setOnClickListener {
+                            dismiss()
+                        }
                     }
                     show()
                 }
