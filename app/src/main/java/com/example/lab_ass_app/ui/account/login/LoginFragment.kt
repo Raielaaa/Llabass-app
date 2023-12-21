@@ -8,19 +8,28 @@ import android.preference.PreferenceManager
 import android.text.InputType
 import android.text.SpannableStringBuilder
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.text.color
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentLoginBinding
+import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.Helper
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginResult
+import com.google.firebase.auth.FacebookAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -72,9 +81,13 @@ class LoginFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
                 displayDialog("google")
             }
             ivFacebook.setOnClickListener {
-                //  Display a notice dialog during registration
-                displayDialog("facebook")
+//                //  Display a notice dialog during registration
+//                displayDialog("facebook")
+
+                //  Facebook login
+                loginViewModel.facebookLogin(binding, this@LoginFragment)
             }
+
         }
     }
 

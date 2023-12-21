@@ -53,18 +53,25 @@
     <string name="account_login_dropdown_student">STUDENT</string>
     <string name="account_login_dropdown_teacher">TEACHER</string>
     <string name="account_login_dropdown_admin">ADMIN</string>
+    <string name="account_login_google">Continue with Google</string>
     <string-array name="account_login_spinner">
         <item>STUDENT</item>
         <item>TEACHER</item>
         <item>ADMIN</item>
     </string-array>
+    <!-- Facebook meta-data -->
+    <string name="facebook_app_id">689840839938387</string>
+    <string name="fb_login_protocol_scheme">fb689840839938387</string>
+    <string name="facebook_client_token">
+        EAAJzaBY3UVMBO0qzRl9wSdPq8qDgeqkNlkz3s5ZBNznxXRUYjTOJFs3cXk65bA3XV4ovF47JdVBBerMxoewqB4IHhG9AdqglBw0uiSJZAgroZB5FlDXigubcNpVXrMiOc2sjiEO3bsDRKmLydIclH95g86o7kjMiY8YQjuRnxnPYEZCNgMOevqaus8Hps28x6uSvrlZCZA
+    </string>
 
     <!-- Account - Register -->
     <string name="account_register_header_1">Register</string>
     <string name="account_register_header_2">Please register to continue</string>
     <string name="account_register_sign_up">Sign up</string>
     <string name="account_register_header_3">OR SIGN UP USING</string>
-    <string name="account_register_header_4">OR CONTINUE USING</string>
+    <string name="account_register_header_4">OR</string>
     <string name="account_register_existing_account">Already have an account? LOGIN</string>
     <string name="account_register_lrn">Learner Reference Number</string>
     <string name="account_register_username">Username@gmail.com</string>

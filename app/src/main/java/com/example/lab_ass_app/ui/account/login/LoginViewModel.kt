@@ -11,13 +11,20 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
+import com.example.lab_ass_app.databinding.FragmentLoginBinding
 import com.example.lab_ass_app.ui.account.register.google_facebook.TermsOfServiceDialogGoogle
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.Helper
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -169,5 +176,53 @@ class LoginViewModel @Inject constructor(
     fun signInUsingGoogle(activity: Activity) {
         val signInIntent = googleSignInClient.signInIntent
         activity.startActivityForResult(signInIntent, Constants.GOOGLE_SIGN_IN)
+    }
+
+    fun facebookLogin(binding: FragmentLoginBinding, hostFragment: Fragment) {
+        //  Initialize Facebook login button
+        val callbackManager = CallbackManager.Factory.create()
+
+        binding.ivFacebook.apply {
+            setPermissions("email", "public_profile")
+            registerCallback(
+                callbackManager,
+                object : FacebookCallback<LoginResult> {
+                    override fun onCancel() {
+                        displayToastMessage("Facebook cancel", hostFragment)
+                        Log.e(Constants.TAG, "FacebookOnCancel")
+                    }
+
+                    override fun onError(error: FacebookException) {
+                        displayToastMessage("Facebook error:  ${error.localizedMessage}", hostFragment)
+                        Log.e(Constants.TAG, "FacebookOnError: ${error.message}")
+                    }
+
+                    override fun onSuccess(result: LoginResult) {
+                        Log.d(Constants.TAG, "facebook:onSuccess:$result")
+                        handleFacebookAccessToken(result.accessToken, hostFragment)
+                    }
+                }
+            )
+        }
+    }
+
+    private fun handleFacebookAccessToken(token: AccessToken, hostFragment: Fragment) {
+        Log.d(Constants.TAG, "handleFacebookAccessToken:$token")
+
+        val credential = FacebookAuthProvider.getCredential(token.token)
+        firebaseAuth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(Constants.TAG, "signInWithCredential:success")
+                    val user = firebaseAuth.currentUser
+                    displayToastMessage("Facebook Authentication Success. Signed in as $user", hostFragment)
+                    hostFragment.findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(Constants.TAG, "signInWithCredential:failure", task.exception)
+                    displayToastMessage("Facebook Authentication Failed", hostFragment)
+                }
+            }
     }
 }

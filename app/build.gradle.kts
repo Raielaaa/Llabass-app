@@ -99,4 +99,7 @@ dependencies {
 
     //  Google Play services authentication library
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+    //  Facebook SDK
+    implementation("com.facebook.android:facebook-login:latest.release")
 }
