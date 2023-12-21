@@ -109,6 +109,7 @@ object Helper {
         spinner: Spinner,
         loginFragment: LoginFragment,
         loginViewModel: LoginViewModel,
+        loginProcess: String,
         minWidthPercentage: Float = 0.75f
     ) {
         try {
@@ -134,7 +135,7 @@ object Helper {
                 dialog?.apply {
                     findViewById<TextView>(R.id.tvDialogOk)?.setOnClickListener {
                         dismiss()
-                        InputLRNFragment(spinner, loginFragment, loginViewModel).show(hostFragment.parentFragmentManager, "LRN_Bottom_Dialog")
+                        InputLRNFragment(spinner, loginFragment, loginViewModel, loginProcess).show(hostFragment.parentFragmentManager, "LRN_Bottom_Dialog")
                     }
                     findViewById<ConstraintLayout>(R.id.clMain)?.minWidth = minWidth
                     findViewById<ConstraintLayout>(R.id.clMainSelectedItem)?.minWidth = minWidth

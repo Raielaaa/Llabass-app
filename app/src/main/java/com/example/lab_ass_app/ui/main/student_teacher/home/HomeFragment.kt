@@ -41,6 +41,9 @@ class HomeFragment : Fragment() {
         sharedPreferences = requireActivity().getSharedPreferences("UserType_Pref", Context.MODE_PRIVATE)
         editor = sharedPreferences.edit()
 
+        //  Dismiss dialog for assurance
+        Helper.dismissDialog()
+
         initClickableViews()
         initUserType()
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.text.InputType
 import android.text.SpannableStringBuilder
 import android.text.method.PasswordTransformationMethod
@@ -67,8 +68,12 @@ class LoginFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
     private fun initGoogleFacebookLogin() {
         binding.apply {
             ivGoogle.setOnClickListener {
-                // Display a notice dialog during registration
-                displayDialog()
+                //  Display a notice dialog during registration
+                displayDialog("google")
+            }
+            ivFacebook.setOnClickListener {
+                //  Display a notice dialog during registration
+                displayDialog("facebook")
             }
         }
     }
@@ -121,13 +126,14 @@ class LoginFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
     }
 
     // Display a notice dialog during registration
-    private fun displayDialog() {
+    private fun displayDialog(loginProcess: String) {
         Helper.displayCustomDialog(
             this@LoginFragment,
             R.layout.custom_dialog_notice,
             binding.spUser,
             this@LoginFragment,
             loginViewModel,
+            loginProcess
         )
     }
 
@@ -153,5 +159,21 @@ class LoginFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
             )
             loginViewModel.signInUsingGoogle(requireActivity())
         }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        // Register the fragment as a listener for changes in SharedPreferences
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        // Unregister the fragment as a listener when the view is destroyed
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
     }
 }

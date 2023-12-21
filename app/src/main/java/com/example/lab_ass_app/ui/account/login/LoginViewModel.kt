@@ -158,9 +158,9 @@ class LoginViewModel @Inject constructor(
         ).show()
     }
 
-    fun loginViaGoogle(loginFragment: LoginFragment, lrn: String) {
+    fun loginViaGoogle(loginFragment: LoginFragment, lrn: String, loginProcess: String) {
         if (lrn.isNotEmpty()) {
-            TermsOfServiceDialogGoogle(loginFragment).show(loginFragment.parentFragmentManager, "Register_BottomDialog_Google")
+            TermsOfServiceDialogGoogle(loginFragment, loginProcess).show(loginFragment.parentFragmentManager, "Register_BottomDialog_Google")
         } else {
             displayToastMessage("Error: Please provide your LRN for Google/Facebook sign-up.", loginFragment)
         }

@@ -16,7 +16,10 @@ import com.example.lab_ass_app.ui.account.register.RegisterViewModel
 import com.example.lab_ass_app.utils.Helper
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class TermsOfServiceDialogGoogle(private val hostFragment: LoginFragment) : BottomSheetDialogFragment() {
+class TermsOfServiceDialogGoogle(
+    private val hostFragment: LoginFragment,
+    private val loginProcess: String
+) : BottomSheetDialogFragment() {
     //  View Binding
     private lateinit var binding: FragmentRegisterTermsOfServiceBinding
 
@@ -47,9 +50,22 @@ class TermsOfServiceDialogGoogle(private val hostFragment: LoginFragment) : Bott
         binding.apply {
             // Accept button click listener
             btnAccept.setOnClickListener {
-                editor.apply {
-                    putBoolean("booleanKeyGoogle", !sharedPreferences.getBoolean("booleanKeyGoogle", true))
-                    commit()
+                if (loginProcess == "google") {
+                    editor.apply {
+                        putBoolean("booleanKeyGoogle", !sharedPreferences.getBoolean("booleanKeyGoogle", true))
+                        commit()
+                    }
+                } else if (loginProcess == "facebook") {
+                    Toast.makeText(
+                        hostFragment.requireContext(),
+                        "Facebook process clicked",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        hostFragment.requireContext(),
+                        "Unknown login process",
+                        Toast.LENGTH_LONG                    ).show()
                 }
 
                 // Dismiss the dialog

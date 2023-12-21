@@ -1,5 +1,6 @@
 package com.example.lab_ass_app.ui.account.login.google_facebook_bottom_dialog
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,7 +18,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class InputLRNFragment(
     private val spUser: Spinner,
     private val loginFragment: LoginFragment,
-    private val loginViewModel: LoginViewModel
+    private val loginViewModel: LoginViewModel,
+    private val loginProcess: String
 ) : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentInputLRNBinding
 
@@ -28,6 +30,9 @@ class InputLRNFragment(
         // Inflate the layout for this fragment
         binding = FragmentInputLRNBinding.inflate(inflater, container, false)
 
+        //  Configure process icon
+        changeIcon()
+
         binding.apply {
             cvProceed.setOnClickListener {
                 if (etLRN.text.toString().isNotEmpty()) {
@@ -36,7 +41,7 @@ class InputLRNFragment(
                         etLRN.text.toString(),
                         spUser.selectedItem.toString()
                     )
-                    loginViewModel.loginViaGoogle(loginFragment, spUser.selectedItem.toString())
+                    loginViewModel.loginViaGoogle(loginFragment, spUser.selectedItem.toString(), loginProcess)
                 } else {
                     Toast.makeText(requireParentFragment().requireActivity(), "Error: LRN is required to proceed", Toast.LENGTH_LONG).show()
                 }
@@ -44,5 +49,13 @@ class InputLRNFragment(
         }
 
         return binding.root
+    }
+
+    private fun changeIcon() {
+        if (loginProcess == "facebook") {
+            binding.ivProcessIcon.setImageURI(
+                Uri.parse("android.resource://com.example.lab_ass_app/drawable/facebook")
+            )
+        }
     }
 }
