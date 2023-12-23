@@ -1,6 +1,5 @@
 package com.example.lab_ass_app
 
-import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
@@ -10,17 +9,13 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.databinding.ActivityMainBinding
-import com.example.lab_ass_app.ui.account.register.google_facebook.GoogleDataModel
+import com.example.lab_ass_app.ui.account.register.google_facebook.FacebookGoogleDataModel
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.Helper
-import com.facebook.CallbackManager
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -61,6 +56,10 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor: Editor
 
+    //  SharedPref for fb no account dialog
+    private lateinit var sharedPreferencesFB: SharedPreferences
+    private lateinit var editorFB: Editor
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -70,12 +69,18 @@ open class MainActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("GoogleSignIn", MODE_PRIVATE)
         editor = sharedPreferences.edit()
 
+        //  Init sharedPref fb no account dialog
+        sharedPreferencesFB = getSharedPreferences("SharedPref_fbNoAccount", MODE_PRIVATE)
+        editorFB = sharedPreferences.edit()
+
         //  Initialize navigation host fragment and navigation drawer
         initNavHostFragment()
         initNavDrawer()
 
         //  Logging App Activations
         facebookLogger()
+
+        Helper.navControllerFromMain = navController
     }
 
     //    Logging app activations enables almost all other functionality and should be the first thing you add to your app.
@@ -202,7 +207,7 @@ open class MainActivity : AppCompatActivity() {
                     val uid = user?.uid
 
                     // Insert data from Google sign-in to FireStore
-                    val dataToBeInserted = GoogleDataModel(email!!, uid!!, Helper.lrn, Helper.userType)
+                    val dataToBeInserted = FacebookGoogleDataModel(email!!, uid!!, Helper.lrn, Helper.userType)
                     val userID = task.result.user!!.uid
 
                     googleSignInAccountValidation(email, userID, dataToBeInserted, displayName.toString())
@@ -213,7 +218,7 @@ open class MainActivity : AppCompatActivity() {
             }
     }
 
-    private fun googleSignInAccountValidation(email: String, userID: String, dataToBeInserted: GoogleDataModel, displayName: String) {
+    private fun googleSignInAccountValidation(email: String, userID: String, dataToBeInserted: FacebookGoogleDataModel, displayName: String) {
         firebaseFireStore.collection("labass-app-user-account-initial")
             .whereEqualTo("userEmailModel", email)
             .get()
@@ -252,7 +257,7 @@ open class MainActivity : AppCompatActivity() {
             }
     }
 
-    private fun insertGoogleDataToFireStore(userID: String, data: GoogleDataModel) {
+    private fun insertGoogleDataToFireStore(userID: String, data: FacebookGoogleDataModel) {
         firebaseFireStore.collection("labass-app-user-account-initial")
             .document(userID)
             .set(data)

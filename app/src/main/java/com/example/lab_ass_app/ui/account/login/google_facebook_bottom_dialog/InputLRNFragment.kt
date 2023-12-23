@@ -2,13 +2,11 @@ package com.example.lab_ass_app.ui.account.login.google_facebook_bottom_dialog
 
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Spinner
 import android.widget.Toast
-import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentInputLRNBinding
 import com.example.lab_ass_app.ui.account.login.LoginFragment
 import com.example.lab_ass_app.ui.account.login.LoginViewModel
@@ -41,7 +39,7 @@ class InputLRNFragment(
                         etLRN.text.toString(),
                         spUser.selectedItem.toString()
                     )
-                    loginViewModel.loginViaGoogle(loginFragment, spUser.selectedItem.toString(), loginProcess)
+                    loginViewModel.loginViaFacebookGoogle(loginFragment, spUser.selectedItem.toString(), loginProcess)
                 } else {
                     Toast.makeText(requireParentFragment().requireActivity(), "Error: LRN is required to proceed", Toast.LENGTH_LONG).show()
                 }

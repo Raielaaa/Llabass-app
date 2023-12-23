@@ -81,14 +81,12 @@ class LoginFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
                 displayDialog("google")
             }
             ivFacebook.setOnClickListener {
-//                //  Display a notice dialog during registration
-//                displayDialog("facebook")
+                //  Display a notice dialog during registration
+                displayDialog("facebook")
 
                 //  Facebook login
                 Helper.hostFragmentInstanceForFacebookLogin = this@LoginFragment
-                loginViewModel.facebookLogin(this@LoginFragment)
             }
-
         }
     }
 

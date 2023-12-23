@@ -11,6 +11,7 @@ import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentRegisterBinding
 import com.example.lab_ass_app.databinding.FragmentRegisterTermsOfServiceBinding
 import com.example.lab_ass_app.ui.account.login.LoginFragment
+import com.example.lab_ass_app.ui.account.login.LoginViewModel
 import com.example.lab_ass_app.ui.account.register.RegisterFragment
 import com.example.lab_ass_app.ui.account.register.RegisterViewModel
 import com.example.lab_ass_app.utils.Helper
@@ -18,7 +19,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class TermsOfServiceDialogGoogle(
     private val hostFragment: LoginFragment,
-    private val loginProcess: String
+    private val loginProcess: String,
+    private val loginViewModel: LoginViewModel
 ) : BottomSheetDialogFragment() {
     //  View Binding
     private lateinit var binding: FragmentRegisterTermsOfServiceBinding
@@ -50,22 +52,23 @@ class TermsOfServiceDialogGoogle(
         binding.apply {
             // Accept button click listener
             btnAccept.setOnClickListener {
-                if (loginProcess == "google") {
-                    editor.apply {
-                        putBoolean("booleanKeyGoogle", !sharedPreferences.getBoolean("booleanKeyGoogle", true))
-                        commit()
+                when (loginProcess) {
+                    "google" -> {
+                        editor.apply {
+                            putBoolean("booleanKeyGoogle", !sharedPreferences.getBoolean("booleanKeyGoogle", true))
+                            commit()
+                        }
                     }
-                } else if (loginProcess == "facebook") {
-                    Toast.makeText(
-                        hostFragment.requireContext(),
-                        "Facebook process clicked",
-                        Toast.LENGTH_LONG
-                    ).show()
-                } else {
-                    Toast.makeText(
-                        hostFragment.requireContext(),
-                        "Unknown login process",
-                        Toast.LENGTH_LONG                    ).show()
+                    "facebook" -> {
+                        loginViewModel.facebookLogin(hostFragment)
+                    }
+                    else -> {
+                        Toast.makeText(
+                            hostFragment.requireContext(),
+                            "Unknown login process",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
 
                 // Dismiss the dialog

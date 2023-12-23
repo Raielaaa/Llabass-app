@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,9 +19,16 @@ import com.example.lab_ass_app.utils.Helper
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModel
 import com.example.lab_ass_app.ui.main.student_teacher.home.see_all.SeeAllDialog
+import com.example.lab_ass_app.utils.Constants
 import com.google.android.material.navigation.NavigationView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
     //  Binding and ViewModel
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: HomeViewModel
@@ -40,19 +48,15 @@ class HomeFragment : Fragment() {
         //  Init sharedPref
         sharedPreferences = requireActivity().getSharedPreferences("UserType_Pref", Context.MODE_PRIVATE)
         editor = sharedPreferences.edit()
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this@HomeFragment)
 
         //  Dismiss dialog for assurance
         Helper.dismissDialog()
 
         initClickableViews()
         initUserType()
-        clearNavBackStack()
 
         return binding.root
-    }
-
-    private fun clearNavBackStack() {
-        findNavController().popBackStack(R.id.homeFragment, false)
     }
 
     private fun initUserType() {
@@ -196,6 +200,13 @@ class HomeFragment : Fragment() {
             } else {
                 drawerLayout.openDrawer(GravityCompat.START)
             }
+        }
+    }
+
+    override fun onSharedPreferenceChanged(sharedPred: SharedPreferences?, key: String?) {
+        Log.d(Constants.TAG, "onSharedPreferenceChanged: testttt")
+        if (key == "fbNoAccount_key") {
+            findNavController().navigate(R.id.accountOpeningFragment)
         }
     }
 }

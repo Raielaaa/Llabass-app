@@ -2,7 +2,6 @@ package com.example.lab_ass_app.ui.account.login
 
 import android.app.Activity
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import android.util.Log
 import android.widget.EditText
@@ -12,23 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
-import com.example.lab_ass_app.databinding.FragmentLoginBinding
 import com.example.lab_ass_app.ui.account.login.google_facebook_bottom_dialog.FacebookAuthActivity
 import com.example.lab_ass_app.ui.account.register.google_facebook.TermsOfServiceDialogGoogle
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.Helper
-import com.facebook.AccessToken
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginResult
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.common.api.ApiException
 import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -169,9 +157,9 @@ class LoginViewModel @Inject constructor(
         ).show()
     }
 
-    fun loginViaGoogle(loginFragment: LoginFragment, lrn: String, loginProcess: String) {
+    fun loginViaFacebookGoogle(loginFragment: LoginFragment, lrn: String, loginProcess: String) {
         if (lrn.isNotEmpty()) {
-            TermsOfServiceDialogGoogle(loginFragment, loginProcess).show(loginFragment.parentFragmentManager, "Register_BottomDialog_Google")
+            TermsOfServiceDialogGoogle(loginFragment, loginProcess, this@LoginViewModel).show(loginFragment.parentFragmentManager, "Register_BottomDialog_Google")
         } else {
             displayToastMessage("Error: Please provide your LRN for Google/Facebook sign-up.", loginFragment)
         }
@@ -187,25 +175,5 @@ class LoginViewModel @Inject constructor(
         intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
         intent.putExtra("navigateToHomeFragment", true)
         hostFragment.requireActivity().startActivity(intent)
-    }
-
-    private fun handleFacebookAccessToken(token: AccessToken, hostFragment: Fragment) {
-        Log.d(Constants.TAG, "handleFacebookAccessToken:$token")
-
-        val credential = FacebookAuthProvider.getCredential(token.token)
-        firebaseAuth.signInWithCredential(credential)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(Constants.TAG, "signInWithCredential:success")
-                    val user = firebaseAuth.currentUser
-                    displayToastMessage("Facebook Authentication Success. Signed in as $user", hostFragment)
-                    hostFragment.findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(Constants.TAG, "signInWithCredential:failure", task.exception)
-                    displayToastMessage("Facebook Authentication Failed", hostFragment)
-                }
-            }
     }
 }

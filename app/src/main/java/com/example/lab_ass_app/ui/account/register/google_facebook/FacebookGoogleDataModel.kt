@@ -1,6 +1,6 @@
 package com.example.lab_ass_app.ui.account.register.google_facebook
 
-data class GoogleDataModel(
+data class FacebookGoogleDataModel(
     val userEmailModel: String,
     val userIDModel: String,
     val userLRNModel: String,

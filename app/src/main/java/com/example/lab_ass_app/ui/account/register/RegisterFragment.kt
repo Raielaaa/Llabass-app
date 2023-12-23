@@ -1,11 +1,7 @@
 package com.example.lab_ass_app.ui.account.register
 
-import android.content.Context
-import android.content.SharedPreferences
-import android.content.SharedPreferences.Editor
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.os.Message
 import android.text.InputType
 import android.text.SpannableStringBuilder
 import android.text.method.PasswordTransformationMethod
@@ -21,10 +17,6 @@ import androidx.core.text.color
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentRegisterBinding
-import com.example.lab_ass_app.ui.account.register.google_facebook.GoogleDataModel
-import com.example.lab_ass_app.ui.account.register.google_facebook.TermsOfServiceDialogFacebook
-import com.example.lab_ass_app.ui.account.register.google_facebook.TermsOfServiceDialogGoogle
-import com.example.lab_ass_app.utils.Helper
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
