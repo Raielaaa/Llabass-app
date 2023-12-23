@@ -1,6 +1,7 @@
 package com.example.lab_ass_app.ui.account.login
 
 import android.app.Activity
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import android.util.Log
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentLoginBinding
+import com.example.lab_ass_app.ui.account.login.google_facebook_bottom_dialog.FacebookAuthActivity
 import com.example.lab_ass_app.ui.account.register.google_facebook.TermsOfServiceDialogGoogle
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.Helper
@@ -19,6 +21,8 @@ import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -178,32 +182,11 @@ class LoginViewModel @Inject constructor(
         activity.startActivityForResult(signInIntent, Constants.GOOGLE_SIGN_IN)
     }
 
-    fun facebookLogin(binding: FragmentLoginBinding, hostFragment: Fragment) {
-        //  Initialize Facebook login button
-        val callbackManager = CallbackManager.Factory.create()
-
-        binding.ivFacebook.apply {
-            setPermissions("email", "public_profile")
-            registerCallback(
-                callbackManager,
-                object : FacebookCallback<LoginResult> {
-                    override fun onCancel() {
-                        displayToastMessage("Facebook cancel", hostFragment)
-                        Log.e(Constants.TAG, "FacebookOnCancel")
-                    }
-
-                    override fun onError(error: FacebookException) {
-                        displayToastMessage("Facebook error:  ${error.localizedMessage}", hostFragment)
-                        Log.e(Constants.TAG, "FacebookOnError: ${error.message}")
-                    }
-
-                    override fun onSuccess(result: LoginResult) {
-                        Log.d(Constants.TAG, "facebook:onSuccess:$result")
-                        handleFacebookAccessToken(result.accessToken, hostFragment)
-                    }
-                }
-            )
-        }
+    fun facebookLogin(hostFragment: Fragment) {
+        val intent: Intent = Intent(hostFragment.requireActivity(), FacebookAuthActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
+        intent.putExtra("navigateToHomeFragment", true)
+        hostFragment.requireActivity().startActivity(intent)
     }
 
     private fun handleFacebookAccessToken(token: AccessToken, hostFragment: Fragment) {

@@ -40,6 +40,8 @@ object Helper {
     private var dialog: Dialog? = null
     val TAG: String = "MyTag"
 
+    var hostFragmentInstanceForFacebookLogin: Fragment? = null
+
     @SuppressLint("ObsoleteSdkInt")
     fun displayCustomDialog(
         activity: Activity,

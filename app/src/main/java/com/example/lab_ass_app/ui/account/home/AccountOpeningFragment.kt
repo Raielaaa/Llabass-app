@@ -30,6 +30,10 @@ class AccountOpeningFragment : Fragment() {
             }
         }
 
+        if (requireActivity().intent.getBooleanExtra("navigateToHomeFragment", false)) {
+            findNavController().navigate(R.id.homeFragment)
+        }
+
         return binding.root
     }
 }

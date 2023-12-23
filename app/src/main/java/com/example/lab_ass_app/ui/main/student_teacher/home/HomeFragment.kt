@@ -46,8 +46,13 @@ class HomeFragment : Fragment() {
 
         initClickableViews()
         initUserType()
+        clearNavBackStack()
 
         return binding.root
+    }
+
+    private fun clearNavBackStack() {
+        findNavController().popBackStack(R.id.homeFragment, false)
     }
 
     private fun initUserType() {

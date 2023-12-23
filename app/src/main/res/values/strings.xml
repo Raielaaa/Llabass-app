@@ -54,17 +54,16 @@
     <string name="account_login_dropdown_teacher">TEACHER</string>
     <string name="account_login_dropdown_admin">ADMIN</string>
     <string name="account_login_google">Continue with Google</string>
+    <string name="account_login_facebook">Continue with Facebook</string>
     <string-array name="account_login_spinner">
         <item>STUDENT</item>
         <item>TEACHER</item>
         <item>ADMIN</item>
     </string-array>
     <!-- Facebook meta-data -->
-    <string name="facebook_app_id">689840839938387</string>
-    <string name="fb_login_protocol_scheme">fb689840839938387</string>
-    <string name="facebook_client_token">
-        EAAJzaBY3UVMBO0qzRl9wSdPq8qDgeqkNlkz3s5ZBNznxXRUYjTOJFs3cXk65bA3XV4ovF47JdVBBerMxoewqB4IHhG9AdqglBw0uiSJZAgroZB5FlDXigubcNpVXrMiOc2sjiEO3bsDRKmLydIclH95g86o7kjMiY8YQjuRnxnPYEZCNgMOevqaus8Hps28x6uSvrlZCZA
-    </string>
+    <string name="facebook_app_id">891198342317068</string>
+    <string name="fb_login_protocol_scheme">fb891198342317068</string>
+    <string name="facebook_client_token">e4e56e57412c98927cd9d974c5d6ba22</string>
 
     <!-- Account - Register -->
     <string name="account_register_header_1">Register</string>

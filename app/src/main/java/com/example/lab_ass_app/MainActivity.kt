@@ -13,12 +13,16 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.databinding.ActivityMainBinding
 import com.example.lab_ass_app.ui.account.register.google_facebook.GoogleDataModel
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.Helper
 import com.facebook.CallbackManager
+import com.facebook.FacebookSdk
+import com.facebook.appevents.AppEventsLogger
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
@@ -35,7 +39,7 @@ import javax.inject.Named
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+open class MainActivity : AppCompatActivity() {
     //  Firebase auth
     @Inject
     @Named("FirebaseAuth.Instance")
@@ -69,6 +73,17 @@ class MainActivity : AppCompatActivity() {
         //  Initialize navigation host fragment and navigation drawer
         initNavHostFragment()
         initNavDrawer()
+
+        //  Logging App Activations
+        facebookLogger()
+    }
+
+    //    Logging app activations enables almost all other functionality and should be the first thing you add to your app.
+    //    The SDK provides a helper method to log app activation. By logging an activation event, you can observe how frequently users activate your app,
+    //    how much time they spend using it, and view other demographic information through Facebook Analytics for Apps.
+    private fun facebookLogger() {
+        FacebookSdk.sdkInitialize(applicationContext);
+        AppEventsLogger.activateApp(this.application);
     }
 
     //  Initialize navigation drawer

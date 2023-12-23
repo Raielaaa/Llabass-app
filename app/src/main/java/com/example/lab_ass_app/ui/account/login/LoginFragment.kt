@@ -85,7 +85,8 @@ class LoginFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
 //                displayDialog("facebook")
 
                 //  Facebook login
-                loginViewModel.facebookLogin(binding, this@LoginFragment)
+                Helper.hostFragmentInstanceForFacebookLogin = this@LoginFragment
+                loginViewModel.facebookLogin(this@LoginFragment)
             }
 
         }
