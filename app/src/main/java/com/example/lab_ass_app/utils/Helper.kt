@@ -19,6 +19,7 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -36,8 +37,20 @@ import com.example.lab_ass_app.ui.account.login.google_facebook_bottom_dialog.In
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.BorrowReturnDialogFragment
 import com.facebook.login.LoginManager
 import com.google.android.material.navigation.NavigationView
+import java.lang.ref.WeakReference
 
 object Helper {
+    //  Encapsulation principle for Activity reference
+    var mainActivityInstance: WeakReference<Activity>? = null
+
+    fun setActivityReference(activity: Activity) {
+        mainActivityInstance = WeakReference(activity)
+    }
+
+    fun getActivityReference(): Activity? {
+        return mainActivityInstance?.get()
+    }
+
     lateinit var drawerLayoutInstance: DrawerLayout
     lateinit var navDrawerInstance: NavigationView
 
@@ -84,6 +97,12 @@ object Helper {
                         findViewById<ImageView>(R.id.ivExitDialog)?.setOnClickListener {
                             dismiss()
                         }
+
+                        try {
+                            findViewById<CardView>(R.id.cvQR).setOnClickListener {
+                                takeQR(getActivityReference()!!)
+                            }
+                        } catch (ignored: Exception) { }
                     }
                     show()
                 }

@@ -80,7 +80,14 @@ open class MainActivity : AppCompatActivity() {
         //  Logging App Activations
         facebookLogger()
 
-        Helper.navControllerFromMain = navController
+        //  Init values from object class
+        initObjectValues()
+    }
+
+    private fun initObjectValues() {
+        Helper.apply {
+            navControllerFromMain = navController
+        }
     }
 
     //    Logging app activations enables almost all other functionality and should be the first thing you add to your app.

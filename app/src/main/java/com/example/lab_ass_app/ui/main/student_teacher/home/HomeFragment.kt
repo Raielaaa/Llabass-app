@@ -71,6 +71,11 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
         initListItemExpand()
         initListItemRV()
         initCVQR()
+        initObjectValues()
+    }
+
+    private fun initObjectValues() {
+        Helper.setActivityReference(requireActivity())
     }
 
     private fun initCVQR() {
