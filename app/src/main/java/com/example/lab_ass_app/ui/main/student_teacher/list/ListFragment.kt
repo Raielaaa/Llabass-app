@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.findNavController
@@ -29,6 +30,7 @@ class ListFragment : Fragment() {
         initBottomNavDrawer()
         initNavigationDrawer()
         initListRV()
+        initColorTransitionForCategory()
 
         return binding.root
     }
@@ -127,6 +129,39 @@ class ListFragment : Fragment() {
             }
             ivTakeQR.setOnClickListener {
                 Helper.takeQR(requireActivity())
+            }
+        }
+    }
+
+    private fun initColorTransitionForCategory() {
+        binding.apply {
+            cvCategoryTools.setOnClickListener {
+                clCategoryTools.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.Theme_color_main))
+                tvCategoryToolsTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                tvCategoryToolsCategory.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                ivCategoryToolsArrow.setImageURI(Uri.parse("android.resource://${requireActivity().packageName}/drawable/right_arrow_white"))
+                ivCategoryToolsPic.setImageURI(Uri.parse("android.resource://${requireActivity().packageName}/drawable/top_tools"))
+
+                clCategoryChem.background = ContextCompat.getDrawable(requireContext(), R.drawable.home_top_bg)
+                clCategoryChem.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
+                tvCategoryChemTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.Theme_color_main))
+                tvCategoryChemCategory.setTextColor(ContextCompat.getColor(requireContext(), R.color.Theme_color_main))
+                ivCategoryChemArrow.setImageURI(Uri.parse("android.resource://${requireActivity().packageName}/drawable/right_arrow"))
+                ivCategoryChemPic.setImageURI(Uri.parse("android.resource://${requireActivity().packageName}/drawable/top_chem"))
+            }
+            cvCategoryChe.setOnClickListener {
+                clCategoryChem.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.Theme_color_main))
+                tvCategoryChemTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                tvCategoryChemCategory.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                ivCategoryChemArrow.setImageURI(Uri.parse("android.resource://${requireActivity().packageName}/drawable/right_arrow_white"))
+                ivCategoryChemPic.setImageURI(Uri.parse("android.resource://${requireActivity().packageName}/drawable/top_chem_white"))
+
+                clCategoryTools.background = ContextCompat.getDrawable(requireContext(), R.drawable.home_top_bg)
+                clCategoryTools.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
+                tvCategoryToolsTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.Theme_color_main))
+                tvCategoryToolsCategory.setTextColor(ContextCompat.getColor(requireContext(), R.color.Theme_color_main))
+                ivCategoryToolsArrow.setImageURI(Uri.parse("android.resource://${requireActivity().packageName}/drawable/right_arrow"))
+                ivCategoryToolsPic.setImageURI(Uri.parse("android.resource://${requireActivity().packageName}/drawable/top_tools_themecolor"))
             }
         }
     }

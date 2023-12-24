@@ -501,7 +501,7 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView6"
+        android:id="@+id/cvCategoryTools"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_20sdp"
@@ -513,12 +513,13 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView4">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clCategoryTools"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:padding="@dimen/_10sdp">
 
             <TextView
-                android:id="@+id/textView39"
+                android:id="@+id/tvCategoryToolsCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
@@ -531,7 +532,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView40"
+                android:id="@+id/tvCategoryToolsTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/_2sdp"
@@ -540,49 +541,51 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_13ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textView39"
-                app:layout_constraintTop_toBottomOf="@+id/textView39" />
+                app:layout_constraintStart_toStartOf="@+id/tvCategoryToolsCategory"
+                app:layout_constraintTop_toBottomOf="@+id/tvCategoryToolsCategory" />
 
             <ImageView
-                android:id="@+id/imageView16"
+                android:id="@+id/ivCategoryToolsArrow"
                 android:layout_width="@dimen/_10sdp"
                 android:layout_height="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:src="@drawable/right_arrow_white"
-                app:layout_constraintBottom_toBottomOf="@+id/textView39"
-                app:layout_constraintStart_toEndOf="@+id/textView39"
-                app:layout_constraintTop_toTopOf="@+id/textView39" />
+                app:layout_constraintBottom_toBottomOf="@+id/tvCategoryToolsCategory"
+                app:layout_constraintStart_toEndOf="@+id/tvCategoryToolsCategory"
+                app:layout_constraintTop_toTopOf="@+id/tvCategoryToolsCategory" />
 
             <ImageView
-                android:id="@+id/imageView17"
+                android:id="@+id/ivCategoryToolsPic"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:src="@drawable/top_tools"
-                app:layout_constraintBottom_toBottomOf="@+id/textView40"
+                app:layout_constraintBottom_toBottomOf="@+id/tvCategoryToolsTitle"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView16"
-                app:layout_constraintTop_toTopOf="@+id/imageView16" />
+                app:layout_constraintStart_toEndOf="@+id/ivCategoryToolsArrow"
+                app:layout_constraintTop_toTopOf="@+id/ivCategoryToolsArrow" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cvCategoryChem"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/_10sdp"
         app:cardCornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/cardView6"
+        app:layout_constraintBottom_toBottomOf="@+id/cvCategoryTools"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline14"
-        app:layout_constraintTop_toTopOf="@+id/cardView6">
+        app:layout_constraintTop_toTopOf="@+id/cvCategoryTools">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clCategoryChem"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/home_top_bg"
             android:padding="@dimen/_10sdp">
 
             <TextView
-                android:id="@+id/textView41"
+                android:id="@+id/tvCategoryChemCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
@@ -595,17 +598,17 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView18"
+                android:id="@+id/ivCategoryChemArrow"
                 android:layout_width="@dimen/_10sdp"
                 android:layout_height="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:src="@drawable/right_arrow"
-                app:layout_constraintBottom_toBottomOf="@+id/textView41"
-                app:layout_constraintStart_toEndOf="@+id/textView41"
-                app:layout_constraintTop_toTopOf="@+id/textView41" />
+                app:layout_constraintBottom_toBottomOf="@+id/tvCategoryChemCategory"
+                app:layout_constraintStart_toEndOf="@+id/tvCategoryChemCategory"
+                app:layout_constraintTop_toTopOf="@+id/tvCategoryChemCategory" />
 
             <TextView
-                android:id="@+id/textView42"
+                android:id="@+id/tvCategoryChemTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/_2sdp"
@@ -614,18 +617,18 @@
                 android:textColor="@color/Theme.color.main"
                 android:textSize="@dimen/_13ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textView41"
-                app:layout_constraintTop_toBottomOf="@+id/textView41" />
+                app:layout_constraintStart_toStartOf="@+id/tvCategoryChemCategory"
+                app:layout_constraintTop_toBottomOf="@+id/tvCategoryChemCategory" />
 
             <ImageView
-                android:id="@+id/imageView19"
+                android:id="@+id/ivCategoryChemPic"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:src="@drawable/top_chem"
-                app:layout_constraintBottom_toBottomOf="@+id/textView42"
+                app:layout_constraintBottom_toBottomOf="@+id/tvCategoryChemTitle"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView18"
-                app:layout_constraintTop_toTopOf="@+id/imageView18" />
+                app:layout_constraintStart_toEndOf="@+id/ivCategoryChemArrow"
+                app:layout_constraintTop_toTopOf="@+id/ivCategoryChemArrow" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
@@ -716,7 +719,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView6" >
+        app:layout_constraintTop_toBottomOf="@+id/cvCategoryTools" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
