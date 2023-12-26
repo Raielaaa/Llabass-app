@@ -17,12 +17,9 @@ class BorrowReturnDialogViewModel : ViewModel() {
     private val calendar = Calendar.getInstance()
 
     fun showDatePicker(
-        context: Activity,
+        context: Fragment,
         tvDate: TextView
     ) {
-        Helper.displayCustomDialog(
-            context,
-            R.layout.fragment_set_date_dialog
-        )
+//        SetDateDialogFragment(tvDate).show(context.parentFragmentManager, "SetDate_Dialog")
     }
 }

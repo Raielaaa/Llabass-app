@@ -12,18 +12,20 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.text.color
 import androidx.navigation.fragment.findNavController
-import android.app.DatePickerDialog
 import androidx.lifecycle.ViewModelProvider
 import com.example.lab_ass_app.MainActivity
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentBorrowReturnDialogBinding
+import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.date_time.DateTimeSelectedListener
+import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.date_time.SetDateDialogFragment
+import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.date_time.SetTimeDialogFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class BorrowReturnDialogFragment(
     private val bitmap: Bitmap?,
     private val mainActivity: MainActivity
-) : BottomSheetDialogFragment() {
+) : BottomSheetDialogFragment(), DateTimeSelectedListener {
     private lateinit var binding: FragmentBorrowReturnDialogBinding
     private lateinit var borrowReturnDialogViewModel: BorrowReturnDialogViewModel
 
@@ -50,13 +52,10 @@ class BorrowReturnDialogFragment(
     private fun initDateTimeChooser() {
         binding.apply {
             cvSetDate.setOnClickListener {
-                borrowReturnDialogViewModel.showDatePicker(
-                    requireActivity(),
-                    tvDate
-                )
+                SetDateDialogFragment(this@BorrowReturnDialogFragment).show(parentFragmentManager, "SetDate_Dialog")
             }
             cvSetTime.setOnClickListener {
-
+                SetTimeDialogFragment(this@BorrowReturnDialogFragment).show(parentFragmentManager, "SetTime_Dialog")
             }
         }
     }
@@ -98,5 +97,13 @@ class BorrowReturnDialogFragment(
 
             spinner.adapter = spinnerAdapter
         }
+    }
+
+    override fun onDateSelected(selectedDate: String) {
+        binding.tvDate.text = selectedDate
+    }
+
+    override fun onTimeSelected(selectedTime: String) {
+        binding.tvTime.text = selectedTime
     }
 }

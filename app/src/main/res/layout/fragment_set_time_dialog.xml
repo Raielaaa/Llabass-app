@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="@dimen/_20sdp"
-    tools:context=".ui.main.student_teacher.borrow_return_dialog.date_time.SetDateDialogFragment">
+    tools:context=".ui.main.student_teacher.borrow_return_dialog.date_time.SetTimeDialogFragment">
 
     <TextView
         android:id="@+id/textView39"
@@ -14,7 +14,7 @@
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:fontFamily="@font/poppins_bold"
-        android:text="@string/dateTimeDialog_setDate_header"
+        android:text="@string/dateTimeDialog_setTime_header"
         android:textColor="@color/Theme.color.main"
         android:textSize="@dimen/_16ssp"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,14 +31,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView39" />
 
-    <DatePicker
+    <TimePicker
         android:layout_marginStart="@dimen/_25sdp"
         android:layout_marginEnd="@dimen/_25sdp"
-        android:id="@+id/datePicker"
+        android:id="@+id/timePicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:calendarViewShown="false"
-        android:datePickerMode="spinner"
+        android:timePickerMode="spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/datePicker" />
+        app:layout_constraintTop_toBottomOf="@+id/timePicker" />
 
     <TextView
         android:id="@+id/tvCancel"
@@ -65,7 +65,7 @@
         android:layout_marginTop="@dimen/_20sdp"
         app:layout_constraintEnd_toStartOf="@+id/guideline35"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/datePicker" />
+        app:layout_constraintTop_toBottomOf="@+id/timePicker" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline35"
@@ -84,5 +84,5 @@
         android:fontFamily="@font/poppins_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline35"
-        app:layout_constraintTop_toBottomOf="@+id/datePicker" />
+        app:layout_constraintTop_toBottomOf="@+id/timePicker" />
 </androidx.constraintlayout.widget.ConstraintLayout>
