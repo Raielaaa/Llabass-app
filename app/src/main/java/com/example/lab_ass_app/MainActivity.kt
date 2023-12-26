@@ -177,12 +177,6 @@ open class MainActivity : AppCompatActivity() {
                     this@MainActivity,
                     imageBitmap
                 )
-                // Display QR code dialog
-                Helper.displayBorrowReturnDialog(
-                    supportFragmentManager,
-                    imageBitmap,
-                    this@MainActivity
-                )
             } catch (err: Exception) {
                 // Handle errors
                 displayToastMessage("An error occurred: ${err.localizedMessage}")

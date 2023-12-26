@@ -19,12 +19,16 @@ import com.example.lab_ass_app.databinding.FragmentBorrowReturnDialogBinding
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.date_time.DateTimeSelectedListener
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.date_time.SetDateDialogFragment
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.date_time.SetTimeDialogFragment
+import com.example.lab_ass_app.utils.ItemInfoModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class BorrowReturnDialogFragment(
     private val bitmap: Bitmap?,
-    private val mainActivity: MainActivity
+    private val mainActivity: MainActivity,
+    private val itemInfoModel: ItemInfoModel,
+    private val currentUserLRN: String,
+    private val currentUserEmail: String
 ) : BottomSheetDialogFragment(), DateTimeSelectedListener {
     private lateinit var binding: FragmentBorrowReturnDialogBinding
     private lateinit var borrowReturnDialogViewModel: BorrowReturnDialogViewModel
@@ -51,7 +55,14 @@ class BorrowReturnDialogFragment(
     }
 
     private fun initDisplayComponents() {
-
+        binding.apply {
+            tvItemName.text = itemInfoModel.modelName
+            tvName.text = currentUserEmail
+            tvCategory.text = itemInfoModel.modelCategory
+            tvStatus.text = itemInfoModel.modelStatus
+            tvDescription.text = itemInfoModel.modelDescription
+            tvLRN.text = currentUserLRN
+        }
     }
 
     private fun initDateTimeChooser() {

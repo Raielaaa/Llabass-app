@@ -241,9 +241,12 @@ object Helper {
     fun displayBorrowReturnDialog(
         fragmentManager: FragmentManager,
         bitmap: Bitmap?,
-        mainActivity: MainActivity
+        mainActivity: MainActivity,
+        itemInfoModel: ItemInfoModel,
+        currentUserLRN: String,
+        currentUserEmail: String
     ) {
-        BorrowReturnDialogFragment(bitmap, mainActivity).show(fragmentManager, "BorrowReturn_Dialog")
+        BorrowReturnDialogFragment(bitmap, mainActivity, itemInfoModel, currentUserLRN, currentUserEmail).show(fragmentManager, "BorrowReturn_Dialog")
     }
 
     private fun getScreenWidth(activity: Activity): Int {

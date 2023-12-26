@@ -264,7 +264,7 @@
     <string name="borrow_return_borrow">BORROW</string>
     <string name="borrow_return_return">RETURN</string>
     <string name="borrow_return_item_name">PETRI DISH</string>
-    <string name="borrow_return_name">Name: </string>
+    <string name="borrow_return_name">Email: </string>
     <string name="borrow_return_name_placeholder">Borrower Name</string>
     <string name="borrow_return_lrn">LRN: </string>
     <string name="borrow_return_lrn_placeholder">3847364924746</string>
