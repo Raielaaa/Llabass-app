@@ -42,11 +42,16 @@ class BorrowReturnDialogFragment(
     }
 
     private fun initViews() {
+        initDisplayComponents()
         initSpinner()
         initReportTextView()
         initReportTv()
         binding.ivImage.setImageBitmap(bitmap)
         initDateTimeChooser()
+    }
+
+    private fun initDisplayComponents() {
+
     }
 
     private fun initDateTimeChooser() {

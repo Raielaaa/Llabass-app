@@ -7,6 +7,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions
+import com.google.mlkit.vision.barcode.common.Barcode
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,6 +34,14 @@ object AppModule {
     @Provides
     @Named("FirebaseStorage.Instance")
     fun providesFirebaseStorageInstance() = FirebaseStorage.getInstance().reference
+
+    @Singleton
+    @Provides
+    @Named("BarcodeScannerOptionsBuilder.Instance")
+    fun providesBarcodeScannerOptionsBuilder() = BarcodeScannerOptions.Builder()
+        .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
+        .enableAllPotentialBarcodes()
+        .build()
 
     @Singleton
     @Provides

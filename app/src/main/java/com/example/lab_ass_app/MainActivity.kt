@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
@@ -60,6 +61,9 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferencesFB: SharedPreferences
     private lateinit var editorFB: Editor
 
+    //  ViewModel
+    private lateinit var mainActivityViewModel: MainActivityViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -72,6 +76,9 @@ open class MainActivity : AppCompatActivity() {
         //  Init sharedPref fb no account dialog
         sharedPreferencesFB = getSharedPreferences("SharedPref_fbNoAccount", MODE_PRIVATE)
         editorFB = sharedPreferences.edit()
+
+        //  Init ViewModel
+        mainActivityViewModel = ViewModelProvider(this@MainActivity)[MainActivityViewModel::class.java]
 
         //  Initialize navigation host fragment and navigation drawer
         initNavHostFragment()
@@ -165,6 +172,11 @@ open class MainActivity : AppCompatActivity() {
                 // Retrieve image bitmap from extras
                 imageBitmap = extras?.get("data") as Bitmap
 
+                //  Analyze scanned QR
+                mainActivityViewModel.getInfoFromQR(
+                    this@MainActivity,
+                    imageBitmap
+                )
                 // Display QR code dialog
                 Helper.displayBorrowReturnDialog(
                     supportFragmentManager,
