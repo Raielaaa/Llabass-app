@@ -28,7 +28,8 @@ class BorrowReturnDialogFragment(
     private val mainActivity: MainActivity,
     private val itemInfoModel: ItemInfoModel,
     private val currentUserLRN: String,
-    private val currentUserEmail: String
+    private val currentUserEmail: String,
+    private val currentUserType: String
 ) : BottomSheetDialogFragment(), DateTimeSelectedListener {
     private lateinit var binding: FragmentBorrowReturnDialogBinding
     private lateinit var borrowReturnDialogViewModel: BorrowReturnDialogViewModel
@@ -61,7 +62,7 @@ class BorrowReturnDialogFragment(
             tvCategory.text = itemInfoModel.modelCategory
             tvStatus.text = itemInfoModel.modelStatus
             tvDescription.text = itemInfoModel.modelDescription
-            tvLRN.text = currentUserLRN
+            tvLRN.text = "$currentUserLRN - $currentUserType"
         }
     }
 

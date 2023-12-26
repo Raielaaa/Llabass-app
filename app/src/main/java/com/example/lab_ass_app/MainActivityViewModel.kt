@@ -110,8 +110,9 @@ class MainActivityViewModel @Inject constructor(
 
                     val currentUserLRN = retrievedData?.get("userLRNModel").toString()
                     val currentUserEmail = retrievedData?.get("userEmailModel").toString()
+                    val currentUserType = retrievedData?.get("userTypeModel").toString()
 
-                    displayBorrowReturnDialog(mainActivity, imageBitmap, completeItemInfo, currentUserLRN, currentUserEmail)
+                    displayBorrowReturnDialog(mainActivity, imageBitmap, completeItemInfo, currentUserLRN, currentUserEmail, currentUserType)
                 } else {
                     displayToastMessage("LRN not found", mainActivity)
                 }
@@ -125,7 +126,8 @@ class MainActivityViewModel @Inject constructor(
         imageBitmap: Bitmap?,
         itemInfoModel: ItemInfoModel,
         currentUserLRN: String,
-        currentUserEmail: String
+        currentUserEmail: String,
+        currentUserType: String
     ) {
         Helper.dismissDialog()
 
@@ -136,7 +138,8 @@ class MainActivityViewModel @Inject constructor(
             mainActivity,
             itemInfoModel,
             currentUserLRN,
-            currentUserEmail
+            currentUserEmail,
+            currentUserType
         )
     }
 

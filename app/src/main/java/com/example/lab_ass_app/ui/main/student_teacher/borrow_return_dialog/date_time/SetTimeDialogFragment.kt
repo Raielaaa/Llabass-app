@@ -11,11 +11,13 @@ import androidx.fragment.app.DialogFragment
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentSetTimeDialogBinding
 import com.example.lab_ass_app.utils.Constants
+import java.text.DecimalFormat
 
 class SetTimeDialogFragment(
     private val dateTimeSelectedListener: DateTimeSelectedListener
 ) : DialogFragment() {
     private lateinit var binding: FragmentSetTimeDialogBinding
+    private val dateTimeDecimalFormal: DecimalFormat by lazy { DecimalFormat("00") }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,9 +43,9 @@ class SetTimeDialogFragment(
                 this@SetTimeDialogFragment.dismiss()
             }
             tvSet.setOnClickListener {
-                val selectedHour: Int = if (timePicker.hour > 1) timePicker.hour - 12 else timePicker.hour
+                val selectedHour: Int = if (timePicker.hour > 12) timePicker.hour - 12 else timePicker.hour
                 val selectedMinute: Int = timePicker.minute
-                val amOrPm = if (selectedHour >= 12) "PM" else "AM"
+                val amOrPm = if (timePicker.hour >= 12) "PM" else "AM"
 
                 Toast.makeText(
                     requireContext(),
@@ -51,7 +53,7 @@ class SetTimeDialogFragment(
                     Toast.LENGTH_LONG
                 ).show()
 
-                dateTimeSelectedListener.onTimeSelected("$selectedHour : $selectedMinute $amOrPm")
+                dateTimeSelectedListener.onTimeSelected("${dateTimeDecimalFormal.format(selectedHour)} : ${dateTimeDecimalFormal.format(selectedMinute)} $amOrPm")
                 this@SetTimeDialogFragment.dismiss()
             }
         }
