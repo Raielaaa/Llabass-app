@@ -3,7 +3,6 @@ package com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.SpannableStringBuilder
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,9 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.text.color
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import android.app.DatePickerDialog
+import androidx.lifecycle.ViewModelProvider
 import com.example.lab_ass_app.MainActivity
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentBorrowReturnDialogBinding
@@ -25,19 +25,40 @@ class BorrowReturnDialogFragment(
     private val mainActivity: MainActivity
 ) : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentBorrowReturnDialogBinding
+    private lateinit var borrowReturnDialogViewModel: BorrowReturnDialogViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentBorrowReturnDialogBinding.inflate(inflater, container, false)
+        borrowReturnDialogViewModel = ViewModelProvider(this@BorrowReturnDialogFragment)[BorrowReturnDialogViewModel::class.java]
 
-        binding.ivImage.setImageBitmap(bitmap)
+        initViews()
+
+        return binding.root
+    }
+
+    private fun initViews() {
         initSpinner()
         initReportTextView()
         initReportTv()
+        binding.ivImage.setImageBitmap(bitmap)
+        initDateTimeChooser()
+    }
 
-        return binding.root
+    private fun initDateTimeChooser() {
+        binding.apply {
+            cvSetDate.setOnClickListener {
+                borrowReturnDialogViewModel.showDatePicker(
+                    requireActivity(),
+                    tvDate
+                )
+            }
+            cvSetTime.setOnClickListener {
+
+            }
+        }
     }
 
     private fun initReportTv() {

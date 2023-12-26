@@ -166,6 +166,9 @@
     <string name="st_home_list_tool_code">Item code: </string>
     <string name="st_home_list_tool_code_placeholder">384024</string>
     <string name="st_home_list_borrow_count">14 Borrows</string>
+    <string name="dateTimeDialog_setDate_header">Set Date</string>
+    <string name="dateTimeDialog_setDate_cancel">Cancel</string>
+    <string name="dateTimeDialog_setDate_set">Set</string>
 
     <!-- Privacy settings -->
     <string name="privacy_title">PRIVACY SETTINGS</string>
