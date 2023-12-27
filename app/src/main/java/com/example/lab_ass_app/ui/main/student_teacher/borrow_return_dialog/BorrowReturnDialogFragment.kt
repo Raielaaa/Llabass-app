@@ -22,7 +22,9 @@ import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.date
 import com.example.lab_ass_app.utils.ItemInfoModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BorrowReturnDialogFragment(
     private val bitmap: Bitmap?,
     private val mainActivity: MainActivity,
@@ -53,6 +55,18 @@ class BorrowReturnDialogFragment(
         initReportTv()
         binding.ivImage.setImageBitmap(bitmap)
         initDateTimeChooser()
+        initProceedCancelButton()
+    }
+
+    private fun initProceedCancelButton() {
+        binding.apply {
+            btnCancel.setOnClickListener {
+                this@BorrowReturnDialogFragment.dismiss()
+            }
+            btnProceed.setOnClickListener {
+                borrowReturnDialogViewModel.insertBorrowInfoToFirebase()
+            }
+        }
     }
 
     private fun initDisplayComponents() {
