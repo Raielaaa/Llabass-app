@@ -3,9 +3,11 @@ package com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.SpannableStringBuilder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
@@ -19,10 +21,17 @@ import com.example.lab_ass_app.databinding.FragmentBorrowReturnDialogBinding
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.date_time.DateTimeSelectedListener
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.date_time.SetDateDialogFragment
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.date_time.SetTimeDialogFragment
+import com.example.lab_ass_app.utils.Constants
+import com.example.lab_ass_app.utils.Helper
 import com.example.lab_ass_app.utils.ItemInfoModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import javax.inject.Inject
+import javax.inject.Named
 
 @AndroidEntryPoint
 class BorrowReturnDialogFragment(
@@ -31,8 +40,14 @@ class BorrowReturnDialogFragment(
     private val itemInfoModel: ItemInfoModel,
     private val currentUserLRN: String,
     private val currentUserEmail: String,
-    private val currentUserType: String
+    private val currentUserType: String,
+    private val currentUserID: String
 ) : BottomSheetDialogFragment(), DateTimeSelectedListener {
+    //  Firebase fireStore
+    @Inject
+    @Named("FirebaseFireStore.Instance")
+    lateinit var firebaseFireStore: FirebaseFirestore
+
     private lateinit var binding: FragmentBorrowReturnDialogBinding
     private lateinit var borrowReturnDialogViewModel: BorrowReturnDialogViewModel
 
@@ -63,10 +78,41 @@ class BorrowReturnDialogFragment(
             btnCancel.setOnClickListener {
                 this@BorrowReturnDialogFragment.dismiss()
             }
-            btnProceed.setOnClickListener {
-                borrowReturnDialogViewModel.insertBorrowInfoToFirebase()
+            btnBRProceed.setOnClickListener {
+                if (spUser2.selectedItem == "BORROW") {
+                    if (tvDate.text != "Set Date" && tvTime.text != "Set Time") {
+                        borrowReturnDialogViewModel.insertInfoToFireStore(
+                            BorrowModel(
+                                modelEmail = currentUserEmail,
+                                modelLRN = currentUserLRN,
+                                modelUserType = currentUserType,
+                                modelUserID = currentUserID,
+                                modelItemCode = itemInfoModel.modelCode,
+                                modelItemName = itemInfoModel.modelName,
+                                modelItemCategory = itemInfoModel.modelCategory,
+                                modelItemSize = itemInfoModel.modelSize,
+                                modelBorrowDateTime = getCurrentDateTime(),
+                                modelBorrowDeadlineDateTime = "${tvDate.text}, ${tvTime.text} "
+                            ),
+                            this@BorrowReturnDialogFragment
+                        )
+                        displayToastMessage("Insert on process")
+                    } else {
+                        displayToastMessage("Error: Borrow Date and Borrow Time must not be empty")
+                    }
+                }
             }
         }
+    }
+
+    private fun getCurrentDateTime(): String {
+        //  Get current date and time
+        val currentDateTime = LocalDate.now()
+
+        //  Date-time format
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yy, hh:mm a")
+
+        return currentDateTime.format(formatter)
     }
 
     private fun initDisplayComponents() {
@@ -127,6 +173,40 @@ class BorrowReturnDialogFragment(
             )
 
             spinner.adapter = spinnerAdapter
+
+            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    val selectedItem = parent?.getItemAtPosition(position).toString()
+
+                    if (selectedItem == "RETURN") {
+                        cvSetDate.isEnabled = false
+                        setViewAndChildrenEnabled(cvSetDate, false)
+
+                        cvSetTime.isEnabled = false
+                        setViewAndChildrenEnabled(cvSetTime, false)
+                    } else {
+                        cvSetDate.isEnabled = true
+                        setViewAndChildrenEnabled(cvSetDate, true)
+
+                        cvSetTime.isEnabled = true
+                        setViewAndChildrenEnabled(cvSetTime, true)
+                    }
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    //  Nothing
+                }
+            }
+        }
+    }
+
+    private fun setViewAndChildrenEnabled(view: View, enabled: Boolean) {
+        view.isEnabled = enabled
+        if (view is ViewGroup) {
+            for (index in 0 until view.childCount) {
+                val child = view.getChildAt(index)
+                setViewAndChildrenEnabled(child, enabled)
+            }
         }
     }
 
@@ -136,5 +216,22 @@ class BorrowReturnDialogFragment(
 
     override fun onTimeSelected(selectedTime: String) {
         binding.tvTime.text = selectedTime
+    }
+
+    // Function to handle the end of tasks and notify the user about errors
+    private fun endTaskNotify(exception: Exception) {
+        // Display an error message, log the exception, and dismiss the loading dialog
+        displayToastMessage("Error: ${exception.localizedMessage}")
+        Log.e(Constants.TAG, "BorrowReturnDialogFragment: ${exception.message}")
+        Helper.dismissDialog()
+    }
+
+    // Display toast message
+    private fun displayToastMessage(message: String) {
+        Toast.makeText(
+            requireContext(),
+            message,
+            Toast.LENGTH_LONG
+        ).show()
     }
 }

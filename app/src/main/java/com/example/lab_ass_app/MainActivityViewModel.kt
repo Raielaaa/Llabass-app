@@ -101,6 +101,8 @@ class MainActivityViewModel @Inject constructor(
         imageBitmap: Bitmap?,
         completeItemInfo: ItemInfoModel
     ) {
+        val userID = firebaseAuth.currentUser!!.uid
+
         fireStore.collection("labass-app-user-account-initial")
             .document(firebaseAuth.currentUser!!.uid)
             .get()
@@ -112,7 +114,7 @@ class MainActivityViewModel @Inject constructor(
                     val currentUserEmail = retrievedData?.get("userEmailModel").toString()
                     val currentUserType = retrievedData?.get("userTypeModel").toString()
 
-                    displayBorrowReturnDialog(mainActivity, imageBitmap, completeItemInfo, currentUserLRN, currentUserEmail, currentUserType)
+                    displayBorrowReturnDialog(mainActivity, imageBitmap, completeItemInfo, currentUserLRN, currentUserEmail, currentUserType, userID)
                 } else {
                     displayToastMessage("LRN not found", mainActivity)
                 }
@@ -127,7 +129,8 @@ class MainActivityViewModel @Inject constructor(
         itemInfoModel: ItemInfoModel,
         currentUserLRN: String,
         currentUserEmail: String,
-        currentUserType: String
+        currentUserType: String,
+        userID: String
     ) {
         Helper.dismissDialog()
 
@@ -139,7 +142,8 @@ class MainActivityViewModel @Inject constructor(
             itemInfoModel,
             currentUserLRN,
             currentUserEmail,
-            currentUserType
+            currentUserType,
+            userID
         )
     }
 

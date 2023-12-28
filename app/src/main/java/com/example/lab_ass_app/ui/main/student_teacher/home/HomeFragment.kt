@@ -166,7 +166,7 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
             )
         )
 
-        SeeAllDialog(seeAllAdapter).show(parentFragmentManager, "SeeAllDialog")
+//        SeeAllDialog(seeAllAdapter).show(parentFragmentManager, "SeeAllDialog")
 
         binding.btnHomeSeeAll.setOnClickListener {
             SeeAllDialog(seeAllAdapter).show(parentFragmentManager, "SeeAllDialog")

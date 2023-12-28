@@ -305,7 +305,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cvSetDate" />
 
     <Button
-        android:id="@+id/btnProceed"
+        android:id="@+id/btnBRProceed"
         android:layout_width="0dp"
         android:layout_height="@dimen/_40sdp"
         android:layout_marginTop="20dp"
@@ -327,10 +327,10 @@
         android:fontFamily="@font/poppins_bold"
         android:text="@string/borrow_return_cancel"
         android:textColor="@color/Theme.color.main"
-        app:layout_constraintBottom_toBottomOf="@+id/btnProceed"
+        app:layout_constraintBottom_toBottomOf="@+id/btnBRProceed"
         app:layout_constraintEnd_toStartOf="@+id/guideline29"
         app:layout_constraintStart_toStartOf="@+id/guideline30"
-        app:layout_constraintTop_toTopOf="@+id/btnProceed" />
+        app:layout_constraintTop_toTopOf="@+id/btnBRProceed" />
 
     <TextView
         android:id="@+id/tvReport"
@@ -345,6 +345,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnProceed" />
+        app:layout_constraintTop_toBottomOf="@+id/btnBRProceed" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

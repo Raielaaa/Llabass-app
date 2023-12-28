@@ -43,7 +43,6 @@ class SetDateDialogFragment(
         binding.apply {
             tvCancel.setOnClickListener {
                 this@SetDateDialogFragment.dismiss()
-                Log.d(Constants.TAG, "initClickableViews: cancel")
                 Toast.makeText(
                     requireContext(),
                     "cancel",
@@ -60,7 +59,8 @@ class SetDateDialogFragment(
                     "Date selected",
                     Toast.LENGTH_LONG
                 ).show()
-                dateTimeSelectedListener.onDateSelected("$day · $month · $year")
+//                dateTimeSelectedListener.onDateSelected("$day · $month · $year")
+                dateTimeSelectedListener.onDateSelected("$day/$month/$year")
                 this@SetDateDialogFragment.dismiss()
             }
         }
@@ -68,7 +68,6 @@ class SetDateDialogFragment(
 
     override fun onStart() {
         super.onStart()
-
         dialog?.window?.setWindowAnimations(R.style.animation)
     }
 
