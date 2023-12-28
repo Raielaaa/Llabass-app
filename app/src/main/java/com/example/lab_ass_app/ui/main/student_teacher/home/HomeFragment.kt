@@ -15,6 +15,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentHomeBinding
 import com.example.lab_ass_app.utils.Helper
@@ -23,6 +24,8 @@ import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModel
 import com.example.lab_ass_app.ui.main.student_teacher.home.see_all.SeeAllDialog
 import com.example.lab_ass_app.utils.Constants
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,9 +33,15 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Named
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+    @Inject
+    @Named("FirebaseStorage.Instance")
+    lateinit var firebaseStorage: StorageReference
+
     //  Binding and ViewModel
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeViewModel: HomeViewModel
@@ -76,7 +85,7 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
     }
 
     private fun initTopBorrows() {
-        homeViewModel.initTopBorrowDisplay(binding)
+        homeViewModel.initTopBorrowDisplay(binding, requireContext())
     }
 
     private fun initUserType() {
