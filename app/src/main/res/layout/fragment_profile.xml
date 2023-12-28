@@ -185,7 +185,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardView3"
+                android:id="@+id/cvHomeStatus"
                 android:layout_width="@dimen/_6sdp"
                 android:layout_height="@dimen/_6sdp"
                 app:cardBackgroundColor="@color/Theme.light"

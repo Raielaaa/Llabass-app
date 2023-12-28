@@ -162,7 +162,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardView3"
+                android:id="@+id/cvHomeStatus"
                 android:layout_width="@dimen/_6sdp"
                 android:layout_height="@dimen/_6sdp"
                 app:cardBackgroundColor="@color/Theme.light"
@@ -224,12 +224,12 @@
                 app:layout_constraintTop_toTopOf="@+id/textView30" />
 
             <ImageView
-                android:id="@+id/imageView11"
+                android:id="@+id/ivHomeExpand"
                 android:layout_width="@dimen/_10sdp"
                 android:layout_height="@dimen/_10sdp"
                 android:src="@drawable/expand_box"
                 app:layout_constraintBottom_toBottomOf="@+id/textView32"
-                app:layout_constraintEnd_toEndOf="@+id/cardView3"
+                app:layout_constraintEnd_toEndOf="@+id/cvHomeStatus"
                 app:layout_constraintTop_toTopOf="@+id/textView32" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

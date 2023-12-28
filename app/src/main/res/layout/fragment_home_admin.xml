@@ -164,7 +164,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_marginEnd="@dimen/_5sdp"
-                android:id="@+id/cardView3"
+                android:id="@+id/cvHomeStatus"
                 android:layout_width="@dimen/_6sdp"
                 android:layout_height="@dimen/_6sdp"
                 app:cardBackgroundColor="@color/Theme.light"
@@ -174,12 +174,12 @@
 
             <ImageView
                 android:layout_marginBottom="@dimen/_3sdp"
-                android:id="@+id/imageView11"
+                android:id="@+id/ivHomeExpand"
                 android:layout_width="@dimen/_10sdp"
                 android:layout_height="@dimen/_10sdp"
                 android:src="@drawable/expand_box"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/cardView3" />
+                app:layout_constraintEnd_toEndOf="@+id/cvHomeStatus" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

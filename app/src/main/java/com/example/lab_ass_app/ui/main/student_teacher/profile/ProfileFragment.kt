@@ -34,41 +34,41 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initRV() {
-        val listItemsAdapter = HomeAdapter {
-            Helper.displayCustomDialog(
-                requireActivity(),
-                R.layout.selected_item_dialog
-            )
-        }
-        listItemsAdapter.setItem(
-            ArrayList(
-                listOf(
-                    HomeModel(
-                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
-                        "PETRI DISH",
-                        "384732",
-                        "14 Borrows",
-                        "AVAILABLE"
-                    ),
-                    HomeModel(
-                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
-                        "PETRI DISH",
-                        "384732",
-                        "14 Borrows",
-                        "AVAILABLE"
-                    ),
-                    HomeModel(
-                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
-                        "PETRI DISH",
-                        "384732",
-                        "14 Borrows",
-                        "AVAILABLE"
-                    )
-                )
-            )
-        )
-
-        binding.rvProfileList.adapter = listItemsAdapter
+//        val listItemsAdapter = HomeAdapter {
+//            Helper.displayCustomDialog(
+//                requireActivity(),
+//                R.layout.selected_item_dialog
+//            )
+//        }
+//        listItemsAdapter.setItem(
+//            ArrayList(
+//                listOf(
+//                    HomeModel(
+//                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
+//                        "PETRI DISH",
+//                        "384732",
+//                        "14 Borrows",
+//                        "AVAILABLE"
+//                    ),
+//                    HomeModel(
+//                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
+//                        "PETRI DISH",
+//                        "384732",
+//                        "14 Borrows",
+//                        "AVAILABLE"
+//                    ),
+//                    HomeModel(
+//                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
+//                        "PETRI DISH",
+//                        "384732",
+//                        "14 Borrows",
+//                        "AVAILABLE"
+//                    )
+//                )
+//            )
+//        )
+//
+//        binding.rvProfileList.adapter = listItemsAdapter
     }
 
     private fun initNavigationDrawer() {

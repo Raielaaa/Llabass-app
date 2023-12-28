@@ -76,16 +76,16 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
     }
 
     private fun initDataRetrievalFromFirebase() {
-        Helper.displayCustomDialog(
-            requireActivity(),
-            R.layout.custom_dialog_loading
-        )
-
         initTopBorrows()
+        initBottomRvList()
+    }
+
+    private fun initBottomRvList() {
+        homeViewModel.initListItemRV(binding.rvListItems, this@HomeFragment)
     }
 
     private fun initTopBorrows() {
-        homeViewModel.initTopBorrowDisplay(binding, requireContext())
+        homeViewModel.initTopBorrowDisplay(binding, requireContext(), this@HomeFragment)
     }
 
     private fun initUserType() {
@@ -98,7 +98,6 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
         initFAB()
         initSeeAllButton()
         initListItemExpand()
-        initListItemRV()
         initCVQR()
         initObjectValues()
         initColorTransitionForCategory()
@@ -114,44 +113,6 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
         }
     }
 
-    private fun initListItemRV() {
-        val listItemsAdapter = HomeAdapter {
-            Helper.displayCustomDialog(
-                requireActivity(),
-                R.layout.selected_item_dialog
-            )
-        }
-        listItemsAdapter.setItem(
-            ArrayList(
-                listOf(
-                    HomeModel(
-                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
-                        "PETRI DISH",
-                        "384732",
-                        "14 Borrows",
-                        "AVAILABLE"
-                    ),
-                    HomeModel(
-                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
-                        "PETRI DISH",
-                        "384732",
-                        "14 Borrows",
-                        "AVAILABLE"
-                    ),
-                    HomeModel(
-                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
-                        "PETRI DISH",
-                        "384732",
-                        "14 Borrows",
-                        "AVAILABLE"
-                    )
-                )
-            )
-        )
-
-        binding.rvListItems.adapter = listItemsAdapter
-    }
-
     private fun initListItemExpand() {
         binding.ivListItemExpand.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_listFragment)
@@ -159,45 +120,16 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
     }
 
     private fun initSeeAllButton() {
-        val seeAllAdapter = HomeAdapter {
-            Helper.displayCustomDialog(
-                requireActivity(),
-                R.layout.selected_item_dialog
-            )
-        }
-        seeAllAdapter.setItem(
-            ArrayList(
-                listOf(
-                    HomeModel(
-                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
-                        "PETRI DISH",
-                        "384732",
-                        "14 Borrows",
-                        "AVAILABLE"
-                    ),
-                    HomeModel(
-                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
-                        "PETRI DISH",
-                        "384732",
-                        "14 Borrows",
-                        "AVAILABLE"
-                    ),
-                    HomeModel(
-                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
-                        "PETRI DISH",
-                        "384732",
-                        "14 Borrows",
-                        "AVAILABLE"
-                    )
-                )
-            )
-        )
-
-//        SeeAllDialog(seeAllAdapter).show(parentFragmentManager, "SeeAllDialog")
-
-        binding.btnHomeSeeAll.setOnClickListener {
-            SeeAllDialog(seeAllAdapter).show(parentFragmentManager, "SeeAllDialog")
-        }
+//        val seeAllAdapter = HomeAdapter {
+//            Helper.displayCustomDialog(
+//                requireActivity(),
+//                R.layout.selected_item_dialog
+//            )
+//        }
+//
+//        binding.btnHomeSeeAll.setOnClickListener {
+//            SeeAllDialog(seeAllAdapter).show(parentFragmentManager, "SeeAllDialog")
+//        }
     }
 
     private fun initFAB() {

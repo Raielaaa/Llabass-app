@@ -3,10 +3,18 @@ package com.example.lab_ass_app.ui.main.student_teacher.home
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentHomeBinding
+import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
+import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModelLive
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.Helper
 import com.example.lab_ass_app.utils.PopularModel
@@ -21,9 +29,7 @@ import javax.inject.Named
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     @Named("FirebaseFireStore.Instance")
-    private val firebaseFireStore: FirebaseFirestore,
-    @Named("FirebaseStorage.Instance")
-    private val firebaseStorage: StorageReference
+    private val firebaseFireStore: FirebaseFirestore
 ) : ViewModel() {
     private val storage: FirebaseStorage by lazy { FirebaseStorage.getInstance() }
 
@@ -32,7 +38,7 @@ class HomeViewModel @Inject constructor(
         Helper.takeQR(activity)
     }
 
-    fun initTopBorrowDisplay(binding: FragmentHomeBinding, context: Context) {
+    fun initTopBorrowDisplay(binding: FragmentHomeBinding, context: Context, hostFragment: Fragment) {
         firebaseFireStore.collection("labass-app-item-description")
             .orderBy("modelBorrowCount", Query.Direction.DESCENDING)
             .limit(3)
@@ -51,38 +57,82 @@ class HomeViewModel @Inject constructor(
                 }
 
                 binding.apply {
-                    tvTitleTop1.text = topThreeList[0].itemName
-                    tvBorrowCountTop1.text = "${topThreeList[0].borrowCount} Borrows"
-                    val gsReference1 = storage.getReferenceFromUrl("gs://labass-app.appspot.com/${topThreeList[0].imageLink}.jpg")
-                    Glide.with(context)
-                        .load(gsReference1)
-                        .into(ivTop1)
-
-                    tvTitleTop2.text = topThreeList[1].itemName
-                    tvBorrowCountTop2.text = "${topThreeList[1].borrowCount} Borrows"
-                    val gsReference2 = storage.getReferenceFromUrl("gs://labass-app.appspot.com/${topThreeList[1].imageLink}.jpg")
-                    Glide.with(context)
-                        .load(gsReference2)
-                        .into(ivTop2)
-
-                    tvTitleTop3.text = topThreeList[2].itemName
-                    tvBorrowCountTop3.text = "${topThreeList[2].borrowCount} Borrows"
-                    val gsReference3 = storage.getReferenceFromUrl("gs://labass-app.appspot.com/${topThreeList[2].imageLink}.jpg")
-                    Glide.with(context)
-                        .load(gsReference3)
-                        .into(ivTop3)
+                    displayItemToTopBorrow(tvTitleTop1, tvBorrowCountTop1, topThreeList[0], context, ivTop1)
+                    displayItemToTopBorrow(tvTitleTop2, tvBorrowCountTop2, topThreeList[1], context, ivTop2)
+                    displayItemToTopBorrow(tvTitleTop3, tvBorrowCountTop3, topThreeList[2], context, ivTop3)
                 }
-
-                Helper.dismissDialog()
             }.addOnFailureListener { exception ->
-                Log.e(Constants.TAG, "Error getting top items: ", exception)
+                endTaskNotify(exception, hostFragment)
             }
     }
 
-    //  Used for displaying toast messages
-    private fun displayToastMessage(activity: Activity, message: String?) {
+    private fun displayItemToTopBorrow(
+        tvTitle: TextView,
+        tvBorrowCount: TextView,
+        topList: PopularModel,
+        context: Context,
+        image: ImageView
+    ) {
+        tvTitle.text = topList.itemName
+        tvBorrowCount.text = "${topList.borrowCount} Borrows"
+        val gsReference = storage.getReferenceFromUrl("gs://labass-app.appspot.com/${topList.imageLink}.jpg")
+        Glide.with(context)
+            .load(gsReference)
+            .into(image)
+    }
+
+    fun initListItemRV(rvListItems: RecyclerView, hostFragment: Fragment) {
+        Helper.displayCustomDialog(
+            hostFragment.requireActivity(),
+            R.layout.custom_dialog_loading
+        )
+
+        firebaseFireStore.collection("labass-app-item-description")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val documents = task.result.documents
+                    val retrievedData: ArrayList<HomeModelLive> = ArrayList()
+
+                    for (document in documents) {
+                        retrievedData.add(
+                            HomeModelLive(
+                                document.get("modelImageLink").toString(),
+                                document.get("modelName").toString(),
+                                document.get("modelCode").toString(),
+                                document.get("modelBorrowCount").toString(),
+                                document.get("modelStatus").toString()
+                            )
+                        )
+                    }
+                    val adapter = HomeAdapter(storage, hostFragment.requireContext()) {
+                        Helper.displayCustomDialog(
+                            hostFragment.requireActivity(),
+                            R.layout.selected_item_dialog
+                        )
+                    }
+                    adapter.setItem(retrievedData)
+                    rvListItems.adapter = adapter
+
+                    Helper.dismissDialog()
+                }
+            }.addOnFailureListener { exception ->
+                endTaskNotify(exception, hostFragment)
+            }
+    }
+
+    // Function to handle the end of tasks and notify the user about errors
+    private fun endTaskNotify(exception: Exception, hostFragment: Fragment) {
+        // Display an error message, log the exception, and dismiss the loading dialog
+        displayToastMessage("Error: ${exception.localizedMessage}", hostFragment)
+        Log.e(Constants.TAG, "isCredentialsWithUserTypeExist: ${exception.message}")
+        Helper.dismissDialog()
+    }
+
+    // Display toast message
+    private fun displayToastMessage(message: String, hostFragment: Fragment) {
         Toast.makeText(
-            activity,
+            hostFragment.requireContext(),
             message,
             Toast.LENGTH_LONG
         ).show()

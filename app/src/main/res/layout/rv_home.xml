@@ -45,7 +45,7 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/imageView12"
+                        android:id="@+id/ivHomeImage"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -60,7 +60,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/textView68"
+                android:id="@+id/tvHomeName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
@@ -76,11 +76,11 @@
                 android:fontFamily="@font/poppins"
                 android:text="@string/st_home_list_tool_code"
                 android:textSize="@dimen/_8ssp"
-                app:layout_constraintBottom_toTopOf="@+id/textView70"
-                app:layout_constraintStart_toStartOf="@+id/textView68" />
+                app:layout_constraintBottom_toTopOf="@+id/tvHomeBorrowCount"
+                app:layout_constraintStart_toStartOf="@+id/tvHomeName" />
 
             <TextView
-                android:id="@+id/textView70"
+                android:id="@+id/tvHomeBorrowCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
@@ -90,7 +90,7 @@
                 app:layout_constraintStart_toStartOf="@+id/textView69" />
 
             <TextView
-                android:id="@+id/textView71"
+                android:id="@+id/tvHomeCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
@@ -102,7 +102,7 @@
                 app:layout_constraintTop_toTopOf="@+id/textView69" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardView3"
+                android:id="@+id/cvHomeStatus"
                 android:layout_width="@dimen/_6sdp"
                 android:layout_height="@dimen/_6sdp"
                 app:cardBackgroundColor="@color/Theme.light"
@@ -111,7 +111,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView11"
+                android:id="@+id/ivHomeExpand"
                 android:layout_width="@dimen/_10sdp"
                 android:layout_height="@dimen/_10sdp"
                 android:src="@drawable/expand_colored"
