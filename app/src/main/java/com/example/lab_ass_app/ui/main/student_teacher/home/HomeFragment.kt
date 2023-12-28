@@ -23,6 +23,7 @@ import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModel
 import com.example.lab_ass_app.ui.main.student_teacher.home.see_all.SeeAllDialog
 import com.example.lab_ass_app.utils.Constants
 import com.google.android.material.navigation.NavigationView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -30,10 +31,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
     //  Binding and ViewModel
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var viewModel: HomeViewModel
+    private lateinit var homeViewModel: HomeViewModel
 
     //  SharedPref
     private lateinit var sharedPreferences: SharedPreferences
@@ -45,7 +47,7 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
     ): View {
         //  Binding and ViewModel
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this@HomeFragment)[HomeViewModel::class.java]
+        homeViewModel = ViewModelProvider(this@HomeFragment)[HomeViewModel::class.java]
 
         //  Init sharedPref
         sharedPreferences = requireActivity().getSharedPreferences("UserType_Pref", Context.MODE_PRIVATE)
@@ -55,10 +57,26 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
         //  Dismiss dialog for assurance
         Helper.dismissDialog()
 
+        //  Database retrieving functions
+        initDataRetrievalFromFirebase()
+
         initClickableViews()
         initUserType()
 
         return binding.root
+    }
+
+    private fun initDataRetrievalFromFirebase() {
+        Helper.displayCustomDialog(
+            requireActivity(),
+            R.layout.custom_dialog_loading
+        )
+
+        initTopBorrows()
+    }
+
+    private fun initTopBorrows() {
+        homeViewModel.initTopBorrowDisplay(binding)
     }
 
     private fun initUserType() {
@@ -83,7 +101,7 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
 
     private fun initCVQR() {
         binding.cvTakeQR.setOnClickListener {
-            viewModel.takeQR(requireActivity())
+            homeViewModel.takeQR(requireActivity())
         }
     }
 
