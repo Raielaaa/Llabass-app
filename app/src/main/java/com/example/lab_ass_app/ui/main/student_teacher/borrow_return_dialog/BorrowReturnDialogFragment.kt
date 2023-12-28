@@ -29,6 +29,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import javax.inject.Named
@@ -81,6 +82,11 @@ class BorrowReturnDialogFragment(
             btnBRProceed.setOnClickListener {
                 if (spUser2.selectedItem == "BORROW") {
                     if (tvDate.text != "Set Date" && tvTime.text != "Set Time") {
+                        Helper.displayCustomDialog(
+                            requireActivity(),
+                            R.layout.custom_dialog_loading
+                        )
+
                         borrowReturnDialogViewModel.insertInfoToFireStore(
                             BorrowModel(
                                 modelEmail = currentUserEmail,
@@ -94,9 +100,9 @@ class BorrowReturnDialogFragment(
                                 modelBorrowDateTime = getCurrentDateTime(),
                                 modelBorrowDeadlineDateTime = "${tvDate.text}, ${tvTime.text} "
                             ),
-                            this@BorrowReturnDialogFragment
+                            this@BorrowReturnDialogFragment,
+                            requireActivity()
                         )
-                        displayToastMessage("Insert on process")
                     } else {
                         displayToastMessage("Error: Borrow Date and Borrow Time must not be empty")
                     }
@@ -107,7 +113,7 @@ class BorrowReturnDialogFragment(
 
     private fun getCurrentDateTime(): String {
         //  Get current date and time
-        val currentDateTime = LocalDate.now()
+        val currentDateTime = LocalDateTime.now()
 
         //  Date-time format
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yy, hh:mm a")
@@ -224,6 +230,7 @@ class BorrowReturnDialogFragment(
         displayToastMessage("Error: ${exception.localizedMessage}")
         Log.e(Constants.TAG, "BorrowReturnDialogFragment: ${exception.message}")
         Helper.dismissDialog()
+        this.dismiss()
     }
 
     // Display toast message
@@ -231,7 +238,7 @@ class BorrowReturnDialogFragment(
         Toast.makeText(
             requireContext(),
             message,
-            Toast.LENGTH_LONG
+            Toast.LENGTH_SHORT
         ).show()
     }
 }

@@ -130,6 +130,55 @@ object Helper {
 
     @SuppressLint("ObsoleteSdkInt")
     fun displayCustomDialog(
+        activity: Activity,
+        layoutDialog: Int,
+        title: String,
+        content: String,
+        minWidthPercentage: Float = 0.75f
+    ) {
+        try {
+            if (!activity.isFinishing) {
+                dialog = Dialog(activity)
+
+                dialog?.apply {
+                    setContentView(layoutDialog)
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        window!!.setBackgroundDrawable(ResourcesCompat.getDrawable(
+                            activity.resources,
+                            R.drawable.custom_dialog_bg,
+                            null))
+                    }
+                    window!!.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    setCancelable(false)
+                    window!!.attributes.windowAnimations = R.style.animation
+
+                    // Calculate the minWidth in pixels based on the percentage of the screen width
+                    val screenWidth = getScreenWidth(activity)
+                    val minWidth = (screenWidth * minWidthPercentage).toInt()
+
+                    dialog?.apply {
+                        findViewById<ConstraintLayout>(R.id.clMain)?.minWidth = minWidth
+                        findViewById<TextView>(R.id.tvDialogOk)?.setOnClickListener {
+                            dialog?.dismiss()
+                        }
+                        findViewById<TextView>(R.id.tvDialogTitle)?.text = title
+                        findViewById<TextView>(R.id.tvDialogContent)?.text = content
+                    }
+                    show()
+                }
+            }
+        } catch (err: Exception) {
+            Log.e(TAG, "displayCustomDialog: ${err.message}")
+            displayToastMessage(
+                activity,
+                "Error: ${err.localizedMessage}"
+            )
+        }
+    }
+
+    @SuppressLint("ObsoleteSdkInt")
+    fun displayCustomDialog(
         hostFragment: Fragment,
         layoutDialog: Int,
         spinner: Spinner,

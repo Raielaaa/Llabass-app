@@ -12,7 +12,7 @@
     android:paddingBottom="@dimen/_20sdp">
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/tvDialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins"
@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/tvDialogContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
@@ -34,7 +34,7 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDialogTitle" />
 
     <TextView
         android:id="@+id/tvOkSignUpNotice"
@@ -46,8 +46,8 @@
         android:textColor="@color/Theme.color.main"
         android:textSize="@dimen/_16ssp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/textView11"
-        app:layout_constraintStart_toStartOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintEnd_toEndOf="@+id/tvDialogContent"
+        app:layout_constraintStart_toStartOf="@+id/tvDialogContent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDialogContent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
