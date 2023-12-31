@@ -86,6 +86,11 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
 
     private fun initTopBorrows() {
         homeViewModel.initTopBorrowDisplay(binding, requireContext(), this@HomeFragment)
+        initTopBorrowsSelected()
+    }
+
+    private fun initTopBorrowsSelected() {
+        homeViewModel.initTopBorrowDisplaySelected(binding, requireActivity())
     }
 
     private fun initUserType() {

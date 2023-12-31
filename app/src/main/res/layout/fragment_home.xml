@@ -309,7 +309,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView17" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView4"
+        android:id="@+id/cvTop1"
         android:layout_width="0dp"
         android:layout_height="@dimen/_110sdp"
         android:layout_marginTop="@dimen/_10sdp"
@@ -372,15 +372,15 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView5"
+        android:id="@+id/cvTop2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/cardView4"
+        app:layout_constraintBottom_toBottomOf="@+id/cvTop1"
         app:layout_constraintEnd_toStartOf="@+id/guideline11"
         app:layout_constraintStart_toStartOf="@+id/guideline10"
-        app:layout_constraintTop_toTopOf="@+id/cardView4">
+        app:layout_constraintTop_toTopOf="@+id/cvTop1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -435,14 +435,15 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cvTop3"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/cardView5"
+        app:layout_constraintBottom_toBottomOf="@+id/cvTop2"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toTopOf="@+id/cardView5">
+        app:layout_constraintTop_toTopOf="@+id/cvTop2">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -468,7 +469,6 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:maxLines="1"
                 android:id="@+id/tvTitleTop3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -476,6 +476,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/poppins"
                 android:gravity="center"
+                android:maxLines="1"
                 android:text="@string/st_home_item_placeholder"
                 android:textColor="@color/Theme.color.main"
                 android:textSize="@dimen/_10ssp"
@@ -513,7 +514,7 @@
         app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline14"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/cardView4">
+        app:layout_constraintTop_toBottomOf="@+id/cvTop1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clCategoryTools"

@@ -29,6 +29,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.lab_ass_app.MainActivity
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.ui.account.login.LoginFragment
@@ -37,6 +38,7 @@ import com.example.lab_ass_app.ui.account.login.google_facebook_bottom_dialog.In
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.BorrowReturnDialogFragment
 import com.facebook.login.LoginManager
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.storage.FirebaseStorage
 import java.lang.ref.WeakReference
 
 object Helper {
@@ -58,6 +60,7 @@ object Helper {
     val TAG: String = "MyTag"
 
     var hostFragmentInstanceForFacebookLogin: Fragment? = null
+    @SuppressLint("StaticFieldLeak")
     var navControllerFromMain: NavController? = null
 
     @SuppressLint("ObsoleteSdkInt")
@@ -118,6 +121,75 @@ object Helper {
         try {
             dialog?.findViewById<TextView>(R.id.tvDialogOk)?.setOnClickListener {
                 dialog?.dismiss()
+            }
+        } catch (err: Exception) {
+            Log.e(TAG, "displayCustomDialog: ${err.message}")
+            displayToastMessage(
+                activity,
+                "Error: ${err.localizedMessage}"
+            )
+        }
+    }
+
+    @SuppressLint("ObsoleteSdkInt")
+    fun displayCustomDialog(
+        activity: Activity,
+        layoutDialog: Int,
+        itemFullInfoModel: ItemFullInfoModel,
+        storage: FirebaseStorage,
+        minWidthPercentage: Float = 0.75f
+    ) {
+        try {
+            if (!activity.isFinishing) {
+                dialog = Dialog(activity)
+
+                dialog?.apply {
+                    setContentView(layoutDialog)
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        window!!.setBackgroundDrawable(ResourcesCompat.getDrawable(
+                            activity.resources,
+                            R.drawable.custom_dialog_bg,
+                            null))
+                    }
+                    window!!.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    setCancelable(false)
+                    window!!.attributes.windowAnimations = R.style.animation
+
+                    // Calculate the minWidth in pixels based on the percentage of the screen width
+                    val screenWidth = getScreenWidth(activity)
+                    val minWidth = (screenWidth * minWidthPercentage).toInt()
+
+                    dialog?.apply {
+                        setCancelable(true)
+                        findViewById<ConstraintLayout>(R.id.clMain)?.minWidth = minWidth
+                        findViewById<ConstraintLayout>(R.id.clMainSelectedItem)?.minWidth = minWidth
+//                        findViewById<ConstraintLayout>(R.id.clMain)?.setOnClickListener {
+//                            dismiss()
+//                        }
+                        findViewById<ImageView>(R.id.ivExitDialog)?.setOnClickListener {
+                            dismiss()
+                        }
+
+                        //  Content
+                        val gsReference = storage.getReferenceFromUrl("gs://labass-app.appspot.com/${itemFullInfoModel.itemImageLink}.jpg")
+                        val selectedItemImage = findViewById<ImageView>(R.id.ivSelectedItemSize)
+                        Glide.with(activity.applicationContext)
+                            .load(gsReference)
+                            .into(selectedItemImage)
+                        findViewById<TextView>(R.id.tvSelectedItemTitle).text = itemFullInfoModel.itemName
+                        findViewById<TextView>(R.id.tvSelectedItemCategory).text = itemFullInfoModel.itemCategory
+                        findViewById<TextView>(R.id.tvSelectedItemStatus).text = itemFullInfoModel.itemStatus
+                        findViewById<TextView>(R.id.tvSelectedItemContent).text = itemFullInfoModel.itemDescription
+
+                        try {
+                            findViewById<CardView>(R.id.cvQR).setOnClickListener {
+                                takeQR(getActivityReference()!!)
+                            }
+                        } catch (ignored: Exception) { }
+                    }
+                    show()
+                }
             }
         } catch (err: Exception) {
             Log.e(TAG, "displayCustomDialog: ${err.message}")

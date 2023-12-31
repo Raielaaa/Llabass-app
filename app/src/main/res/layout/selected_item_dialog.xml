@@ -9,7 +9,7 @@
     android:paddingBottom="@dimen/_20sdp">
 
     <ImageView
-        android:id="@+id/imageView27"
+        android:id="@+id/ivSelectedItemSize"
         android:layout_width="0dp"
         android:layout_height="@dimen/_130sdp"
         android:scaleType="centerCrop"
@@ -20,7 +20,7 @@
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <TextView
-        android:id="@+id/textView95"
+        android:id="@+id/tvSelectedItemTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_20sdp"
@@ -30,7 +30,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/_16sdp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView27" />
+        app:layout_constraintTop_toBottomOf="@+id/ivSelectedItemSize" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvQR"
@@ -40,7 +40,7 @@
         android:backgroundTint="@color/Theme.color.main"
         app:cardCornerRadius="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView95">
+        app:layout_constraintTop_toTopOf="@+id/tvSelectedItemTitle">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,8 +77,8 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:backgroundTint="@android:color/transparent"
         app:cardElevation="0dp"
-        app:layout_constraintStart_toStartOf="@+id/textView95"
-        app:layout_constraintTop_toBottomOf="@+id/textView95">
+        app:layout_constraintStart_toStartOf="@+id/tvSelectedItemTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvSelectedItemTitle">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -218,7 +218,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView101" />
 
     <TextView
-        android:id="@+id/textView103"
+        android:id="@+id/tvSelectedItemCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_5sdp"
@@ -231,7 +231,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView101" />
 
     <TextView
-        android:id="@+id/textView104"
+        android:id="@+id/tvSelectedItemStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_5sdp"
@@ -244,7 +244,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView102" />
 
     <TextView
-        android:id="@+id/textView105"
+        android:id="@+id/tvSelectedItemContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/selected_item_description"

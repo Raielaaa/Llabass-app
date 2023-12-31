@@ -6,7 +6,6 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
@@ -17,11 +16,11 @@ import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModelLive
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.Helper
+import com.example.lab_ass_app.utils.ItemFullInfoModel
 import com.example.lab_ass_app.utils.PopularModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import javax.inject.Named
@@ -32,6 +31,7 @@ class HomeViewModel @Inject constructor(
     private val firebaseFireStore: FirebaseFirestore
 ) : ViewModel() {
     private val storage: FirebaseStorage by lazy { FirebaseStorage.getInstance() }
+    private val fullInfoForTopItems: ArrayList<ItemFullInfoModel> = ArrayList()
 
     fun takeQR(activity: Activity) {
         //  Method for starting the camera
@@ -46,12 +46,33 @@ class HomeViewModel @Inject constructor(
             .addOnSuccessListener { querySnapshot ->
                 val topThreeList: MutableList<PopularModel> = mutableListOf()
 
-                querySnapshot.forEachIndexed { _, queryDocumentSnapshot ->
+                querySnapshot.forEachIndexed { index, queryDocumentSnapshot ->
+                    val imageLink = queryDocumentSnapshot.get("modelImageLink").toString()
+                    val itemName = queryDocumentSnapshot.get("modelName").toString()
+                    val itemBorrowCount = queryDocumentSnapshot.get("modelBorrowCount").toString()
+                    val itemCode = queryDocumentSnapshot.get("modelCode").toString()
+                    val itemCategory = queryDocumentSnapshot.get("modelCategory").toString()
+                    val itemDescription = queryDocumentSnapshot.get("modelDescription").toString()
+                    val itemSize = queryDocumentSnapshot.get("modelSize").toString()
+                    val itemStatus = queryDocumentSnapshot.get("modelStatus").toString()
+
                     topThreeList.add(
                         PopularModel(
-                            queryDocumentSnapshot.get("modelImageLink").toString(),
-                            queryDocumentSnapshot.get("modelName").toString(),
-                            queryDocumentSnapshot.get("modelBorrowCount").toString()
+                            imageLink,
+                            itemName,
+                            itemBorrowCount
+                        )
+                    )
+                    fullInfoForTopItems.add(
+                        ItemFullInfoModel(
+                            imageLink,
+                            itemName,
+                            itemSize,
+                            itemCategory,
+                            itemStatus,
+                            itemDescription,
+                            itemBorrowCount,
+                            itemCode
                         )
                     )
                 }
@@ -64,6 +85,29 @@ class HomeViewModel @Inject constructor(
             }.addOnFailureListener { exception ->
                 endTaskNotify(exception, hostFragment)
             }
+    }
+
+    fun initTopBorrowDisplaySelected(binding: FragmentHomeBinding, activity: Activity) {
+        binding.apply {
+            cvTop1.setOnClickListener {
+                displaySelectedItemCustomDialog(fullInfoForTopItems[0], activity)
+            }
+            cvTop2.setOnClickListener {
+                displaySelectedItemCustomDialog(fullInfoForTopItems[1], activity)
+            }
+            cvTop3.setOnClickListener {
+                displaySelectedItemCustomDialog(fullInfoForTopItems[2], activity)
+            }
+        }
+    }
+
+    private fun displaySelectedItemCustomDialog(fullInfoModel: ItemFullInfoModel, activity: Activity) {
+        Helper.displayCustomDialog(
+            activity,
+            R.layout.selected_item_dialog,
+            fullInfoModel,
+            storage
+        )
     }
 
     private fun displayItemToTopBorrow(
