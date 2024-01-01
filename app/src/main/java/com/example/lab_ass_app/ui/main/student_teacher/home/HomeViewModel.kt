@@ -3,6 +3,7 @@ package com.example.lab_ass_app.ui.main.student_teacher.home
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -14,6 +15,7 @@ import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentHomeBinding
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModelLive
+import com.example.lab_ass_app.ui.main.student_teacher.home.see_all.SeeAllDialog
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.DataCache
 import com.example.lab_ass_app.utils.Helper
@@ -33,21 +35,22 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     private val storage: FirebaseStorage by lazy { FirebaseStorage.getInstance() }
     private val fullInfoForTopItems: ArrayList<ItemFullInfoModel> = ArrayList()
+    private lateinit var topThreeList: MutableList<PopularModel>
 
     fun takeQR(activity: Activity) {
         //  Method for starting the camera
         Helper.takeQR(activity)
     }
 
-    fun initTopBorrowDisplay(binding: FragmentHomeBinding, context: Context, hostFragment: Fragment) {
+    fun initTopBorrowDisplay(binding: FragmentHomeBinding, context: Context, hostFragment: Fragment, btnSeeAll: Button? = null) {
         firebaseFireStore.collection("labass-app-item-description")
             .orderBy("modelBorrowCount", Query.Direction.DESCENDING)
             .limit(3)
             .get()
             .addOnSuccessListener { querySnapshot ->
-                val topThreeList: MutableList<PopularModel> = mutableListOf()
+                topThreeList = mutableListOf()
 
-                querySnapshot.forEachIndexed { index, queryDocumentSnapshot ->
+                querySnapshot.forEachIndexed { _, queryDocumentSnapshot ->
                     val imageLink = queryDocumentSnapshot.get("modelImageLink").toString()
                     val itemName = queryDocumentSnapshot.get("modelName").toString()
                     val itemBorrowCount = queryDocumentSnapshot.get("modelBorrowCount").toString()
@@ -61,7 +64,9 @@ class HomeViewModel @Inject constructor(
                         PopularModel(
                             imageLink,
                             itemName,
-                            itemBorrowCount
+                            itemBorrowCount,
+                            itemCode,
+                            itemStatus
                         )
                     )
 
@@ -78,6 +83,8 @@ class HomeViewModel @Inject constructor(
                         )
                     )
                 }
+
+                initSeeAllButtonRV(hostFragment, btnSeeAll)
 
                 binding.apply {
                     displayItemToTopBorrow(tvTitleTop1, tvBorrowCountTop1, topThreeList[0], context, ivTop1)
@@ -181,6 +188,51 @@ class HomeViewModel @Inject constructor(
             }.addOnFailureListener { exception ->
                 endTaskNotify(exception, hostFragment)
             }
+    }
+
+    private fun initSeeAllButtonRV(hostFragment: Fragment, seeAllButton: Button?) {
+        val storage = FirebaseStorage.getInstance()
+        val seeAllAdapter = HomeAdapter(
+            hostFragment.requireActivity(),
+            firebaseFireStore,
+            storage,
+            hostFragment.requireContext()
+        ) {
+            Helper.displayCustomDialog(
+                hostFragment.requireActivity(),
+                R.layout.selected_item_dialog
+            )
+        }
+
+        seeAllAdapter.setItem(
+            arrayListOf(
+                HomeModelLive(
+                    topThreeList[0].imageLink,
+                    topThreeList[0].itemName,
+                    topThreeList[0].itemCode,
+                    topThreeList[0].borrowCount,
+                    topThreeList[0].itemStatus
+                ),
+                HomeModelLive(
+                    topThreeList[1].imageLink,
+                    topThreeList[1].itemName,
+                    topThreeList[1].itemCode,
+                    topThreeList[1].borrowCount,
+                    topThreeList[1].itemStatus
+                ),
+                HomeModelLive(
+                    topThreeList[2].imageLink,
+                    topThreeList[2].itemName,
+                    topThreeList[2].itemCode,
+                    topThreeList[2].borrowCount,
+                    topThreeList[2].itemStatus
+                ),
+            )
+        )
+
+        seeAllButton?.setOnClickListener {
+            SeeAllDialog(seeAllAdapter).show(hostFragment.parentFragmentManager, "SeeAllDialog")
+        }
     }
 
     // Function to handle the end of tasks and notify the user about errors

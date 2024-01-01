@@ -20,23 +20,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentHomeBinding
-import com.example.lab_ass_app.utils.Helper
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
-import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModel
-import com.example.lab_ass_app.ui.main.student_teacher.home.see_all.SeeAllDialog
+import com.example.lab_ass_app.utils.Helper
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.DataCache
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -83,6 +74,16 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
         return binding.root
     }
 
+    private fun initClickableViews() {
+        initNavigationDrawer()
+        initBottomNavigationDrawer()
+        initFAB()
+        initListItemExpand()
+        initCVQR()
+        initObjectValues()
+        initColorTransitionForCategory()
+    }
+
     private fun initDataRetrievalFromFirebase() {
         initTopBorrows()
         initBottomRvList()
@@ -100,7 +101,7 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
     }
 
     private fun initTopBorrows() {
-        homeViewModel.initTopBorrowDisplay(binding, requireContext(), this@HomeFragment)
+        homeViewModel.initTopBorrowDisplay(binding, requireContext(), this@HomeFragment, binding.btnHomeSeeAll)
         initTopBorrowsSelected()
     }
 
@@ -110,17 +111,6 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
 
     private fun initUserType() {
         binding.tvUserType.text = sharedPreferences.getString("user_type", "USER")
-    }
-
-    private fun initClickableViews() {
-        initNavigationDrawer()
-        initBottomNavigationDrawer()
-        initFAB()
-        initSeeAllButton()
-        initListItemExpand()
-        initCVQR()
-        initObjectValues()
-        initColorTransitionForCategory()
     }
 
     private fun initObjectValues() {
@@ -137,19 +127,6 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
         binding.ivListItemExpand.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_listFragment)
         }
-    }
-
-    private fun initSeeAllButton() {
-//        val seeAllAdapter = HomeAdapter {
-//            Helper.displayCustomDialog(
-//                requireActivity(),
-//                R.layout.selected_item_dialog
-//            )
-//        }
-//
-//        binding.btnHomeSeeAll.setOnClickListener {
-//            SeeAllDialog(seeAllAdapter).show(parentFragmentManager, "SeeAllDialog")
-//        }
     }
 
     private fun initFAB() {
