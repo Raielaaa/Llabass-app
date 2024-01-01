@@ -1,5 +1,6 @@
 package com.example.lab_ass_app.ui.main.student_teacher.list
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,16 +10,29 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentListBinding
+import com.example.lab_ass_app.ui.main.student_teacher.home.HomeViewModel
 import com.example.lab_ass_app.utils.Helper
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModel
+import com.example.lab_ass_app.utils.DataCache
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.firestore.FirebaseFirestore
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+import javax.inject.Named
 
+@AndroidEntryPoint
 class ListFragment : Fragment() {
-    private lateinit var viewModel: ListViewModel
+    @Inject
+    @Named("FirebaseFireStore.Instance")
+    lateinit var fireStore: FirebaseFirestore
+
+    private lateinit var listViewModel: ListViewModel
+    private lateinit var homeViewModel: HomeViewModel
     private lateinit var binding: FragmentListBinding
 
     override fun onCreateView(
@@ -36,69 +50,14 @@ class ListFragment : Fragment() {
     }
 
     private fun initListRV() {
-//        val listItemsAdapter = HomeAdapter {
-//            Helper.displayCustomDialog(
-//                requireActivity(),
-//                R.layout.selected_item_dialog
-//            )
-//        }
-//        listItemsAdapter.setItem(
-//            ArrayList(
-//                listOf(
-//                    HomeModel(
-//                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
-//                        "PETRI DISH",
-//                        "384732",
-//                        "14 Borrows",
-//                        "AVAILABLE"
-//                    ),
-//                    HomeModel(
-//                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
-//                        "PETRI DISH",
-//                        "384732",
-//                        "14 Borrows",
-//                        "AVAILABLE"
-//                    ),
-//                    HomeModel(
-//                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
-//                        "PETRI DISH",
-//                        "384732",
-//                        "14 Borrows",
-//                        "AVAILABLE"
-//                    ),
-//                    HomeModel(
-//                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
-//                        "PETRI DISH",
-//                        "384732",
-//                        "14 Borrows",
-//                        "AVAILABLE"
-//                    ),
-//                    HomeModel(
-//                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
-//                        "PETRI DISH",
-//                        "384732",
-//                        "14 Borrows",
-//                        "AVAILABLE"
-//                    ),
-//                    HomeModel(
-//                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
-//                        "PETRI DISH",
-//                        "384732",
-//                        "14 Borrows",
-//                        "AVAILABLE"
-//                    ),
-//                    HomeModel(
-//                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
-//                        "PETRI DISH",
-//                        "384732",
-//                        "14 Borrows",
-//                        "AVAILABLE"
-//                    ),
-//                )
-//            )
-//        )
-//
-//        binding.rvListListItem.adapter = listItemsAdapter
+        //  Display on-click RV Tools
+        DataCache.cacheDataForCategory(
+            "Tools",
+            homeViewModel,
+            binding.rvListListItem,
+            this@ListFragment,
+            fireStore
+        )
     }
 
     private fun initNavigationDrawer() {
@@ -136,6 +95,15 @@ class ListFragment : Fragment() {
     private fun initColorTransitionForCategory() {
         binding.apply {
             cvCategoryTools.setOnClickListener {
+                //  Display on-click RV Tools
+                DataCache.cacheDataForCategory(
+                    "Tools",
+                    homeViewModel,
+                    binding.rvListListItem,
+                    this@ListFragment,
+                    fireStore
+                )
+
                 clCategoryTools.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.Theme_color_main))
                 tvCategoryToolsTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                 tvCategoryToolsCategory.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -150,6 +118,15 @@ class ListFragment : Fragment() {
                 ivCategoryChemPic.setImageURI(Uri.parse("android.resource://${requireActivity().packageName}/drawable/top_chem"))
             }
             cvCategoryChe.setOnClickListener {
+                //  Display on-click RV Chemicals
+                DataCache.cacheDataForCategory(
+                    "Chemicals",
+                    homeViewModel,
+                    binding.rvListListItem,
+                    this@ListFragment,
+                    fireStore
+                )
+
                 clCategoryChem.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.Theme_color_main))
                 tvCategoryChemTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                 tvCategoryChemCategory.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -164,5 +141,12 @@ class ListFragment : Fragment() {
                 ivCategoryToolsPic.setImageURI(Uri.parse("android.resource://${requireActivity().packageName}/drawable/top_tools_themecolor"))
             }
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        listViewModel = ViewModelProvider(this@ListFragment)[ListViewModel::class.java]
+        homeViewModel = ViewModelProvider(this@ListFragment)[HomeViewModel::class.java]
     }
 }

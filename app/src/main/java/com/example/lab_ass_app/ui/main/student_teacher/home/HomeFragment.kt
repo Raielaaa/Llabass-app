@@ -10,11 +10,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentHomeBinding
@@ -23,7 +25,9 @@ import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModel
 import com.example.lab_ass_app.ui.main.student_teacher.home.see_all.SeeAllDialog
 import com.example.lab_ass_app.utils.Constants
+import com.example.lab_ass_app.utils.DataCache
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +45,10 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
     @Inject
     @Named("FirebaseStorage.Instance")
     lateinit var firebaseStorage: StorageReference
+
+    @Inject
+    @Named("FirebaseFireStore.Instance")
+    lateinit var fireStore: FirebaseFirestore
 
     //  Binding and ViewModel
     private lateinit var binding: FragmentHomeBinding
@@ -81,7 +89,14 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
     }
 
     private fun initBottomRvList() {
-        homeViewModel.initListItemRV(binding.rvListItems, this@HomeFragment)
+        //  Initial display
+        DataCache.cacheDataForCategory(
+            "Tools",
+            homeViewModel,
+            binding.rvListItems,
+            this@HomeFragment,
+            fireStore
+        )
     }
 
     private fun initTopBorrows() {
@@ -185,6 +200,15 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
     private fun initColorTransitionForCategory() {
         binding.apply {
             cvCategoryTools.setOnClickListener {
+                //  Display on-click RV Tools
+                DataCache.cacheDataForCategory(
+                    "Tools",
+                    homeViewModel,
+                    binding.rvListItems,
+                    this@HomeFragment,
+                    fireStore
+                )
+
                 clCategoryTools.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.Theme_color_main))
                 tvCategoryToolsTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                 tvCategoryToolsCategory.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -199,6 +223,15 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
                 ivCategoryChemPic.setImageURI(Uri.parse("android.resource://${requireActivity().packageName}/drawable/top_chem"))
             }
             cvCategoryChem.setOnClickListener {
+                //  Display on-click RV Chemicals
+                DataCache.cacheDataForCategory(
+                    "Chemicals",
+                    homeViewModel,
+                    binding.rvListItems,
+                    this@HomeFragment,
+                    fireStore
+                )
+
                 clCategoryChem.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.Theme_color_main))
                 tvCategoryChemTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                 tvCategoryChemCategory.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))

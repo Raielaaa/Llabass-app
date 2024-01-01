@@ -1,17 +1,27 @@
 package com.example.lab_ass_app.ui.main.student_teacher.home.rv
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.RvHomeBinding
+import com.example.lab_ass_app.utils.Constants
+import com.example.lab_ass_app.utils.Helper
+import com.example.lab_ass_app.utils.ItemFullInfoModel
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
 class HomeAdapter(
+    private val activity: Activity,
+    private val fireStore: FirebaseFirestore,
     private val storage: FirebaseStorage,
     private val context: Context,
     private val clickedListener: () -> Unit
@@ -45,7 +55,42 @@ class HomeAdapter(
             }
             binding.root.setOnClickListener {
                 clickedListener()
+
+                displayDialogForSelectedItem(items)
             }
+        }
+
+        private fun displayDialogForSelectedItem(items: HomeModelLive) {
+            fireStore.collection("labass-app-item-description")
+                .document(items.itemCodeModel)
+                .get()
+                .addOnSuccessListener { documentSnapshot ->
+                    val imageLink = documentSnapshot.get("modelImageLink").toString()
+                    val itemName = documentSnapshot.get("modelName").toString()
+                    val itemBorrowCount = documentSnapshot.get("modelBorrowCount").toString()
+                    val itemCode = documentSnapshot.get("modelCode").toString()
+                    val itemCategory = documentSnapshot.get("modelCategory").toString()
+                    val itemDescription = documentSnapshot.get("modelDescription").toString()
+                    val itemSize = documentSnapshot.get("modelSize").toString()
+                    val itemStatus = documentSnapshot.get("modelStatus").toString()
+
+                    val itemsToBeShown = ItemFullInfoModel(
+                        imageLink,
+                        itemName, itemSize, itemCategory, itemStatus, itemDescription, itemBorrowCount, itemCode
+                    )
+
+                    //  Dismisses the loading dialog first before showing the selected item dialog
+                    Helper.dismissDialog()
+
+                    Helper.displayCustomDialog(
+                        activity,
+                        R.layout.selected_item_dialog,
+                        itemsToBeShown,
+                        storage
+                    )
+                }.addOnFailureListener { exception ->
+                    endTaskNotify(exception, activity)
+                }
         }
     }
 
@@ -60,5 +105,22 @@ class HomeAdapter(
 
     override fun onBindViewHolder(holder: HomeAdapterViewModel, position: Int) {
         holder.bind(collections[position], clickedListener)
+    }
+
+    // Function to handle the end of tasks and notify the user about errors
+    private fun endTaskNotify(exception: Exception, activity: Activity) {
+        // Display an error message, log the exception, and dismiss the loading dialog
+        displayToastMessage("Error: ${exception.localizedMessage}", activity)
+        Log.e(Constants.TAG, "isCredentialsWithUserTypeExist: ${exception.message}")
+        Helper.dismissDialog()
+    }
+
+    // Display toast message
+    private fun displayToastMessage(message: String, activity: Activity) {
+        Toast.makeText(
+            activity,
+            message,
+            Toast.LENGTH_LONG
+        ).show()
     }
 }

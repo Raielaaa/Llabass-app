@@ -15,6 +15,7 @@ import com.example.lab_ass_app.databinding.FragmentHomeBinding
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModelLive
 import com.example.lab_ass_app.utils.Constants
+import com.example.lab_ass_app.utils.DataCache
 import com.example.lab_ass_app.utils.Helper
 import com.example.lab_ass_app.utils.ItemFullInfoModel
 import com.example.lab_ass_app.utils.PopularModel
@@ -63,6 +64,7 @@ class HomeViewModel @Inject constructor(
                             itemBorrowCount
                         )
                     )
+
                     fullInfoForTopItems.add(
                         ItemFullInfoModel(
                             imageLink,
@@ -125,13 +127,14 @@ class HomeViewModel @Inject constructor(
             .into(image)
     }
 
-    fun initListItemRV(rvListItems: RecyclerView, hostFragment: Fragment) {
+    fun initListItemRV(rvListItems: RecyclerView, hostFragment: Fragment, category: String) {
         Helper.displayCustomDialog(
             hostFragment.requireActivity(),
             R.layout.custom_dialog_loading
         )
 
         firebaseFireStore.collection("labass-app-item-description")
+            .whereEqualTo("modelCategory", category)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -139,20 +142,35 @@ class HomeViewModel @Inject constructor(
                     val retrievedData: ArrayList<HomeModelLive> = ArrayList()
 
                     for (document in documents) {
+                        val imageLink = document.get("modelImageLink").toString()
+                        val itemName = document.get("modelName").toString()
+                        val itemCode = document.get("modelCode").toString()
+                        val itemBorrowCount = document.get("modelBorrowCount").toString()
+                        val itemStatus = document.get("modelStatus").toString()
+
                         retrievedData.add(
                             HomeModelLive(
-                                document.get("modelImageLink").toString(),
-                                document.get("modelName").toString(),
-                                document.get("modelCode").toString(),
-                                document.get("modelBorrowCount").toString(),
-                                document.get("modelStatus").toString()
+                                imageLink,
+                                itemName,
+                                itemCode,
+                                itemBorrowCount,
+                                itemStatus
                             )
                         )
                     }
-                    val adapter = HomeAdapter(storage, hostFragment.requireContext()) {
+
+                    if (category == "Tools") {
+                        DataCache.rvItemsForTools.clear()
+                        DataCache.rvItemsForTools.addAll(retrievedData)
+                    } else if (category == "Chemicals") {
+                        DataCache.rvItemsForChemicals.clear()
+                        DataCache.rvItemsForChemicals.addAll(retrievedData)
+                    }
+
+                    val adapter = HomeAdapter(hostFragment.requireActivity(), firebaseFireStore, storage, hostFragment.requireContext()) {
                         Helper.displayCustomDialog(
                             hostFragment.requireActivity(),
-                            R.layout.selected_item_dialog
+                            R.layout.custom_dialog_loading
                         )
                     }
                     adapter.setItem(retrievedData)
