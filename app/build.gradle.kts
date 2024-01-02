@@ -108,4 +108,7 @@ dependencies {
     kapt("com.github.bumptech.glide:compiler:4.16.0")
     //  Firebase UI for Glide use
     implementation("com.firebaseui:firebase-ui-storage:8.0.2")
+
+    //  Splash screen
+    implementation("androidx.core:core-splashscreen:1.1.0-alpha02")
 }

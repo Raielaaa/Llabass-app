@@ -13,12 +13,13 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/logo"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/logo"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Labassapp"
+        android:theme="@style/Theme.App.Starting"
         tools:targetApi="31">
+
         <activity
             android:name=".ui.account.login.google_facebook_bottom_dialog.FacebookAuthActivity"
             android:exported="false" />
