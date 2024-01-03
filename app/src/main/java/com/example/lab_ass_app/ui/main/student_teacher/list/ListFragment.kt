@@ -52,8 +52,22 @@ class ListFragment : Fragment() {
         initListRV()
         initColorTransitionForCategory()
         initSearchButton()
+        initRefreshButtonAndTV()
 
         return binding.root
+    }
+
+    private fun initRefreshButtonAndTV() {
+        binding.apply {
+            listViewModel.initRefreshButtonAndTV(
+                tvCurrentDate,
+                btnListRefresh,
+                this@ListFragment,
+                homeViewModel,
+                rvListListItem,
+                fireStore
+            )
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -69,7 +83,6 @@ class ListFragment : Fragment() {
                     val drawableEndWithPadding = etListSearch.right - drawableEndBounds.width() - extraPadding
                     if (event.rawX >= drawableEndWithPadding) {
                         // Clicked on the drawable end
-                        Toast.makeText(this@ListFragment.requireContext(), "Drawable end clicked", Toast.LENGTH_SHORT).show()
                         etListSearch.setText("")
                         return@setOnTouchListener true
                     }
@@ -87,8 +100,6 @@ class ListFragment : Fragment() {
 
                     listViewModel.initSearchFunction(
                         inputtedText,
-                        binding.etListSearch,
-                        this@ListFragment,
                         isToolsSelected
                     )
                 }
@@ -147,6 +158,7 @@ class ListFragment : Fragment() {
         binding.apply {
             cvCategoryTools.setOnClickListener {
                 //  Display on-click RV Tools
+                etListSearch.setText("")
                 DataCache.cacheDataForCategory(
                     "Tools",
                     homeViewModel,
@@ -171,6 +183,7 @@ class ListFragment : Fragment() {
             }
             cvCategoryChe.setOnClickListener {
                 //  Display on-click RV Chemicals
+                etListSearch.setText("")
                 DataCache.cacheDataForCategory(
                     "Chemicals",
                     homeViewModel,

@@ -3,7 +3,9 @@ package com.example.lab_ass_app.ui.main.student_teacher.home
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import android.view.MotionEvent
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast

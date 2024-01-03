@@ -56,7 +56,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/textView60"
+        android:id="@+id/tvCurrentDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_20sdp"
@@ -67,16 +67,16 @@
         app:layout_constraintTop_toBottomOf="@+id/tosCardView8" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnListRefresh"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_35sdp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/experiments_refresh_button"
-        app:layout_constraintBottom_toBottomOf="@+id/textView60"
+        app:layout_constraintBottom_toBottomOf="@+id/tvCurrentDate"
         app:layout_constraintEnd_toStartOf="@+id/guideline18"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textView60"
-        app:layout_constraintTop_toTopOf="@+id/textView60" />
+        app:layout_constraintStart_toEndOf="@+id/tvCurrentDate"
+        app:layout_constraintTop_toTopOf="@+id/tvCurrentDate" />
 
     <EditText
         android:id="@+id/etListSearch"
@@ -99,7 +99,7 @@
         android:textSize="@dimen/_8ssp"
         app:layout_constraintEnd_toStartOf="@+id/guideline18"
         app:layout_constraintStart_toStartOf="@+id/guideline17"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/btnListRefresh" />
 
     <TextView
         android:id="@+id/textView61"

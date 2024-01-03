@@ -72,7 +72,7 @@
 
     <TextView
         android:textColor="@color/Theme.color.main"
-        android:id="@+id/textView60"
+        android:id="@+id/tvCurrentDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/experiments_date_placeholder"
@@ -87,14 +87,14 @@
         android:backgroundTint="@color/Theme.red"
         android:fontFamily="@font/poppins_bold"
         app:layout_constraintHorizontal_bias="1.0"
-        android:id="@+id/button2"
+        android:id="@+id/btnListRefresh"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_35sdp"
         android:text="@string/experiments_refresh_button"
-        app:layout_constraintBottom_toBottomOf="@+id/textView60"
+        app:layout_constraintBottom_toBottomOf="@+id/tvCurrentDate"
         app:layout_constraintEnd_toStartOf="@+id/guideline20"
-        app:layout_constraintStart_toEndOf="@+id/textView60"
-        app:layout_constraintTop_toTopOf="@+id/textView60" />
+        app:layout_constraintStart_toEndOf="@+id/tvCurrentDate"
+        app:layout_constraintTop_toTopOf="@+id/tvCurrentDate" />
 
     <androidx.recyclerview.widget.RecyclerView
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -106,6 +106,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline20"
         app:layout_constraintStart_toStartOf="@+id/guideline19"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/btnListRefresh" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
