@@ -1,5 +1,6 @@
 package com.example.lab_ass_app.utils
 
+import android.annotation.SuppressLint
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,8 @@ import com.google.firebase.storage.FirebaseStorage
 object DataCache {
     val rvItemsForTools: ArrayList<HomeModelLive> = ArrayList()
     val rvItemsForChemicals: ArrayList<HomeModelLive> = ArrayList()
+    @SuppressLint("StaticFieldLeak")
+    lateinit var adapter: HomeAdapter
 
     fun cacheDataForCategory(
         category: String,
@@ -29,7 +32,7 @@ object DataCache {
         } else {
             val firebaseStorage = FirebaseStorage.getInstance()
 
-            val adapter = HomeAdapter(
+            adapter = HomeAdapter(
                 hostFragment.requireActivity(),
                 fireStore,
                 firebaseStorage,

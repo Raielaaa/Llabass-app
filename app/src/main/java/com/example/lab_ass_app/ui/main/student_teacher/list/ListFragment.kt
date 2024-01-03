@@ -1,12 +1,17 @@
 package com.example.lab_ass_app.ui.main.student_teacher.list
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -34,6 +39,7 @@ class ListFragment : Fragment() {
     private lateinit var listViewModel: ListViewModel
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var binding: FragmentListBinding
+    private var isToolsSelected: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,8 +51,53 @@ class ListFragment : Fragment() {
         initNavigationDrawer()
         initListRV()
         initColorTransitionForCategory()
+        initSearchButton()
 
         return binding.root
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun initSearchButton() {
+        binding.apply {
+            etListSearch.setOnTouchListener { _, event ->
+                if (event.action == MotionEvent.ACTION_UP) {
+                    val drawableEnd = 2 // Index for the drawable end
+                    val extraPadding = 60 // Drawable padding in dp
+                    val drawableEndBounds = etListSearch.compoundDrawablesRelative[drawableEnd].bounds
+
+                    // Adjusting for drawable padding
+                    val drawableEndWithPadding = etListSearch.right - drawableEndBounds.width() - extraPadding
+                    if (event.rawX >= drawableEndWithPadding) {
+                        // Clicked on the drawable end
+                        Toast.makeText(this@ListFragment.requireContext(), "Drawable end clicked", Toast.LENGTH_SHORT).show()
+                        etListSearch.setText("")
+                        return@setOnTouchListener true
+                    }
+                }
+                false
+            }
+
+            etListSearch.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                    TODO("Not yet implemented")
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    val inputtedText: String = p0.toString()
+
+                    listViewModel.initSearchFunction(
+                        inputtedText,
+                        binding.etListSearch,
+                        this@ListFragment,
+                        isToolsSelected
+                    )
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+//                    TODO("Not yet implemented")
+                }
+            })
+        }
     }
 
     private fun initListRV() {
@@ -103,6 +154,7 @@ class ListFragment : Fragment() {
                     this@ListFragment,
                     fireStore
                 )
+                isToolsSelected = true
 
                 clCategoryTools.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.Theme_color_main))
                 tvCategoryToolsTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -126,6 +178,7 @@ class ListFragment : Fragment() {
                     this@ListFragment,
                     fireStore
                 )
+                isToolsSelected = false
 
                 clCategoryChem.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.Theme_color_main))
                 tvCategoryChemTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
