@@ -237,7 +237,7 @@
     <EditText
         android:background="@drawable/report_bg"
         android:padding="@dimen/_10sdp"
-        android:id="@+id/editTextText2"
+        android:id="@+id/etReportTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -256,10 +256,10 @@
         android:text="@string/report_description"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintStart_toStartOf="@+id/guideline31"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
+        app:layout_constraintTop_toBottomOf="@+id/etReportTitle" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine2"
+        android:id="@+id/etReportContent"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/report_bg"
