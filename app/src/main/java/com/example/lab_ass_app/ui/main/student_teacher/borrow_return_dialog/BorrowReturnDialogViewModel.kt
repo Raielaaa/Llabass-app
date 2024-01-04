@@ -24,8 +24,9 @@ class BorrowReturnDialogViewModel @Inject constructor(
         hostFragment: BottomSheetDialogFragment,
         activity: Activity
     ) {
+        Log.d(Constants.TAG, "${borrowModel.modelLRN}-${borrowModel.modelEmail}-${borrowModel.modelBorrowDateTime.replace(" ", "").replace("/", "_")}")
         firebaseFireStore.collection("labass-app-borrow-log")
-            .document("${borrowModel.modelLRN}-${borrowModel.modelEmail}")
+            .document("${borrowModel.modelLRN}-${borrowModel.modelEmail}-${borrowModel.modelBorrowDateTime.replace(" ", "").replace("/", "_")}")
             .set(borrowModel)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
