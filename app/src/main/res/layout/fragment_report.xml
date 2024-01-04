@@ -184,7 +184,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView88" />
 
     <TextView
-        android:id="@+id/textView90"
+        android:id="@+id/tvReportName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/report_name_placeholder"
@@ -197,7 +197,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView9" />
 
     <TextView
-        android:id="@+id/textView91"
+        android:id="@+id/tvReportCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/report_item_num_placeholder"
@@ -210,7 +210,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView88" />
 
     <TextView
-        android:id="@+id/textView92"
+        android:id="@+id/tvReportCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/report_category"
@@ -268,13 +268,13 @@
         android:gravity="start|top"
         android:inputType="textMultiLine"
         android:padding="@dimen/_10sdp"
-        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintBottom_toTopOf="@+id/btnReportSubmit"
         app:layout_constraintEnd_toStartOf="@+id/guideline32"
         app:layout_constraintStart_toStartOf="@+id/guideline31"
         app:layout_constraintTop_toBottomOf="@+id/textView94" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btnReportSubmit"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_45sdp"
         android:layout_marginBottom="@dimen/_10sdp"

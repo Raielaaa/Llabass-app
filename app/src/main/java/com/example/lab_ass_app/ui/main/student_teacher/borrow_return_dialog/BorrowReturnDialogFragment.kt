@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.text.color
 import androidx.navigation.fragment.findNavController
 import androidx.lifecycle.ViewModelProvider
@@ -145,7 +146,7 @@ class BorrowReturnDialogFragment(
 
     private fun initReportTv() {
         binding.tvReport.setOnClickListener {
-            findNavController().navigate(R.id.reportFragment)
+            findNavController().navigate(R.id.reportFragment, bundleOf("ScannedItemInfo" to itemInfoModel.modelCode))
             this.dismiss()
         }
     }
