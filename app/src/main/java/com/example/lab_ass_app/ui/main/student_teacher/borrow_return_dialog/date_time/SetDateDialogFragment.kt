@@ -45,23 +45,37 @@ class SetDateDialogFragment(
                 this@SetDateDialogFragment.dismiss()
                 Toast.makeText(
                     requireContext(),
-                    "cancel",
+                    "Canceled",
                     Toast.LENGTH_LONG
                 ).show()
             }
             tvSet.setOnClickListener {
-                val day = datePicker.dayOfMonth
-                val month = datePicker.month + 1
-                val year = datePicker.year
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(datePicker.year, datePicker.month, datePicker.dayOfMonth)
 
-                Toast.makeText(
-                    requireContext(),
-                    "Date selected",
-                    Toast.LENGTH_LONG
-                ).show()
-//                dateTimeSelectedListener.onDateSelected("$day · $month · $year")
-                dateTimeSelectedListener.onDateSelected("$day/$month/$year")
-                this@SetDateDialogFragment.dismiss()
+                val currentDate = Calendar.getInstance()
+
+                // Check if the selected date is less than or equal the current date or more than 6 days in the future
+                if (selectedDate.before(currentDate) || selectedDate.timeInMillis == currentDate.timeInMillis || selectedDate.timeInMillis > currentDate.timeInMillis + 6 * 24 * 60 * 60 * 1000) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Please select a date within the allowed range (1-6 days)",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    val day = datePicker.dayOfMonth
+                    val month = datePicker.month + 1
+                    val year = datePicker.year
+
+                    Toast.makeText(
+                        requireContext(),
+                        "Date selected",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    dateTimeSelectedListener.onDateSelected("$day/$month/$year")
+                    this@SetDateDialogFragment.dismiss()
+                }
             }
         }
     }
@@ -69,9 +83,5 @@ class SetDateDialogFragment(
     override fun onStart() {
         super.onStart()
         dialog?.window?.setWindowAnimations(R.style.animation)
-    }
-
-    interface DateSelectedListener {
-        fun onDateSelected(selectedDate: String)
     }
 }

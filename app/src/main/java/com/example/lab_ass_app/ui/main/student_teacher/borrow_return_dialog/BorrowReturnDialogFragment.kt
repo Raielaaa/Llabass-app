@@ -145,7 +145,6 @@ class BorrowReturnDialogFragment(
 
     private fun initReportTv() {
         binding.tvReport.setOnClickListener {
-            Toast.makeText(mainActivity, "clicked", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.reportFragment)
             this.dismiss()
         }
