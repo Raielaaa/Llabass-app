@@ -43,11 +43,6 @@ class SetDateDialogFragment(
         binding.apply {
             tvCancel.setOnClickListener {
                 this@SetDateDialogFragment.dismiss()
-                Toast.makeText(
-                    requireContext(),
-                    "Canceled",
-                    Toast.LENGTH_LONG
-                ).show()
             }
             tvSet.setOnClickListener {
                 val selectedDate = Calendar.getInstance()
@@ -66,12 +61,6 @@ class SetDateDialogFragment(
                     val day = datePicker.dayOfMonth
                     val month = datePicker.month + 1
                     val year = datePicker.year
-
-                    Toast.makeText(
-                        requireContext(),
-                        "Date selected",
-                        Toast.LENGTH_LONG
-                    ).show()
 
                     dateTimeSelectedListener.onDateSelected("$day/$month/$year")
                     this@SetDateDialogFragment.dismiss()

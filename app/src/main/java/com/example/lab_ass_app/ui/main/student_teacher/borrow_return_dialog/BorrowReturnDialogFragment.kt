@@ -88,21 +88,20 @@ class BorrowReturnDialogFragment(
                             R.layout.custom_dialog_loading
                         )
 
-                        borrowReturnDialogViewModel.insertInfoToFireStore(
-                            BorrowModel(
-                                modelEmail = currentUserEmail,
-                                modelLRN = currentUserLRN,
-                                modelUserType = currentUserType,
-                                modelUserID = currentUserID,
-                                modelItemCode = itemInfoModel.modelCode,
-                                modelItemName = itemInfoModel.modelName,
-                                modelItemCategory = itemInfoModel.modelCategory,
-                                modelItemSize = itemInfoModel.modelSize,
-                                modelBorrowDateTime = getCurrentDateTime(),
-                                modelBorrowDeadlineDateTime = "${tvDate.text}, ${tvTime.text} "
-                            ),
+                        borrowReturnDialogViewModel.checksTheNumberOfBorrows(
+                            requireActivity(),
+                            "$currentUserLRN-$currentUserEmail",
                             this@BorrowReturnDialogFragment,
-                            requireActivity()
+                            currentUserEmail,
+                            currentUserLRN,
+                            currentUserType,
+                            currentUserID,
+                            itemInfoModel.modelCode,
+                            itemInfoModel.modelName,
+                            itemInfoModel.modelCategory,
+                            itemInfoModel.modelSize,
+                            getCurrentDateTime(),
+                            "${tvDate.text}, ${tvTime.text}"
                         )
                     } else {
                         displayToastMessage("Error: Borrow Date and Borrow Time must not be empty")

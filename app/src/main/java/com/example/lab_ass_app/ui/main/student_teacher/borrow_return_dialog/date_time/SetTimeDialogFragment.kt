@@ -47,12 +47,6 @@ class SetTimeDialogFragment(
                 val selectedMinute: Int = timePicker.minute
                 val amOrPm = if (timePicker.hour >= 12) "PM" else "AM"
 
-                Toast.makeText(
-                    requireContext(),
-                    "Time selected",
-                    Toast.LENGTH_LONG
-                ).show()
-
                 dateTimeSelectedListener.onTimeSelected("${dateTimeDecimalFormal.format(selectedHour)} : ${dateTimeDecimalFormal.format(selectedMinute)} $amOrPm")
                 this@SetTimeDialogFragment.dismiss()
             }
