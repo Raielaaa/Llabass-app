@@ -5,7 +5,7 @@
     android:background="@drawable/main_bg_3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.student_teacher.borrow_return_dialog.ReportFragment">
+    tools:context=".ui.main.student_teacher.borrow_return_dialog.report.ReportFragment">
 
     <ImageView
         android:id="@+id/imageView25"

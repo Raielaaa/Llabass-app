@@ -5,6 +5,7 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab_ass_app.R
+import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.BorrowModel
 import com.example.lab_ass_app.ui.main.student_teacher.home.HomeViewModel
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModelLive
@@ -16,6 +17,8 @@ object DataCache {
     val rvItemsForChemicals: ArrayList<HomeModelLive> = ArrayList()
     @SuppressLint("StaticFieldLeak")
     lateinit var adapter: HomeAdapter
+
+    var borrowedItemsInfo: ArrayList<BorrowModel> = ArrayList()
 
     fun cacheDataForCategory(
         category: String,

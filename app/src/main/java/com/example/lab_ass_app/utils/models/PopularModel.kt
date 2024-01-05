@@ -1,4 +1,4 @@
-package com.example.lab_ass_app.utils
+package com.example.lab_ass_app.utils.models
 
 data class PopularModel(
     val imageLink: String,

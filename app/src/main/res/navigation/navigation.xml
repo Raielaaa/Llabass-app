@@ -324,7 +324,7 @@
     </dialog>
     <fragment
         android:id="@+id/reportFragment"
-        android:name="com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.ReportFragment"
+        android:name="com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.report.ReportFragment"
         android:label="fragment_report"
         tools:layout="@layout/fragment_report" >
         <action

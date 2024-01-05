@@ -68,6 +68,9 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
         //  Database retrieving functions
         initDataRetrievalFromFirebase()
 
+        //  Init homeViewModel in Helper object class
+        Helper.homeBinding = binding
+
         initClickableViews()
         initUserType()
 
@@ -87,6 +90,10 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
     private fun initDataRetrievalFromFirebase() {
         initTopBorrows()
         initBottomRvList()
+        homeViewModel.retrieveBorrowedItemInfoFromDB(
+            this@HomeFragment,
+            binding
+        )
     }
 
     private fun initBottomRvList() {

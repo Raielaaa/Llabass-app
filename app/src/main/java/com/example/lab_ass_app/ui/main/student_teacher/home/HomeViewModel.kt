@@ -1,28 +1,31 @@
 package com.example.lab_ass_app.ui.main.student_teacher.home
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.util.Log
-import android.view.MotionEvent
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentHomeBinding
+import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.BorrowModel
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModelLive
 import com.example.lab_ass_app.ui.main.student_teacher.home.see_all.SeeAllDialog
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.DataCache
 import com.example.lab_ass_app.utils.Helper
-import com.example.lab_ass_app.utils.ItemFullInfoModel
-import com.example.lab_ass_app.utils.PopularModel
+import com.example.lab_ass_app.utils.models.ItemFullInfoModel
+import com.example.lab_ass_app.utils.models.PopularModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
@@ -30,10 +33,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import javax.inject.Named
 
+@Suppress("NAME_SHADOWING")
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     @Named("FirebaseFireStore.Instance")
-    private val firebaseFireStore: FirebaseFirestore
+    private val firebaseFireStore: FirebaseFirestore,
+    @Named("FirebaseAuth.Instance")
+    private val firebaseAuth: FirebaseAuth
 ) : ViewModel() {
     private val storage: FirebaseStorage by lazy { FirebaseStorage.getInstance() }
     private val fullInfoForTopItems: ArrayList<ItemFullInfoModel> = ArrayList()
@@ -252,5 +258,87 @@ class HomeViewModel @Inject constructor(
             message,
             Toast.LENGTH_LONG
         ).show()
+    }
+
+    fun retrieveBorrowedItemInfoFromDB(
+        hostFragment: Fragment,
+        binding: FragmentHomeBinding
+    ) {
+        val userID = firebaseAuth.currentUser?.uid
+
+        firebaseFireStore.collection("labass-app-user-account-initial")
+            .document(userID.toString())
+            .get()
+            .addOnSuccessListener { documentSnapshot ->
+                val userLRN = documentSnapshot.get("userLRNModel")
+                val userEmail = documentSnapshot.get("userEmailModel")
+                val filter = "$userLRN-$userEmail"
+
+                firebaseFireStore.collection("labass-app-borrow-log")
+                    .whereGreaterThanOrEqualTo(FieldPath.documentId(), filter)
+                    .whereLessThan(FieldPath.documentId(), filter + '\uF7FF')
+                    .get()
+                    .addOnSuccessListener { documentSnapshot ->
+                        val retrievedData: ArrayList<BorrowModel> = ArrayList()
+
+                        for (document in documentSnapshot.documents) {
+                            retrievedData.add(
+                                BorrowModel(
+                                    modelEmail = document.get("modelEmail").toString(),
+                                    modelLRN = document.get("modelLRN").toString(),
+                                    modelUserType = document.get("modelUserType").toString(),
+                                    modelUserID = document.get("modelUserID").toString(),
+                                    modelItemCode = document.get("modelItemCode").toString(),
+                                    modelItemName = document.get("modelItemName").toString(),
+                                    modelItemCategory = document.get("modelItemCategory").toString(),
+                                    modelItemSize = document.get("modelItemSize").toString(),
+                                    modelBorrowDateTime = document.get("modelBorrowDateTime").toString(),
+                                    modelBorrowDeadlineDateTime = document.get("modelModelDeadlineDateTime").toString()
+                                )
+                            )
+                        }
+
+                        DataCache.borrowedItemsInfo = retrievedData
+                        initHomeUserStatusUI(binding, hostFragment)
+                    }.addOnFailureListener { exception ->
+                        endTaskNotify(exception, hostFragment)
+                    }
+            }.addOnFailureListener { exception ->
+                endTaskNotify(exception, hostFragment)
+            }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun initHomeUserStatusUI(binding: FragmentHomeBinding, hostFragment: Fragment) {
+        val borrowCount = DataCache.borrowedItemsInfo.size
+
+        binding.apply {
+            when (borrowCount) {
+                3 -> {
+                    tvHomePending.text = "$borrowCount/3"
+                    tvHomeStatus.apply {
+                        text = "Limit reached!"
+                        setTextColor(ContextCompat.getColor(hostFragment.requireContext(), R.color.Theme_red))
+                    }
+                    cvHomeStatus.setCardBackgroundColor(ContextCompat.getColor(hostFragment.requireContext(), R.color.Theme_green))
+                }
+                in 1..2 -> {
+                    tvHomePending.text = "$borrowCount/3"
+                    tvHomeStatus.apply {
+                        text = "On-borrow"
+                        setTextColor(ContextCompat.getColor(hostFragment.requireContext(), R.color.Theme_green))
+                    }
+                    cvHomeStatus.setCardBackgroundColor(ContextCompat.getColor(hostFragment.requireContext(), R.color.Theme_green))
+                }
+                else -> {
+                    tvHomePending.text = "$borrowCount/3"
+                    tvHomeStatus.apply {
+                        text = "Available"
+                        setTextColor(ContextCompat.getColor(hostFragment.requireContext(), R.color.Theme_light))
+                    }
+                    cvHomeStatus.setCardBackgroundColor(ContextCompat.getColor(hostFragment.requireContext(), R.color.Theme_light))
+                }
+            }
+        }
     }
 }

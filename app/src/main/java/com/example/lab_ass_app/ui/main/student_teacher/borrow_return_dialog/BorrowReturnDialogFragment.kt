@@ -22,14 +22,14 @@ import com.example.lab_ass_app.databinding.FragmentBorrowReturnDialogBinding
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.date_time.DateTimeSelectedListener
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.date_time.SetDateDialogFragment
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.date_time.SetTimeDialogFragment
+import com.example.lab_ass_app.ui.main.student_teacher.home.HomeViewModel
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.Helper
-import com.example.lab_ass_app.utils.ItemInfoModel
+import com.example.lab_ass_app.utils.models.ItemInfoModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -52,6 +52,7 @@ class BorrowReturnDialogFragment(
 
     private lateinit var binding: FragmentBorrowReturnDialogBinding
     private lateinit var borrowReturnDialogViewModel: BorrowReturnDialogViewModel
+    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,6 +60,7 @@ class BorrowReturnDialogFragment(
     ): View {
         binding = FragmentBorrowReturnDialogBinding.inflate(inflater, container, false)
         borrowReturnDialogViewModel = ViewModelProvider(this@BorrowReturnDialogFragment)[BorrowReturnDialogViewModel::class.java]
+        homeViewModel = ViewModelProvider(this@BorrowReturnDialogFragment)[HomeViewModel::class.java]
 
         initViews()
 
@@ -88,7 +90,8 @@ class BorrowReturnDialogFragment(
                             R.layout.custom_dialog_loading
                         )
 
-                        borrowReturnDialogViewModel.checksTheNumberOfBorrows(
+                        borrowReturnDialogViewModel.checkBorrowAvailability(
+                            homeViewModel,
                             requireActivity(),
                             "$currentUserLRN-$currentUserEmail",
                             this@BorrowReturnDialogFragment,
@@ -106,6 +109,8 @@ class BorrowReturnDialogFragment(
                     } else {
                         displayToastMessage("Error: Borrow Date and Borrow Time must not be empty")
                     }
+                } else if (spUser2.selectedItem == "RETURN") {
+                    TODO("Confirm Delete Dialog")
                 }
             }
         }
@@ -126,9 +131,15 @@ class BorrowReturnDialogFragment(
             tvItemName.text = itemInfoModel.modelName
             tvName.text = currentUserEmail
             tvCategory.text = itemInfoModel.modelCategory
-            tvStatus.text = itemInfoModel.modelStatus
             tvDescription.text = itemInfoModel.modelDescription
             tvLRN.text = "$currentUserLRN - $currentUserType"
+
+            if (itemInfoModel.modelStatus == "Unavailable") {
+                tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.Theme_red))
+            } else if (itemInfoModel.modelStatus == "Available") {
+                tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.Theme_green))
+            }
+            tvStatus.text = itemInfoModel.modelStatus
         }
     }
 

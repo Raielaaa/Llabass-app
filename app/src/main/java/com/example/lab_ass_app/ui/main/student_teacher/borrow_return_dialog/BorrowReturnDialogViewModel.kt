@@ -6,13 +6,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.example.lab_ass_app.R
+import com.example.lab_ass_app.ui.main.student_teacher.home.HomeViewModel
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.Helper
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.core.FieldFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import javax.inject.Named
@@ -25,20 +24,34 @@ class BorrowReturnDialogViewModel @Inject constructor(
     private fun insertInfoToFireStore(
         borrowModel: BorrowModel,
         hostFragment: BottomSheetDialogFragment,
-        activity: Activity
+        activity: Activity,
+        homeViewModel: HomeViewModel
     ) {
         firebaseFireStore.collection("labass-app-borrow-log")
             .document("${borrowModel.modelLRN}-${borrowModel.modelEmail}-${borrowModel.modelBorrowDateTime.replace(" ", "").replace("/", "_")}")
             .set(borrowModel)
             .addOnCompleteListener { task ->
+                Log.d(Constants.TAG, "checkBorrowAvailability: cp-4")
                 if (task.isSuccessful) {
-                    Helper.dismissDialog()
-                    Helper.displayCustomDialog(
-                        activity,
-                        R.layout.custom_dialog_notice,
-                        "Borrow notice",
-                        "Borrow registration for the item has been successfully completed."
-                    )
+                    firebaseFireStore.collection("labass-app-item-description")
+                        .document(borrowModel.modelItemCode)
+                        .update("modelStatus", "Unavailable")
+                        .addOnSuccessListener {
+                            homeViewModel.retrieveBorrowedItemInfoFromDB(
+                                hostFragment,
+                                Helper.homeBinding!!
+                            )
+
+                            Helper.dismissDialog()
+                            Helper.displayCustomDialog(
+                                activity,
+                                R.layout.custom_dialog_notice,
+                                "Borrow notice",
+                                "Borrow registration for the item has been successfully completed."
+                            )
+                        }.addOnFailureListener { exception ->
+                            endTaskNotify(exception, hostFragment)
+                        }
                 } else {
                     Helper.dismissDialog()
                     displayToastMessage("An error occurred", hostFragment)
@@ -49,57 +62,106 @@ class BorrowReturnDialogViewModel @Inject constructor(
             }
     }
 
-    fun checksTheNumberOfBorrows(activity: Activity, filter: String, hostFragment: BottomSheetDialogFragment, vararg userInfo: String) {
-        firebaseFireStore.collection("labass-app-borrow-log")
-            .whereGreaterThanOrEqualTo(FieldPath.documentId(), filter)
-            .whereLessThan(FieldPath.documentId(), filter + '\uF7FF')
+    fun checkBorrowAvailability(
+        homeViewModel: HomeViewModel,
+        activity: Activity,
+        filter: String, hostFragment: BottomSheetDialogFragment, vararg userInfo: String) {
+        Log.d(Constants.TAG, "checkBorrowAvailability: Entry")
+
+        firebaseFireStore.collection("labass-app-item-description")
+            .document(userInfo[4])
             .get()
-            .addOnSuccessListener { querySnapshot ->
-                val count = querySnapshot.size()
+            .addOnSuccessListener { documentSnapshot ->
+                Log.d(Constants.TAG, "checkBorrowAvailability: cp-1")
+                val availability = documentSnapshot.get("modelStatus")
 
-                if (count < 3) {
-                    for (document in querySnapshot.documents) {
-                        val itemCode = document.get("modelItemCode").toString()
-                        val itemCodeToBeBorrowed = userInfo[4]
+                if (availability == "Available") {
+                    Log.d(Constants.TAG, "checkBorrowAvailability: cp-2")
+                    firebaseFireStore.collection("labass-app-borrow-log")
+                        .whereGreaterThanOrEqualTo(FieldPath.documentId(), filter)
+                        .whereLessThan(FieldPath.documentId(), filter + '\uF7FF')
+                        .get()
+                        .addOnSuccessListener { querySnapshot ->
+                            val count = querySnapshot.size()
 
-                        if (itemCode != itemCodeToBeBorrowed) {
-                            insertInfoToFireStore(
-                                BorrowModel(
-                                    userInfo[0],
-                                    userInfo[1],
-                                    userInfo[2],
-                                    userInfo[3],
-                                    userInfo[4],
-                                    userInfo[5],
-                                    userInfo[6],
-                                    userInfo[7],
-                                    userInfo[8],
-                                    userInfo[9]
-                                ),
-                                hostFragment,
-                                hostFragment.requireActivity()
-                            )
-                        } else {
-                            Helper.dismissDialog()
-                            Helper.displayCustomDialog(
-                                activity,
-                                R.layout.custom_dialog_notice,
-                                "Borrow notice",
-                                "Borrow Unsuccessful: The scanned item is already present in your active borrowing list."
-                            )
+                            if (count < 3) {
+                                if (querySnapshot.documents.isEmpty()) {
+                                    Log.d(Constants.TAG, "checkBorrowAvailability: cp-3.1")
+                                    insertInfoToFireStore(
+                                        BorrowModel(
+                                            userInfo[0],
+                                            userInfo[1],
+                                            userInfo[2],
+                                            userInfo[3],
+                                            userInfo[4],
+                                            userInfo[5],
+                                            userInfo[6],
+                                            userInfo[7],
+                                            userInfo[8],
+                                            userInfo[9]
+                                        ),
+                                        hostFragment,
+                                        hostFragment.requireActivity(),
+                                        homeViewModel
+                                    )
+                                } else {
+                                    for (document in querySnapshot.documents) {
+                                        Log.d(Constants.TAG, "checkBorrowAvailability: cp-3.2")
+                                        val itemCode = document.get("modelItemCode").toString()
+                                        val itemCodeToBeBorrowed = userInfo[4]
+
+                                        if (itemCode != itemCodeToBeBorrowed) {
+                                            insertInfoToFireStore(
+                                                BorrowModel(
+                                                    userInfo[0],
+                                                    userInfo[1],
+                                                    userInfo[2],
+                                                    userInfo[3],
+                                                    userInfo[4],
+                                                    userInfo[5],
+                                                    userInfo[6],
+                                                    userInfo[7],
+                                                    userInfo[8],
+                                                    userInfo[9]
+                                                ),
+                                                hostFragment,
+                                                hostFragment.requireActivity(),
+                                                homeViewModel
+                                            )
+                                        } else {
+                                            Helper.dismissDialog()
+                                            Helper.displayCustomDialog(
+                                                activity,
+                                                R.layout.custom_dialog_notice,
+                                                "Borrow notice",
+                                                "Borrow Unsuccessful: The scanned item is already present in your active borrowing list."
+                                            )
+                                        }
+                                    }
+                                }
+                            } else {
+                                Helper.dismissDialog()
+                                Helper.displayCustomDialog(
+                                    activity,
+                                    R.layout.custom_dialog_notice,
+                                    "Borrow notice",
+                                    "Borrow limit reached. Only 3 borrows are allowed at a time."
+                                )
+                            }
+                        }.addOnFailureListener { exception ->
+                            Log.e(Constants.TAG, "checksTheNumberOfBorrows: ${exception.message}")
                         }
-                    }
-                } else {
+                } else if (availability == "Unavailable") {
                     Helper.dismissDialog()
                     Helper.displayCustomDialog(
                         activity,
                         R.layout.custom_dialog_notice,
                         "Borrow notice",
-                        "Borrow limit reached. Only 3 borrows are allowed at a time."
+                        "Borrow unsuccessful. The item is either already reserved or currently unavailable."
                     )
                 }
             }.addOnFailureListener { exception ->
-                Log.e(Constants.TAG, "checksTheNumberOfBorrows: ${exception.message}")
+                endTaskNotify(exception, hostFragment)
             }
     }
 

@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.Helper
-import com.example.lab_ass_app.utils.ItemInfoModel
+import com.example.lab_ass_app.utils.models.ItemInfoModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions

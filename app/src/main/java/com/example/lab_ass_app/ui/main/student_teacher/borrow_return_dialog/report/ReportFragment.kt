@@ -1,4 +1,4 @@
-package com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog
+package com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.report
 
 import android.os.Bundle
 import android.util.Log
