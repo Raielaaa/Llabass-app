@@ -110,7 +110,14 @@ class BorrowReturnDialogFragment(
                         displayToastMessage("Error: Borrow Date and Borrow Time must not be empty")
                     }
                 } else if (spUser2.selectedItem == "RETURN") {
-                    TODO("Confirm Delete Dialog")
+                    Helper.displayCustomDialog(
+                        this@BorrowReturnDialogFragment,
+                        R.layout.fragment_return_item,
+                        firebaseFireStore,
+                        currentUserLRN,
+                        currentUserEmail,
+                        itemInfoModel
+                    )
                 }
             }
         }

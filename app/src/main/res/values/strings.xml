@@ -4,6 +4,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- General -->
+    <string name="dialog_confirm_return_confirm">CONFIRM</string>
+    <string name="dialog_confirm_return_cancel">CANCEL</string>
+    <string name="dialog_confirm_return_title">Return notice</string>
+    <string name="dialog_confirm_return_header">
+        Do you wish to proceed with the return of the item?
+    </string>
     <string name="dialog_sign_up_header">Sign up notice</string>
     <string name="dialog_sign_up_body">For sign-in using <bold>Google</bold> and <bold>Facebook</bold>, only the Learner Reference Number is required.</string>
     <string name="dialog_sign_up_ok">OK</string>

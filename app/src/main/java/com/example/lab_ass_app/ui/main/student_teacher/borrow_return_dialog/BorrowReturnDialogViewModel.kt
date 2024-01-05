@@ -65,18 +65,17 @@ class BorrowReturnDialogViewModel @Inject constructor(
     fun checkBorrowAvailability(
         homeViewModel: HomeViewModel,
         activity: Activity,
-        filter: String, hostFragment: BottomSheetDialogFragment, vararg userInfo: String) {
-        Log.d(Constants.TAG, "checkBorrowAvailability: Entry")
-
+        filter: String,
+        hostFragment: BottomSheetDialogFragment,
+        vararg userInfo: String
+    ) {
         firebaseFireStore.collection("labass-app-item-description")
             .document(userInfo[4])
             .get()
             .addOnSuccessListener { documentSnapshot ->
-                Log.d(Constants.TAG, "checkBorrowAvailability: cp-1")
                 val availability = documentSnapshot.get("modelStatus")
 
                 if (availability == "Available") {
-                    Log.d(Constants.TAG, "checkBorrowAvailability: cp-2")
                     firebaseFireStore.collection("labass-app-borrow-log")
                         .whereGreaterThanOrEqualTo(FieldPath.documentId(), filter)
                         .whereLessThan(FieldPath.documentId(), filter + '\uF7FF')
@@ -86,7 +85,6 @@ class BorrowReturnDialogViewModel @Inject constructor(
 
                             if (count < 3) {
                                 if (querySnapshot.documents.isEmpty()) {
-                                    Log.d(Constants.TAG, "checkBorrowAvailability: cp-3.1")
                                     insertInfoToFireStore(
                                         BorrowModel(
                                             userInfo[0],
@@ -106,7 +104,6 @@ class BorrowReturnDialogViewModel @Inject constructor(
                                     )
                                 } else {
                                     for (document in querySnapshot.documents) {
-                                        Log.d(Constants.TAG, "checkBorrowAvailability: cp-3.2")
                                         val itemCode = document.get("modelItemCode").toString()
                                         val itemCodeToBeBorrowed = userInfo[4]
 

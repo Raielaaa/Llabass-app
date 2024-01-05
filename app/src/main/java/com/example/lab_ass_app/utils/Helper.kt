@@ -38,7 +38,10 @@ import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.Borr
 import com.example.lab_ass_app.utils.models.ItemFullInfoModel
 import com.example.lab_ass_app.utils.models.ItemInfoModel
 import com.facebook.login.LoginManager
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import java.lang.ref.WeakReference
 
@@ -249,6 +252,97 @@ object Helper {
             Log.e(TAG, "displayCustomDialog: ${err.message}")
             displayToastMessage(
                 activity,
+                "Error: ${err.localizedMessage}"
+            )
+        }
+    }
+
+    @SuppressLint("ObsoleteSdkInt")
+    fun displayCustomDialog(
+        hostFragment: BottomSheetDialogFragment,
+        layoutDialog: Int,
+        firebaseFireStore: FirebaseFirestore,
+        currentUserLRN: String,
+        currentUserEmail: String,
+        itemInfoModel: ItemInfoModel,
+        minWidthPercentage: Float = 0.75f
+    ) {
+        try {
+            dialog = Dialog(hostFragment.requireActivity())
+
+            dialog?.apply {
+                setContentView(layoutDialog)
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    window!!.setBackgroundDrawable(ResourcesCompat.getDrawable(
+                        hostFragment.requireActivity().resources,
+                        R.drawable.custom_dialog_bg,
+                        null))
+                }
+                window!!.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                setCancelable(false)
+                window!!.attributes.windowAnimations = R.style.animation
+
+                // Calculate the minWidth in pixels based on the percentage of the screen width
+                val screenWidth = getScreenWidth(hostFragment.requireActivity())
+                val minWidth = (screenWidth * minWidthPercentage).toInt()
+
+                dialog?.apply {
+                    findViewById<ConstraintLayout>(R.id.clMain)?.minWidth = minWidth
+                    findViewById<TextView>(R.id.tvReturnCancel)?.setOnClickListener {
+                        dismiss()
+                    }
+                    findViewById<TextView>(R.id.tvReturnConfirm)?.setOnClickListener {
+                        displayCustomDialog(
+                            hostFragment.requireActivity(),
+                            R.layout.custom_dialog_loading
+                        )
+                        val filter = "$currentUserLRN-$currentUserEmail"
+
+                        firebaseFireStore.collection("labass-app-borrow-log")
+                            .whereGreaterThanOrEqualTo(FieldPath.documentId(), filter)
+                            .whereLessThan(FieldPath.documentId(), filter + '\uF7FF')
+                            .whereEqualTo("modelItemCode", itemInfoModel.modelCode)
+                            .get()
+                            .addOnSuccessListener { querySnapshot ->
+                                if (querySnapshot.documents.isEmpty()) {
+                                    dismissDialog()
+                                    displayCustomDialog(
+                                        hostFragment.requireActivity(),
+                                        R.layout.custom_dialog_notice,
+                                        "Return Unsuccessful",
+                                        "The scanned item is not currently listed in your active borrowing records."
+                                    )
+                                } else {
+                                    for (document in querySnapshot.documents) {
+                                        document.reference.delete()
+                                    }
+
+                                    TODO("Update Home User Profile")
+                                    dismissDialog()
+                                    displayCustomDialog(
+                                        hostFragment.requireActivity(),
+                                        R.layout.custom_dialog_notice,
+                                        "Return Successful",
+                                        "The return process has been successfully completed for the borrowed item"
+                                    )
+                                }
+                            }.addOnFailureListener { exception ->
+                                Toast.makeText(
+                                    hostFragment.requireContext(),
+                                    "An error occurred: ${exception.localizedMessage}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                Log.e(TAG, "displayCustomDialog: ${exception.message}")
+                            }
+                    }
+                }
+                show()
+            }
+        } catch (err: Exception) {
+            Log.e(TAG, "displayCustomDialog: ${err.message}")
+            displayToastMessage(
+                hostFragment.requireContext(),
                 "Error: ${err.localizedMessage}"
             )
         }
