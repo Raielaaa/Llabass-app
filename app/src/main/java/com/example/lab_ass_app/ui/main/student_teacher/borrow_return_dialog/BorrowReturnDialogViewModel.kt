@@ -37,17 +37,11 @@ class BorrowReturnDialogViewModel @Inject constructor(
                         .document(borrowModel.modelItemCode)
                         .update("modelStatus", "Unavailable")
                         .addOnSuccessListener {
-                            homeViewModel.retrieveBorrowedItemInfoFromDB(
+                            updateBorrowedItemBorrowCount(
+                                borrowModel,
+                                homeViewModel,
                                 hostFragment,
-                                Helper.homeBinding!!
-                            )
-
-                            Helper.dismissDialog()
-                            Helper.displayCustomDialog(
-                                activity,
-                                R.layout.custom_dialog_notice,
-                                "Borrow notice",
-                                "Borrow registration for the item has been successfully completed."
+                                activity
                             )
                         }.addOnFailureListener { exception ->
                             endTaskNotify(exception, hostFragment)
@@ -57,6 +51,42 @@ class BorrowReturnDialogViewModel @Inject constructor(
                     displayToastMessage("An error occurred", hostFragment)
                 }
                 hostFragment.dismiss()
+            }.addOnFailureListener { exception ->
+                endTaskNotify(exception, hostFragment)
+            }
+    }
+
+    private fun updateBorrowedItemBorrowCount(
+        borrowModel: BorrowModel,
+        homeViewModel: HomeViewModel,
+        hostFragment: BottomSheetDialogFragment,
+        activity: Activity
+    ) {
+        firebaseFireStore.collection("labass-app-item-description")
+            .document(borrowModel.modelItemCode)
+            .get()
+            .addOnSuccessListener { documentSnapshot ->
+                val currentBorrowCount: Int = documentSnapshot.get("modelBorrowCount").toString().toInt()
+
+                firebaseFireStore.collection("labass-app-item-description")
+                    .document(borrowModel.modelItemCode)
+                    .update("modelBorrowCount", "${currentBorrowCount + 1}")
+                    .addOnSuccessListener {
+                        homeViewModel.retrieveBorrowedItemInfoFromDB(
+                            hostFragment,
+                            Helper.homeBinding!!
+                        )
+
+                        Helper.dismissDialog()
+                        Helper.displayCustomDialog(
+                            activity,
+                            R.layout.custom_dialog_notice,
+                            "Borrow notice",
+                            "Borrow registration for the item has been successfully completed."
+                        )
+                    }.addOnFailureListener { exception ->
+                        endTaskNotify(exception, hostFragment)
+                    }
             }.addOnFailureListener { exception ->
                 endTaskNotify(exception, hostFragment)
             }

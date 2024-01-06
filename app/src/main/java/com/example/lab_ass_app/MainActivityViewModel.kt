@@ -31,9 +31,12 @@ class MainActivityViewModel @Inject constructor(
         mainActivity: MainActivity,
         imageBitmap: Bitmap?
     ) {
+        Log.d(Constants.TAG, "camera-path: 5")
         displayLoadingDialog(mainActivity)
 
         if (imageBitmap != null) {
+            Log.d(Constants.TAG, "camera-path: 6")
+
             //  Creates an InputImage object from the bitmap
             val image = InputImage.fromBitmap(imageBitmap, 0)
             //  Creates a BarcodeScanner client with options
@@ -42,27 +45,53 @@ class MainActivityViewModel @Inject constructor(
             //  Processes the image for barcodes
             scanner.process(image)
                 .addOnSuccessListener { barcodes ->
+                    Log.d(Constants.TAG, "camera-path: 7")
                     if (barcodes.toString() != "[]") {
+                        Log.d(Constants.TAG, "camera-path: 8")
                         //  Loop through each barcode found in the image
                         for (barcode in barcodes) {
-                            //  If the barcode is of type text, extract the book name and author
-                            when (barcode.valueType) {
-                                Barcode.TYPE_TEXT -> {
-                                    //  Getting item code
-                                    val itemInfo = barcode.rawValue.toString().split(":")
-                                    retrieveItemDescription(itemInfo, mainActivity, imageBitmap)
+                            Log.d(Constants.TAG, "getInfoFromQR: ${barcode.rawValue}")
+                            if (barcode.rawValue.toString().isEmpty()) {
+                                Helper.dismissDialog()
+                                Helper.displayCustomDialog(
+                                    mainActivity,
+                                    R.layout.custom_dialog_notice,
+                                    "QR-scan notice",
+                                    "Nothing to scan. Please try again."
+                                )
+                            } else {
+                                //  If the barcode is of type text, extract the book name and author
+                                when (barcode.valueType) {
+                                    Barcode.TYPE_TEXT -> {
+                                        //  Getting item code
+                                        val itemInfo = barcode.rawValue.toString().split(":")
+                                        retrieveItemDescription(itemInfo, mainActivity, imageBitmap)
+                                    }
                                 }
                             }
                         }
                     } else {
                         //  If no barcode is found
-                        displayToastMessage("Nothing to scan. Please try again.", mainActivity)
+                        Helper.dismissDialog()
+                        Helper.displayCustomDialog(
+                            mainActivity,
+                            R.layout.custom_dialog_notice,
+                            "QR-scan notice",
+                            "Nothing to scan. Please try again."
+                        )
                     }
                 }.addOnFailureListener { exception ->
                     endTaskNotify(exception, mainActivity)
                 }
         } else {
-            displayToastMessage("QR code not found", mainActivity)
+            Log.e(Constants.TAG, "getInfoFromQR: QR code not found", )
+            Helper.dismissDialog()
+            Helper.displayCustomDialog(
+                mainActivity,
+                R.layout.custom_dialog_notice,
+                "QR-scan notice",
+                "QR-code not found."
+            )
         }
     }
 
@@ -71,11 +100,13 @@ class MainActivityViewModel @Inject constructor(
         mainActivity: MainActivity,
         imageBitmap: Bitmap?
     ) {
+        Log.d(Constants.TAG, "camera-path: 9")
         fireStore.collection("labass-app-item-description")
             .document(itemInfo[0])
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    Log.d(Constants.TAG, "camera-path: 10")
                     val retrievedData = task.result.data
 
                     val completeItemInfo: ItemInfoModel = ItemInfoModel(

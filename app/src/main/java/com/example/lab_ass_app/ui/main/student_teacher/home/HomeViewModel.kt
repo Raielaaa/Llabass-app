@@ -329,7 +329,7 @@ class HomeViewModel @Inject constructor(
                     tvHomePending.text = "$borrowCount/3"
                     tvHomeStatus.apply {
                         text = "Limit reached!"
-                        setTextColor(ContextCompat.getColor(hostFragment.requireContext(), R.color.Theme_red))
+                        setTextColor(ContextCompat.getColor(hostFragment.requireContext(), R.color.Theme_light_red))
                     }
                     cvHomeStatus.setCardBackgroundColor(ContextCompat.getColor(hostFragment.requireContext(), R.color.Theme_green))
                 }

@@ -169,6 +169,7 @@ open class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        Log.d(Constants.TAG, "camera-path: 3")
         if (requestCode == Constants.CAMERA_PERMISSION_CODE) {
             val extras: Bundle? = data?.extras
 
@@ -176,6 +177,7 @@ open class MainActivity : AppCompatActivity() {
                 // Retrieve image bitmap from extras
                 imageBitmap = extras?.get("data") as Bitmap
 
+                Log.d(Constants.TAG, "camera-path: 4")
                 //  Analyze scanned QR
                 mainActivityViewModel.getInfoFromQR(
                     this@MainActivity,

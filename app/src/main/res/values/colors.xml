@@ -11,5 +11,6 @@
     <color name="Theme.dark.gray">#4a4f53</color>
     <color name="Theme.green">#4AFF58</color>
     <color name="Theme.red">#ff0000</color>
+    <color name="Theme.light.red">#ff3200</color>
     <color name="Theme.facebook.color">#1877f2</color>
 </resources>

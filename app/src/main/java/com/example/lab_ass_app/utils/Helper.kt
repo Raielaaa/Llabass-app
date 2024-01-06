@@ -100,7 +100,7 @@ object Helper {
                     val minWidth = (screenWidth * minWidthPercentage).toInt()
 
                     dialog?.apply {
-                        setCancelable(true)
+                        setCancelable(false)
                         findViewById<ConstraintLayout>(R.id.clMain)?.minWidth = minWidth
                         findViewById<ConstraintLayout>(R.id.clMain)?.setOnClickListener {
                             dismiss()
@@ -324,13 +324,7 @@ object Helper {
                                         hostFragment,
                                         homeBinding!!
                                     )
-                                    dismissDialog()
-                                    displayCustomDialog(
-                                        hostFragment.requireActivity(),
-                                        R.layout.custom_dialog_notice,
-                                        "Return Successful",
-                                        "The return process has been successfully completed for the borrowed item"
-                                    )
+                                    changeReturnedItemStatus(firebaseFireStore, itemInfoModel, hostFragment)
                                 }
                             }.addOnFailureListener { exception ->
                                 Toast.makeText(
@@ -351,6 +345,28 @@ object Helper {
                 "Error: ${err.localizedMessage}"
             )
         }
+    }
+
+    private fun changeReturnedItemStatus(
+        firebaseFireStore: FirebaseFirestore,
+        itemInfoModel: ItemInfoModel,
+        hostFragment: BottomSheetDialogFragment
+    ) {
+        firebaseFireStore.collection("labass-app-item-description")
+            .document(itemInfoModel.modelCode)
+            .update("modelStatus", "Available")
+            .addOnSuccessListener {
+                dismissDialog()
+                displayCustomDialog(
+                    hostFragment.requireActivity(),
+                    R.layout.custom_dialog_notice,
+                    "Return Successful",
+                    "The return process has been successfully completed for the borrowed item"
+                )
+            }.addOnFailureListener { exception ->
+                displayToastMessage(hostFragment.requireContext(), "An error occurred: ${exception.localizedMessage}")
+                Log.e(TAG, "changeReturnedItemStatus: ${exception.message}")
+            }
     }
 
     @SuppressLint("ObsoleteSdkInt")
@@ -525,9 +541,11 @@ object Helper {
 
     //  Opening Camera if permission is granted
     private fun takeImage(activity: Activity) {
+        Log.d(Constants.TAG, "camera-path: 1")
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
             activity.startActivityForResult(intent, 1)
+            Log.d(Constants.TAG, "camera-path: 2")
         } catch (err: Exception) {
             displayToastMessage(activity, err.localizedMessage)
             Log.e(TAG, "takeImage: ${err.message}", )
