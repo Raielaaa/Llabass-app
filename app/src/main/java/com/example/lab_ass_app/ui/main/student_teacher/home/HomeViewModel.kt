@@ -43,7 +43,7 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     private val storage: FirebaseStorage by lazy { FirebaseStorage.getInstance() }
     private val fullInfoForTopItems: ArrayList<ItemFullInfoModel> = ArrayList()
-    private lateinit var topThreeList: MutableList<PopularModel>
+    private var topThreeList: MutableList<PopularModel> = mutableListOf()
 
     fun takeQR(activity: Activity) {
         //  Method for starting the camera
@@ -51,35 +51,44 @@ class HomeViewModel @Inject constructor(
     }
 
     fun initTopBorrowDisplay(binding: FragmentHomeBinding, context: Context, hostFragment: Fragment, btnSeeAll: Button? = null) {
-        firebaseFireStore.collection("labass-app-item-description")
-            .orderBy("modelBorrowCount", Query.Direction.DESCENDING)
-            .limit(3)
-            .get()
-            .addOnSuccessListener { querySnapshot ->
-                topThreeList = mutableListOf()
+        Log.d(Constants.TAG, "initTopBorrowDisplay-out: ${DataCache.topThreeList}")
 
-                querySnapshot.forEachIndexed { _, queryDocumentSnapshot ->
-                    val imageLink = queryDocumentSnapshot.get("modelImageLink").toString()
-                    val itemName = queryDocumentSnapshot.get("modelName").toString()
-                    val itemBorrowCount = queryDocumentSnapshot.get("modelBorrowCount").toString()
-                    val itemCode = queryDocumentSnapshot.get("modelCode").toString()
-                    val itemCategory = queryDocumentSnapshot.get("modelCategory").toString()
-                    val itemDescription = queryDocumentSnapshot.get("modelDescription").toString()
-                    val itemSize = queryDocumentSnapshot.get("modelSize").toString()
-                    val itemStatus = queryDocumentSnapshot.get("modelStatus").toString()
+        if (DataCache.topThreeList.isNotEmpty()) {
+            binding.apply {
+                displayItemToTopBorrow(tvTitleTop1, tvBorrowCountTop1, DataCache.topThreeList[0], context, ivTop1)
+                displayItemToTopBorrow(tvTitleTop2, tvBorrowCountTop2, DataCache.topThreeList[1], context, ivTop2)
+                displayItemToTopBorrow(tvTitleTop3, tvBorrowCountTop3, DataCache.topThreeList[2], context, ivTop3)
+            }
+        } else {
+            firebaseFireStore.collection("labass-app-item-description")
+                .orderBy("modelBorrowCount", Query.Direction.DESCENDING)
+                .limit(3)
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    querySnapshot.forEachIndexed { _, queryDocumentSnapshot ->
+                        val imageLink = queryDocumentSnapshot.get("modelImageLink").toString()
+                        val itemName = queryDocumentSnapshot.get("modelName").toString()
+                        val itemBorrowCount = queryDocumentSnapshot.get("modelBorrowCount").toString()
+                        val itemCode = queryDocumentSnapshot.get("modelCode").toString()
+                        val itemCategory = queryDocumentSnapshot.get("modelCategory").toString()
+                        val itemDescription = queryDocumentSnapshot.get("modelDescription").toString()
+                        val itemSize = queryDocumentSnapshot.get("modelSize").toString()
+                        val itemStatus = queryDocumentSnapshot.get("modelStatus").toString()
 
-                    topThreeList.add(
-                        PopularModel(
+                        val dataToBeAdded = PopularModel(
                             imageLink,
                             itemName,
                             itemBorrowCount,
                             itemCode,
                             itemStatus
                         )
-                    )
 
-                    fullInfoForTopItems.add(
-                        ItemFullInfoModel(
+                        Log.d(Constants.TAG, "initTopBorrowDisplay-in: $dataToBeAdded")
+
+                        topThreeList.add(dataToBeAdded)
+                        DataCache.topThreeList.add(dataToBeAdded)
+
+                        val fullInfoToBeAdded = ItemFullInfoModel(
                             imageLink,
                             itemName,
                             itemSize,
@@ -89,31 +98,33 @@ class HomeViewModel @Inject constructor(
                             itemBorrowCount,
                             itemCode
                         )
-                    )
-                }
+                        fullInfoForTopItems.add(fullInfoToBeAdded)
+                        DataCache.topThreeListFullInfo.add(fullInfoToBeAdded)
+                    }
 
-                initSeeAllButtonRV(hostFragment, btnSeeAll)
+                    initSeeAllButtonRV(hostFragment, btnSeeAll)
 
-                binding.apply {
-                    displayItemToTopBorrow(tvTitleTop1, tvBorrowCountTop1, topThreeList[0], context, ivTop1)
-                    displayItemToTopBorrow(tvTitleTop2, tvBorrowCountTop2, topThreeList[1], context, ivTop2)
-                    displayItemToTopBorrow(tvTitleTop3, tvBorrowCountTop3, topThreeList[2], context, ivTop3)
+                    binding.apply {
+                        displayItemToTopBorrow(tvTitleTop1, tvBorrowCountTop1, topThreeList[0], context, ivTop1)
+                        displayItemToTopBorrow(tvTitleTop2, tvBorrowCountTop2, topThreeList[1], context, ivTop2)
+                        displayItemToTopBorrow(tvTitleTop3, tvBorrowCountTop3, topThreeList[2], context, ivTop3)
+                    }
+                }.addOnFailureListener { exception ->
+                    endTaskNotify(exception, hostFragment)
                 }
-            }.addOnFailureListener { exception ->
-                endTaskNotify(exception, hostFragment)
-            }
+        }
     }
 
     fun initTopBorrowDisplaySelected(binding: FragmentHomeBinding, activity: Activity) {
         binding.apply {
             cvTop1.setOnClickListener {
-                displaySelectedItemCustomDialog(fullInfoForTopItems[0], activity)
+                displaySelectedItemCustomDialog(DataCache.topThreeListFullInfo[0], activity)
             }
             cvTop2.setOnClickListener {
-                displaySelectedItemCustomDialog(fullInfoForTopItems[1], activity)
+                displaySelectedItemCustomDialog(DataCache.topThreeListFullInfo[1], activity)
             }
             cvTop3.setOnClickListener {
-                displaySelectedItemCustomDialog(fullInfoForTopItems[2], activity)
+                displaySelectedItemCustomDialog(DataCache.topThreeListFullInfo[2], activity)
             }
         }
     }

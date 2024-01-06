@@ -116,7 +116,8 @@ class BorrowReturnDialogFragment(
                         firebaseFireStore,
                         currentUserLRN,
                         currentUserEmail,
-                        itemInfoModel
+                        itemInfoModel,
+                        homeViewModel
                     )
                 }
             }

@@ -35,6 +35,7 @@ import com.example.lab_ass_app.ui.account.login.LoginFragment
 import com.example.lab_ass_app.ui.account.login.LoginViewModel
 import com.example.lab_ass_app.ui.account.login.google_facebook_bottom_dialog.InputLRNFragment
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.BorrowReturnDialogFragment
+import com.example.lab_ass_app.ui.main.student_teacher.home.HomeViewModel
 import com.example.lab_ass_app.utils.models.ItemFullInfoModel
 import com.example.lab_ass_app.utils.models.ItemInfoModel
 import com.facebook.login.LoginManager
@@ -265,6 +266,7 @@ object Helper {
         currentUserLRN: String,
         currentUserEmail: String,
         itemInfoModel: ItemInfoModel,
+        homeViewModel: HomeViewModel,
         minWidthPercentage: Float = 0.75f
     ) {
         try {
@@ -318,7 +320,10 @@ object Helper {
                                         document.reference.delete()
                                     }
 
-                                    TODO("Update Home User Profile")
+                                    homeViewModel.retrieveBorrowedItemInfoFromDB(
+                                        hostFragment,
+                                        homeBinding!!
+                                    )
                                     dismissDialog()
                                     displayCustomDialog(
                                         hostFragment.requireActivity(),
