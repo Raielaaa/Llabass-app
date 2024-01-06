@@ -188,8 +188,13 @@ object Helper {
                             .into(selectedItemImage)
                         findViewById<TextView>(R.id.tvSelectedItemTitle).text = itemFullInfoModel.itemName
                         findViewById<TextView>(R.id.tvSelectedItemCategory).text = itemFullInfoModel.itemCategory
-                        findViewById<TextView>(R.id.tvSelectedItemStatus).text = itemFullInfoModel.itemStatus
                         findViewById<TextView>(R.id.tvSelectedItemContent).text = itemFullInfoModel.itemDescription
+                        findViewById<TextView>(R.id.tvSelectedItemStatus).text = itemFullInfoModel.itemStatus
+                        if (itemFullInfoModel.itemStatus == "Available") {
+                            findViewById<TextView>(R.id.tvSelectedItemStatus).setTextColor(ContextCompat.getColor(activity, R.color.Theme_green))
+                        } else {
+                            findViewById<TextView>(R.id.tvSelectedItemStatus).setTextColor(ContextCompat.getColor(activity, R.color.Theme_light_red))
+                        }
 
                         try {
                             findViewById<CardView>(R.id.cvQR).setOnClickListener {

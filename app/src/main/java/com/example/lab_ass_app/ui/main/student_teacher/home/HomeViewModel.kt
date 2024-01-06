@@ -132,10 +132,49 @@ class HomeViewModel @Inject constructor(
     private fun displaySelectedItemCustomDialog(fullInfoModel: ItemFullInfoModel, activity: Activity) {
         Helper.displayCustomDialog(
             activity,
-            R.layout.selected_item_dialog,
-            fullInfoModel,
-            storage
+            R.layout.custom_dialog_loading
         )
+
+        firebaseFireStore.collection("labass-app-item-description")
+            .document(fullInfoModel.itemCode)
+            .get()
+            .addOnSuccessListener { task ->
+                val itemImageLink: String = task.get("modelImageLink").toString()
+                val itemName: String = task.get("modelName").toString()
+                val itemSize: String = task.get("modelSize").toString()
+                val itemCategory: String = task.get("modelCategory").toString()
+                val itemStatus: String = task.get("modelStatus").toString()
+                val itemDescription: String = task.get("modelDescription").toString()
+                val itemBorrowCount: String = task.get("modelBorrowCount").toString()
+                val itemCode: String = task.get("modelCode").toString()
+
+                val itemInfo = ItemFullInfoModel(
+                    itemImageLink,
+                    itemName,
+                    itemSize,
+                    itemCategory,
+                    itemStatus,
+                    itemDescription,
+                    itemBorrowCount,
+                    itemCode
+                )
+
+                Helper.dismissDialog()
+                Helper.displayCustomDialog(
+                    activity,
+                    R.layout.selected_item_dialog,
+                    itemInfo,
+                    storage
+                )
+            }.addOnFailureListener { exception ->
+                Helper.dismissDialog()
+                Toast.makeText(
+                    activity,
+                    "An error occurred: ${exception.localizedMessage}",
+                    Toast.LENGTH_SHORT
+                ).show()
+                Log.e(Constants.TAG, "displaySelectedItemCustomDialog: ${exception.message}", )
+            }
     }
 
     private fun displayItemToTopBorrow(

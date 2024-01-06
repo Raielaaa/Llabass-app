@@ -44,7 +44,7 @@ class HomeAdapter(
                 tvHomeCode.text = items.itemCodeModel
                 tvHomeBorrowCount.text = "${items.itemBorrowCountModel} Borrows"
                 cvHomeStatus.setCardBackgroundColor(
-                    ContextCompat.getColor(context, if (items.itemStatusModel == "Available") R.color.Theme_green else R.color.Theme_light)
+                    ContextCompat.getColor(context, if (items.itemStatusModel == "Available") R.color.Theme_green else R.color.Theme_light_red)
                 )
 
                 val gsReference = storage.getReferenceFromUrl("gs://labass-app.appspot.com/${items.imageLink}.jpg")
