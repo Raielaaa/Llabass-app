@@ -50,6 +50,7 @@ import java.lang.ref.WeakReference
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.system.exitProcess
 
 object Helper {
     //  Encapsulation principle for Activity reference
@@ -138,6 +139,53 @@ object Helper {
         try {
             dialog?.findViewById<TextView>(R.id.tvDialogOk)?.setOnClickListener {
                 dialog?.dismiss()
+            }
+        } catch (err: Exception) {
+            Log.e(TAG, "displayCustomDialog: ${err.message}")
+            displayToastMessage(
+                activity,
+                "Error: ${err.localizedMessage}"
+            )
+        }
+    }
+
+    @SuppressLint("ObsoleteSdkInt")
+    fun displayCustomDialogForNoInternet(
+        activity: Activity,
+        layoutDialog: Int,
+        minWidthPercentage: Float = 0.75f
+    ) {
+        try {
+            if (!activity.isFinishing) {
+                dialog = Dialog(activity)
+
+                dialog?.apply {
+                    setContentView(layoutDialog)
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        window!!.setBackgroundDrawable(ResourcesCompat.getDrawable(
+                            activity.resources,
+                            R.drawable.custom_dialog_bg,
+                            null))
+                    }
+                    window!!.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    setCancelable(false)
+                    window!!.attributes.windowAnimations = R.style.animation
+
+                    // Calculate the minWidth in pixels based on the percentage of the screen width
+                    val screenWidth = getScreenWidth(activity)
+                    val minWidth = (screenWidth * minWidthPercentage).toInt()
+
+                    dialog?.apply {
+                        setCancelable(false)
+                        findViewById<ConstraintLayout>(R.id.clMain)?.minWidth = minWidth
+                        findViewById<ConstraintLayout>(R.id.clMainSelectedItem)?.minWidth = minWidth
+                        findViewById<TextView>(R.id.tvNoInternetOk)?.setOnClickListener {
+                            exitProcess(0)
+                        }
+                    }
+                    show()
+                }
             }
         } catch (err: Exception) {
             Log.e(TAG, "displayCustomDialog: ${err.message}")

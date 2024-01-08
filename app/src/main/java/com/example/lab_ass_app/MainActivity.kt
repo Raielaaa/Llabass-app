@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
@@ -93,6 +94,17 @@ open class MainActivity : AppCompatActivity() {
 
         //  Init values from object class
         initObjectValues()
+
+        //  Checks if there's an active internet connection
+        if (!mainActivityViewModel.checkNetworkAvailability(this@MainActivity)) {
+            Helper.displayCustomDialogForNoInternet(
+                this@MainActivity,
+                R.layout.custom_dialog_no_internet
+            )
+        }
+
+        //  Disabling drawer layout automatic opening (swiping from left edge going to right)
+        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 
     private fun initObjectValues() {

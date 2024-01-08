@@ -148,12 +148,12 @@ class BorrowReturnDialogFragment(
             tvDescription.text = itemInfoModel.modelDescription
             tvLRN.text = "$currentUserLRN - $currentUserType"
 
-            if (itemInfoModel.modelStatus == "Unavailable") {
+            if (itemInfoModel.modelStatus.contains("Unavailable")) {
                 tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.Theme_red))
             } else if (itemInfoModel.modelStatus == "Available") {
                 tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.Theme_green))
             }
-            tvStatus.text = itemInfoModel.modelStatus
+            tvStatus.text = itemInfoModel.modelStatus.split(":")[0]
         }
     }
 

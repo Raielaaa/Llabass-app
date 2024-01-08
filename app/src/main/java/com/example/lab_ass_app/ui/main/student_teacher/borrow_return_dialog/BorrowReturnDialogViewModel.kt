@@ -36,7 +36,7 @@ class BorrowReturnDialogViewModel @Inject constructor(
                 if (task.isSuccessful) {
                     firebaseFireStore.collection("labass-app-item-description")
                         .document(borrowModel.modelItemCode)
-                        .update("modelStatus", "Unavailable")
+                        .update("modelStatus", "Unavailable:${borrowModel.modelLRN}-${borrowModel.modelEmail}-${borrowModel.modelUserType}")
                         .addOnSuccessListener {
                             updateBorrowedItemBorrowCount(
                                 listViewModel,
@@ -108,7 +108,7 @@ class BorrowReturnDialogViewModel @Inject constructor(
             .addOnSuccessListener { documentSnapshot ->
                 val availability = documentSnapshot.get("modelStatus")
 
-                if (availability == "Available") {
+                if (availability.toString().contains("Available")) {
                     firebaseFireStore.collection("labass-app-borrow-log")
                         .whereGreaterThanOrEqualTo(FieldPath.documentId(), filter)
                         .whereLessThan(FieldPath.documentId(), filter + '\uF7FF')
