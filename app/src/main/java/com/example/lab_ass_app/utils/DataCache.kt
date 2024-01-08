@@ -27,6 +27,9 @@ object DataCache {
     var topThreeListFullInfo: MutableList<ItemFullInfoModel> = mutableListOf()
     var isToolSelected: Boolean = true
 
+    var filter: String = ""
+    var rvBorrowInfoProfile: ArrayList<BorrowModel> = ArrayList()
+
     fun cacheDataForCategory(
         category: String,
         homeViewModel: HomeViewModel,

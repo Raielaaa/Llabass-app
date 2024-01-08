@@ -7,7 +7,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
-        android:layout_height="@dimen/_90sdp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_20sdp"
@@ -35,9 +35,9 @@
                 android:layout_height="0dp"
                 app:cardCornerRadius="@dimen/_10sdp"
                 app:cardElevation="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/tvHomeBorrowCount"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvProfileItemName"
                 app:layout_constraintVertical_bias="0.5">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,7 +45,7 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/ivHomeImage"
+                        android:id="@+id/ivProfileImage"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -60,7 +60,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/tvHomeName"
+                android:id="@+id/tvProfileItemName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
@@ -76,8 +76,8 @@
                 android:fontFamily="@font/poppins"
                 android:text="@string/user_borrow_date"
                 android:textSize="@dimen/_8ssp"
-                app:layout_constraintBottom_toTopOf="@+id/tvHomeBorrowCount"
-                app:layout_constraintStart_toStartOf="@+id/textView72" />
+                app:layout_constraintStart_toStartOf="@+id/textView72"
+                app:layout_constraintTop_toBottomOf="@+id/textView72" />
 
             <TextView
                 android:id="@+id/tvHomeBorrowCount"
@@ -86,11 +86,11 @@
                 android:fontFamily="@font/poppins"
                 android:text="@string/user_borrow_deadline"
                 android:textSize="@dimen/_8ssp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textView69" />
+                app:layout_constraintStart_toStartOf="@+id/textView69"
+                app:layout_constraintTop_toBottomOf="@+id/textView69" />
 
             <TextView
-                android:id="@+id/tvHomeCode"
+                android:id="@+id/tvProfileBorrowDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
@@ -102,7 +102,7 @@
                 app:layout_constraintTop_toTopOf="@+id/textView69" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cvHomeStatus"
+                android:id="@+id/cvProfileStatus"
                 android:layout_width="@dimen/_6sdp"
                 android:layout_height="@dimen/_6sdp"
                 app:cardBackgroundColor="@color/Theme.green"
@@ -111,17 +111,18 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:layout_marginTop="@dimen/_7sdp"
                 android:id="@+id/textView72"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
                 android:text="@string/user_borrow_status"
                 android:textSize="@dimen/_8ssp"
-                app:layout_constraintBottom_toTopOf="@+id/textView69"
-                app:layout_constraintStart_toStartOf="@+id/tvHomeName" />
+                app:layout_constraintStart_toStartOf="@+id/tvProfileItemName"
+                app:layout_constraintTop_toBottomOf="@+id/tvProfileItemName" />
 
             <TextView
-                android:id="@+id/textView73"
+                android:id="@+id/tvProfileBorrowStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/user_borrow_status_placeholder"
@@ -134,7 +135,7 @@
                 app:layout_constraintTop_toTopOf="@+id/textView72" />
 
             <TextView
-                android:id="@+id/textView74"
+                android:id="@+id/tvProfileBorrowDeadline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/user_borrow_deadline_placeholder"

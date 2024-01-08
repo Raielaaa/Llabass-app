@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentProfileBinding
@@ -15,9 +16,11 @@ import com.example.lab_ass_app.utils.Helper
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModel
 import com.google.android.material.navigation.NavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
-    private lateinit var viewModel: ProfileViewModel
+    private lateinit var profileViewModel: ProfileViewModel
     private lateinit var binding: FragmentProfileBinding
 
     override fun onCreateView(
@@ -25,6 +28,7 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
+        profileViewModel = ViewModelProvider(this@ProfileFragment)[ProfileViewModel::class.java]
 
         initBottomNavDrawer()
         initNavigationDrawer()
@@ -34,41 +38,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initRV() {
-//        val listItemsAdapter = HomeAdapter {
-//            Helper.displayCustomDialog(
-//                requireActivity(),
-//                R.layout.selected_item_dialog
-//            )
-//        }
-//        listItemsAdapter.setItem(
-//            ArrayList(
-//                listOf(
-//                    HomeModel(
-//                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
-//                        "PETRI DISH",
-//                        "384732",
-//                        "14 Borrows",
-//                        "AVAILABLE"
-//                    ),
-//                    HomeModel(
-//                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
-//                        "PETRI DISH",
-//                        "384732",
-//                        "14 Borrows",
-//                        "AVAILABLE"
-//                    ),
-//                    HomeModel(
-//                        Uri.parse("android.resources://${requireActivity().packageName}/drawable/image_placeholder"),
-//                        "PETRI DISH",
-//                        "384732",
-//                        "14 Borrows",
-//                        "AVAILABLE"
-//                    )
-//                )
-//            )
-//        )
-//
-//        binding.rvProfileList.adapter = listItemsAdapter
+        profileViewModel.displayRealTimeProfileInfoToRV(this@ProfileFragment, binding.rvProfileList)
     }
 
     private fun initNavigationDrawer() {

@@ -47,6 +47,9 @@ import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import java.lang.ref.WeakReference
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 object Helper {
     //  Encapsulation principle for Activity reference
@@ -632,5 +635,29 @@ object Helper {
     ) {
         this.lrn = lrn
         this.userType = userType
+    }
+
+    fun getBorrowTimeDifference(modelBorrowDateTime: String, modelBorrowDeadlineDateTime: String): String {
+        val borrowDateTime = modelBorrowDateTime.split(",")
+        val borrowDeadlineDateTime = modelBorrowDeadlineDateTime.split(",")
+
+        val borrowDeadlineDateTimeFinal = "${borrowDeadlineDateTime[0]} ${borrowDeadlineDateTime[1].replace("\\s*:\\s*".toRegex(), ":")}"
+        val currentDateTime = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault()).format(Date())
+
+        return calculateDateTimeDifferenceInMinutes(currentDateTime, borrowDeadlineDateTimeFinal).toString()
+    }
+
+    private fun calculateDateTimeDifferenceInMinutes(dateTime1: String, dateTime2: String): Long {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
+
+        // Parse date-time strings to Date objects
+        val parsedDateTime1 = dateFormat.parse(dateTime1)
+        val parsedDateTime2 = dateFormat.parse(dateTime2)
+
+        // Calculate time difference in milliseconds
+        val timeDifference = parsedDateTime2!!.time - parsedDateTime1!!.time
+
+        // Convert milliseconds to minutes
+        return timeDifference / (60 * 1000)
     }
 }

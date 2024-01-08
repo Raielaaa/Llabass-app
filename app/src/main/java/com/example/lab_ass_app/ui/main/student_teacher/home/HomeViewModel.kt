@@ -324,6 +324,7 @@ class HomeViewModel @Inject constructor(
                 val userLRN = documentSnapshot.get("userLRNModel")
                 val userEmail = documentSnapshot.get("userEmailModel")
                 val filter = "$userLRN-$userEmail"
+                DataCache.filter = filter
 
                 firebaseFireStore.collection("labass-app-borrow-log")
                     .whereGreaterThanOrEqualTo(FieldPath.documentId(), filter)
