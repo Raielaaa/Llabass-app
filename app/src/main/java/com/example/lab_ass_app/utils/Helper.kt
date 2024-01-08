@@ -12,6 +12,7 @@ import android.os.Build
 import android.provider.MediaStore
 import android.util.DisplayMetrics
 import android.util.Log
+import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ImageView
@@ -43,6 +44,7 @@ import com.example.lab_ass_app.utils.models.ItemInfoModel
 import com.facebook.login.LoginManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -686,7 +688,6 @@ object Helper {
     }
 
     fun getBorrowTimeDifference(modelBorrowDateTime: String, modelBorrowDeadlineDateTime: String): String {
-        val borrowDateTime = modelBorrowDateTime.split(",")
         val borrowDeadlineDateTime = modelBorrowDeadlineDateTime.split(",")
 
         val borrowDeadlineDateTimeFinal = "${borrowDeadlineDateTime[0]} ${borrowDeadlineDateTime[1].replace("\\s*:\\s*".toRegex(), ":")}"
@@ -707,5 +708,64 @@ object Helper {
 
         // Convert milliseconds to minutes
         return timeDifference / (60 * 1000)
+    }
+
+    private var userFilter: String = ""
+
+    fun checkPastDue(auth: FirebaseAuth, firebaseFireStore: FirebaseFirestore, cvPastDueExist: CardView) {
+        if (userFilter.isEmpty()) {
+            val userID = auth.currentUser?.uid
+
+            firebaseFireStore.collection("labass-app-user-account-initial")
+                .document(userID.toString())
+                .get()
+                .addOnSuccessListener { documentSnapshot ->
+                    val userEmail = documentSnapshot.get("userEmailModel")
+                    val userLRN = documentSnapshot.get("userLRNModel")
+
+                    val filter = "$userLRN-$userEmail"
+                    userFilter = filter
+
+                    firebaseFireStore.collection("labass-app-borrow-log")
+                        .whereGreaterThanOrEqualTo(FieldPath.documentId(), userFilter)
+                        .whereLessThan(FieldPath.documentId(), userFilter + '\uF7FF')
+                        .get()
+                        .addOnSuccessListener { querySnapshot ->
+                            if (querySnapshot.documents.isNotEmpty()) {
+                                val itemDeadlines: ArrayList<String> = ArrayList()
+
+                                for (document in querySnapshot.documents) {
+                                    itemDeadlines.add(document.get("modelBorrowDeadlineDateTime").toString())
+                                }
+
+                                for (itemDeadline in itemDeadlines) {
+                                    if (getBorrowTimeDifference("", itemDeadline).toLong() <= 0) {
+                                        cvPastDueExist.visibility = View.VISIBLE
+                                    }
+                                }
+                            }
+                        }
+                }
+        } else {
+            firebaseFireStore.collection("labass-app-borrow-log")
+                .whereGreaterThanOrEqualTo(FieldPath.documentId(), userFilter)
+                .whereLessThan(FieldPath.documentId(), userFilter + '\uF7FF')
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    if (querySnapshot.documents.isNotEmpty()) {
+                        val itemDeadlines: ArrayList<String> = ArrayList()
+
+                        for (document in querySnapshot.documents) {
+                            itemDeadlines.add(document.get("modelBorrowDeadlineDateTime").toString())
+                        }
+
+                        for (itemDeadline in itemDeadlines) {
+                            if (getBorrowTimeDifference("", itemDeadline).toLong() <= 0) {
+                                cvPastDueExist.visibility = View.VISIBLE
+                            }
+                        }
+                    }
+                }
+        }
     }
 }

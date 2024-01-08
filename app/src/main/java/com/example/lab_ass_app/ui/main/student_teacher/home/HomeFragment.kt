@@ -25,6 +25,7 @@ import com.example.lab_ass_app.utils.Helper
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.DataCache
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +34,10 @@ import javax.inject.Named
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+    @Inject
+    @Named("FirebaseAuth.Instance")
+    lateinit var firebaseAuth: FirebaseAuth
+
     @Inject
     @Named("FirebaseStorage.Instance")
     lateinit var firebaseStorage: StorageReference
@@ -94,6 +99,11 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
             this@HomeFragment,
             binding
         )
+        checkIfPastDuePresent()
+    }
+
+    private fun checkIfPastDuePresent() {
+        Helper.checkPastDue(firebaseAuth, fireStore, binding.cvPastDueExist)
     }
 
     private fun initBottomRvList() {

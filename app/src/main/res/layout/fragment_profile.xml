@@ -8,6 +8,40 @@
     tools:context=".ui.main.student_teacher.profile.ProfileFragment">
 
     <androidx.cardview.widget.CardView
+        app:cardElevation="@dimen/_3sdp"
+        android:visibility="invisible"
+        android:id="@+id/cvPastDueExist"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_20sdp"
+        app:cardBackgroundColor="@color/Theme.red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="1dp" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_8ssp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="You have a PAST-DUE! Return it now!"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/tosCardView8"
         android:layout_width="0dp"
         android:layout_height="@dimen/_48sdp"

@@ -16,10 +16,22 @@ import com.example.lab_ass_app.utils.Helper
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModel
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+import javax.inject.Named
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
+    @Inject
+    @Named("FirebaseAuth.Instance")
+    lateinit var firebaseAuth: FirebaseAuth
+
+    @Inject
+    @Named("FirebaseFireStore.Instance")
+    lateinit var fireStore: FirebaseFirestore
+
     private lateinit var profileViewModel: ProfileViewModel
     private lateinit var binding: FragmentProfileBinding
 
@@ -34,6 +46,9 @@ class ProfileFragment : Fragment() {
         initNavigationDrawer()
         initRV()
         initRefreshButton()
+
+        //  init past-due notice
+        Helper.checkPastDue(firebaseAuth, fireStore, binding.cvPastDueExist)
 
         return binding.root
     }

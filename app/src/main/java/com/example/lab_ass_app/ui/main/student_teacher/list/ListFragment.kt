@@ -25,6 +25,7 @@ import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModel
 import com.example.lab_ass_app.utils.DataCache
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -32,6 +33,10 @@ import javax.inject.Named
 
 @AndroidEntryPoint
 class ListFragment : Fragment() {
+    @Inject
+    @Named("FirebaseAuth.Instance")
+    lateinit var firebaseAuth: FirebaseAuth
+
     @Inject
     @Named("FirebaseFireStore.Instance")
     lateinit var fireStore: FirebaseFirestore
@@ -56,6 +61,9 @@ class ListFragment : Fragment() {
 
         //  init Object class binding object
         Helper.listBinding = binding
+
+        //  init past-due notice
+        Helper.checkPastDue(firebaseAuth, fireStore, binding.cvPastDueExist)
 
         return binding.root
     }
