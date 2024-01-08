@@ -31,6 +31,7 @@ import com.bumptech.glide.Glide
 import com.example.lab_ass_app.MainActivity
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentHomeBinding
+import com.example.lab_ass_app.databinding.FragmentListBinding
 import com.example.lab_ass_app.ui.account.login.LoginFragment
 import com.example.lab_ass_app.ui.account.login.LoginViewModel
 import com.example.lab_ass_app.ui.account.login.google_facebook_bottom_dialog.InputLRNFragment
@@ -53,6 +54,9 @@ object Helper {
     //  HomeBinding for UI update
     @SuppressLint("StaticFieldLeak")
     var homeBinding: FragmentHomeBinding? = null
+
+    //  ListBinding for UI update
+    var listBinding: FragmentListBinding? = null
 
     fun setActivityReference(activity: Activity) {
         mainActivityInstance = WeakReference(activity)
@@ -264,6 +268,57 @@ object Helper {
     }
 
     @SuppressLint("ObsoleteSdkInt")
+    fun displayCustomDialogForSuccessBorrow(
+        activity: Activity,
+        layoutDialog: Int,
+        minWidthPercentage: Float = 0.75f
+    ) {
+        dialog?.dismiss()
+        try {
+            if (!activity.isFinishing) {
+                dialog = Dialog(activity)
+
+                dialog?.apply {
+                    setContentView(layoutDialog)
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        window!!.setBackgroundDrawable(ResourcesCompat.getDrawable(
+                            activity.resources,
+                            R.drawable.custom_dialog_bg,
+                            null))
+                    }
+                    window!!.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    setCancelable(true)
+                    window!!.attributes.windowAnimations = R.style.animation
+
+                    // Calculate the minWidth in pixels based on the percentage of the screen width
+                    val screenWidth = getScreenWidth(activity)
+                    val minWidth = (screenWidth * minWidthPercentage).toInt()
+
+                    dialog?.apply {
+                        findViewById<ConstraintLayout>(R.id.clMain)?.minWidth = minWidth
+                        findViewById<TextView>(R.id.tvDialogOk)?.setOnClickListener {
+                            dialog?.dismiss()
+                        }
+                        findViewById<ConstraintLayout>(R.id.clMain)?.setOnClickListener {
+                            dialog?.dismiss()
+                        }
+                        findViewById<TextView>(R.id.tvDialogTitle)?.text = "Borrow notice"
+                        findViewById<TextView>(R.id.tvDialogContent)?.text = "Borrow registration for the item has been successfully completed."
+                    }
+                    show()
+                }
+            }
+        } catch (err: Exception) {
+            Log.e(TAG, "displayCustomDialog: ${err.message}")
+            displayToastMessage(
+                activity,
+                "Error: ${err.localizedMessage}"
+            )
+        }
+    }
+
+    @SuppressLint("ObsoleteSdkInt")
     fun displayCustomDialog(
         hostFragment: BottomSheetDialogFragment,
         layoutDialog: Int,
@@ -330,6 +385,7 @@ object Helper {
                                         homeBinding!!
                                     )
                                     changeReturnedItemStatus(firebaseFireStore, itemInfoModel, hostFragment)
+                                    dismiss()
                                 }
                             }.addOnFailureListener { exception ->
                                 Toast.makeText(

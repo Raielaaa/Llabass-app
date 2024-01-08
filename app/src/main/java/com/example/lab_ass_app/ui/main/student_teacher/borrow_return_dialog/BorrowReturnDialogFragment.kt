@@ -23,6 +23,7 @@ import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.date
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.date_time.SetDateDialogFragment
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.date_time.SetTimeDialogFragment
 import com.example.lab_ass_app.ui.main.student_teacher.home.HomeViewModel
+import com.example.lab_ass_app.ui.main.student_teacher.list.ListViewModel
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.Helper
 import com.example.lab_ass_app.utils.models.ItemInfoModel
@@ -53,6 +54,7 @@ class BorrowReturnDialogFragment(
     private lateinit var binding: FragmentBorrowReturnDialogBinding
     private lateinit var borrowReturnDialogViewModel: BorrowReturnDialogViewModel
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var listViewModel: ListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,6 +63,7 @@ class BorrowReturnDialogFragment(
         binding = FragmentBorrowReturnDialogBinding.inflate(inflater, container, false)
         borrowReturnDialogViewModel = ViewModelProvider(this@BorrowReturnDialogFragment)[BorrowReturnDialogViewModel::class.java]
         homeViewModel = ViewModelProvider(this@BorrowReturnDialogFragment)[HomeViewModel::class.java]
+        listViewModel = ViewModelProvider(this@BorrowReturnDialogFragment)[ListViewModel::class.java]
 
         initViews()
 
@@ -91,6 +94,7 @@ class BorrowReturnDialogFragment(
                         )
 
                         borrowReturnDialogViewModel.checkBorrowAvailability(
+                            listViewModel,
                             homeViewModel,
                             requireActivity(),
                             "$currentUserLRN-$currentUserEmail",

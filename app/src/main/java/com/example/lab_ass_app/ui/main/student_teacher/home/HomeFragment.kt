@@ -175,7 +175,6 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
     }
 
     override fun onSharedPreferenceChanged(sharedPred: SharedPreferences?, key: String?) {
-        Log.d(Constants.TAG, "onSharedPreferenceChanged: testttt")
         if (key == "fbNoAccount_key") {
             findNavController().navigate(R.id.accountOpeningFragment)
         }

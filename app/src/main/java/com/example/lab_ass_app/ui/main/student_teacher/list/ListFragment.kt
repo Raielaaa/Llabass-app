@@ -54,17 +54,22 @@ class ListFragment : Fragment() {
         initSearchButton()
         initRefreshButtonAndTV()
 
+        //  init Object class binding object
+        Helper.listBinding = binding
+
         return binding.root
     }
 
     private fun initRefreshButtonAndTV() {
         binding.apply {
             listViewModel.initRefreshButtonAndTV(
+                requireActivity(),
+                requireContext(),
                 tvCurrentDate,
                 btnListRefresh,
                 this@ListFragment,
                 homeViewModel,
-                rvListListItem,
+                binding,
                 fireStore
             )
         }
@@ -167,6 +172,7 @@ class ListFragment : Fragment() {
                     fireStore
                 )
                 isToolsSelected = true
+                DataCache.isToolSelected = true
 
                 clCategoryTools.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.Theme_color_main))
                 tvCategoryToolsTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -192,6 +198,7 @@ class ListFragment : Fragment() {
                     fireStore
                 )
                 isToolsSelected = false
+                DataCache.isToolSelected = false
 
                 clCategoryChem.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.Theme_color_main))
                 tvCategoryChemTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))

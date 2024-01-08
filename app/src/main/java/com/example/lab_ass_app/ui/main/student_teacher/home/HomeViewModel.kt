@@ -19,11 +19,13 @@ import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.Borr
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModelLive
 import com.example.lab_ass_app.ui.main.student_teacher.home.see_all.SeeAllDialog
+import com.example.lab_ass_app.ui.main.student_teacher.list.ListViewModel
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.DataCache
 import com.example.lab_ass_app.utils.Helper
 import com.example.lab_ass_app.utils.models.ItemFullInfoModel
 import com.example.lab_ass_app.utils.models.PopularModel
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
@@ -51,8 +53,6 @@ class HomeViewModel @Inject constructor(
     }
 
     fun initTopBorrowDisplay(binding: FragmentHomeBinding, context: Context, hostFragment: Fragment, btnSeeAll: Button? = null) {
-        Log.d(Constants.TAG, "initTopBorrowDisplay-out: ${DataCache.topThreeList}")
-
         if (DataCache.topThreeList.isNotEmpty()) {
             binding.apply {
                 displayItemToTopBorrow(tvTitleTop1, tvBorrowCountTop1, DataCache.topThreeList[0], context, ivTop1)
@@ -82,8 +82,7 @@ class HomeViewModel @Inject constructor(
                             itemCode,
                             itemStatus
                         )
-
-                        Log.d(Constants.TAG, "initTopBorrowDisplay-in: $dataToBeAdded")
+                        Log.d(Constants.TAG, "initTopBorrowDisplay: $dataToBeAdded")
 
                         topThreeList.add(dataToBeAdded)
                         DataCache.topThreeList.add(dataToBeAdded)
@@ -312,7 +311,9 @@ class HomeViewModel @Inject constructor(
 
     fun retrieveBorrowedItemInfoFromDB(
         hostFragment: Fragment,
-        binding: FragmentHomeBinding
+        binding: FragmentHomeBinding,
+        listViewModel: ListViewModel? = null,
+        activity: Activity? = null
     ) {
         val userID = firebaseAuth.currentUser?.uid
 
@@ -350,6 +351,19 @@ class HomeViewModel @Inject constructor(
 
                         DataCache.borrowedItemsInfo = retrievedData
                         initHomeUserStatusUI(binding, hostFragment)
+
+                        try {
+                            listViewModel?.refreshList(
+                                activity!!,
+                                hostFragment.requireContext(),
+                                hostFragment,
+                                firebaseFireStore,
+                                Helper.listBinding,
+                                Helper.homeBinding
+                            )
+                        } catch (exception: Exception) {
+                            endTaskNotify(exception, hostFragment)
+                        }
                     }.addOnFailureListener { exception ->
                         endTaskNotify(exception, hostFragment)
                     }

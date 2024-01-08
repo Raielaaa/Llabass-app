@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.ui.main.student_teacher.home.HomeViewModel
+import com.example.lab_ass_app.ui.main.student_teacher.list.ListViewModel
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.Helper
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -22,6 +23,7 @@ class BorrowReturnDialogViewModel @Inject constructor(
     private val firebaseFireStore: FirebaseFirestore
 ) : ViewModel() {
     private fun insertInfoToFireStore(
+        listViewModel: ListViewModel,
         borrowModel: BorrowModel,
         hostFragment: BottomSheetDialogFragment,
         activity: Activity,
@@ -31,13 +33,13 @@ class BorrowReturnDialogViewModel @Inject constructor(
             .document("${borrowModel.modelLRN}-${borrowModel.modelEmail}-${borrowModel.modelBorrowDateTime.replace(" ", "").replace("/", "_")}")
             .set(borrowModel)
             .addOnCompleteListener { task ->
-                Log.d(Constants.TAG, "checkBorrowAvailability: cp-4")
                 if (task.isSuccessful) {
                     firebaseFireStore.collection("labass-app-item-description")
                         .document(borrowModel.modelItemCode)
                         .update("modelStatus", "Unavailable")
                         .addOnSuccessListener {
                             updateBorrowedItemBorrowCount(
+                                listViewModel,
                                 borrowModel,
                                 homeViewModel,
                                 hostFragment,
@@ -57,6 +59,7 @@ class BorrowReturnDialogViewModel @Inject constructor(
     }
 
     private fun updateBorrowedItemBorrowCount(
+        listViewModel: ListViewModel,
         borrowModel: BorrowModel,
         homeViewModel: HomeViewModel,
         hostFragment: BottomSheetDialogFragment,
@@ -74,15 +77,9 @@ class BorrowReturnDialogViewModel @Inject constructor(
                     .addOnSuccessListener {
                         homeViewModel.retrieveBorrowedItemInfoFromDB(
                             hostFragment,
-                            Helper.homeBinding!!
-                        )
-
-                        Helper.dismissDialog()
-                        Helper.displayCustomDialog(
-                            activity,
-                            R.layout.custom_dialog_notice,
-                            "Borrow notice",
-                            "Borrow registration for the item has been successfully completed."
+                            Helper.homeBinding!!,
+                            listViewModel,
+                            activity
                         )
                     }.addOnFailureListener { exception ->
                         endTaskNotify(exception, hostFragment)
@@ -93,6 +90,7 @@ class BorrowReturnDialogViewModel @Inject constructor(
     }
 
     fun checkBorrowAvailability(
+        listViewModel: ListViewModel,
         homeViewModel: HomeViewModel,
         activity: Activity,
         filter: String,
@@ -116,6 +114,7 @@ class BorrowReturnDialogViewModel @Inject constructor(
                             if (count < 3) {
                                 if (querySnapshot.documents.isEmpty()) {
                                     insertInfoToFireStore(
+                                        listViewModel,
                                         BorrowModel(
                                             userInfo[0],
                                             userInfo[1],
@@ -139,6 +138,7 @@ class BorrowReturnDialogViewModel @Inject constructor(
 
                                         if (itemCode != itemCodeToBeBorrowed) {
                                             insertInfoToFireStore(
+                                                listViewModel,
                                                 BorrowModel(
                                                     userInfo[0],
                                                     userInfo[1],

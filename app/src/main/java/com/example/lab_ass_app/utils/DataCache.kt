@@ -16,8 +16,8 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 
 object DataCache {
-    val rvItemsForTools: ArrayList<HomeModelLive> = ArrayList()
-    val rvItemsForChemicals: ArrayList<HomeModelLive> = ArrayList()
+    var rvItemsForTools: ArrayList<HomeModelLive> = ArrayList()
+    var rvItemsForChemicals: ArrayList<HomeModelLive> = ArrayList()
     @SuppressLint("StaticFieldLeak")
     lateinit var adapter: HomeAdapter
 
@@ -25,6 +25,7 @@ object DataCache {
 
     var topThreeList: MutableList<PopularModel> = mutableListOf()
     var topThreeListFullInfo: MutableList<ItemFullInfoModel> = mutableListOf()
+    var isToolSelected: Boolean = true
 
     fun cacheDataForCategory(
         category: String,
