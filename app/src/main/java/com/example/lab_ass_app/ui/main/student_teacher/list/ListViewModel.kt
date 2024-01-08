@@ -233,40 +233,38 @@ class ListViewModel : ViewModel() {
         fireStore: FirebaseFirestore,
         fragmentListBinding: FragmentListBinding?
     ) {
-        try {
-            if (DataCache.isToolSelected) {
-                val firebaseStorage = FirebaseStorage.getInstance()
-                val toolsAdapter = HomeAdapter(
+        if (DataCache.isToolSelected) {
+            val firebaseStorage = FirebaseStorage.getInstance()
+            val toolsAdapter = HomeAdapter(
+                activity,
+                fireStore,
+                firebaseStorage,
+                hostFragment.requireContext()
+            ) {
+                Helper.displayCustomDialog(
                     activity,
-                    fireStore,
-                    firebaseStorage,
-                    hostFragment.requireContext()
-                ) {
-                    Helper.displayCustomDialog(
-                        activity,
-                        R.layout.custom_dialog_loading
-                    )
-                }
-
-                fragmentListBinding?.rvListListItem?.adapter = toolsAdapter
-                toolsAdapter.setItem(DataCache.rvItemsForTools)
-            } else {
-                val firebaseStorage = FirebaseStorage.getInstance()
-                val toolsAdapter = HomeAdapter(
-                    activity,
-                    fireStore,
-                    firebaseStorage,
-                    hostFragment.requireContext()
-                ) {
-                    Helper.displayCustomDialog(
-                        activity,
-                        R.layout.custom_dialog_loading
-                    )
-                }
-
-                fragmentListBinding?.rvListListItem?.adapter = toolsAdapter
-                toolsAdapter.setItem(DataCache.rvItemsForChemicals)
+                    R.layout.custom_dialog_loading
+                )
             }
-        } catch (ignored: Exception) { }
+
+            fragmentListBinding?.rvListListItem?.adapter = toolsAdapter
+            toolsAdapter.setItem(DataCache.rvItemsForTools)
+        } else {
+            val firebaseStorage = FirebaseStorage.getInstance()
+            val toolsAdapter = HomeAdapter(
+                activity,
+                fireStore,
+                firebaseStorage,
+                hostFragment.requireContext()
+            ) {
+                Helper.displayCustomDialog(
+                    activity,
+                    R.layout.custom_dialog_loading
+                )
+            }
+
+            fragmentListBinding?.rvListListItem?.adapter = toolsAdapter
+            toolsAdapter.setItem(DataCache.rvItemsForChemicals)
+        }
     }
 }

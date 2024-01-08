@@ -115,6 +115,8 @@ class BorrowReturnDialogFragment(
                     }
                 } else if (spUser2.selectedItem == "RETURN") {
                     Helper.displayCustomDialog(
+                        requireActivity(),
+                        listViewModel,
                         this@BorrowReturnDialogFragment,
                         R.layout.fragment_return_item,
                         firebaseFireStore,

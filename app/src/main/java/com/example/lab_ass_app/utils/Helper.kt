@@ -37,6 +37,7 @@ import com.example.lab_ass_app.ui.account.login.LoginViewModel
 import com.example.lab_ass_app.ui.account.login.google_facebook_bottom_dialog.InputLRNFragment
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.BorrowReturnDialogFragment
 import com.example.lab_ass_app.ui.main.student_teacher.home.HomeViewModel
+import com.example.lab_ass_app.ui.main.student_teacher.list.ListViewModel
 import com.example.lab_ass_app.utils.models.ItemFullInfoModel
 import com.example.lab_ass_app.utils.models.ItemInfoModel
 import com.facebook.login.LoginManager
@@ -320,6 +321,8 @@ object Helper {
 
     @SuppressLint("ObsoleteSdkInt")
     fun displayCustomDialog(
+        activity: Activity,
+        listViewModel: ListViewModel,
         hostFragment: BottomSheetDialogFragment,
         layoutDialog: Int,
         firebaseFireStore: FirebaseFirestore,
@@ -382,7 +385,9 @@ object Helper {
 
                                     homeViewModel.retrieveBorrowedItemInfoFromDB(
                                         hostFragment,
-                                        homeBinding!!
+                                        homeBinding!!,
+                                        listViewModel,
+                                        activity
                                     )
                                     changeReturnedItemStatus(firebaseFireStore, itemInfoModel, hostFragment)
                                     dismiss()
@@ -418,12 +423,17 @@ object Helper {
             .update("modelStatus", "Available")
             .addOnSuccessListener {
                 dismissDialog()
-                displayCustomDialog(
-                    hostFragment.requireActivity(),
-                    R.layout.custom_dialog_notice,
-                    "Return Successful",
-                    "The return process has been successfully completed for the borrowed item"
-                )
+//                displayCustomDialog(
+//                    hostFragment.requireActivity(),
+//                    R.layout.custom_dialog_notice,
+//                    "Return Successful",
+//                    "The return process has been successfully completed for the borrowed item"
+//                )
+                Toast.makeText(
+                    hostFragment.requireContext(),
+                    "Return Successful: Kindly check your profile status.",
+                    Toast.LENGTH_LONG
+                ).show()
             }.addOnFailureListener { exception ->
                 displayToastMessage(hostFragment.requireContext(), "An error occurred: ${exception.localizedMessage}")
                 Log.e(TAG, "changeReturnedItemStatus: ${exception.message}")

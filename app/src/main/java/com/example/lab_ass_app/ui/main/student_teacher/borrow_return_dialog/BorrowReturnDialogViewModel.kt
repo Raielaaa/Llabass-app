@@ -45,6 +45,11 @@ class BorrowReturnDialogViewModel @Inject constructor(
                                 hostFragment,
                                 activity
                             )
+                            Toast.makeText(
+                                hostFragment.requireContext(),
+                                "Borrow Successful: Kindly check your profile status.",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }.addOnFailureListener { exception ->
                             endTaskNotify(exception, hostFragment)
                         }

@@ -353,7 +353,7 @@ class HomeViewModel @Inject constructor(
                         initHomeUserStatusUI(binding, hostFragment)
 
                         try {
-                            listViewModel?.refreshList(
+                            listViewModel!!.refreshList(
                                 activity!!,
                                 hostFragment.requireContext(),
                                 hostFragment,
@@ -362,7 +362,7 @@ class HomeViewModel @Inject constructor(
                                 Helper.homeBinding
                             )
                         } catch (exception: Exception) {
-                            endTaskNotify(exception, hostFragment)
+                            Log.e(Constants.TAG, "retrieveBorrowedItemInfoFromDB: ${exception.message}", )
                         }
                     }.addOnFailureListener { exception ->
                         endTaskNotify(exception, hostFragment)
