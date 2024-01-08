@@ -246,17 +246,6 @@
                 app:layout_constraintStart_toEndOf="@+id/textView30"
                 app:layout_constraintTop_toTopOf="@+id/textView30" />
 
-            <TextView
-                android:id="@+id/textView66"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/david_libre"
-                android:text="@string/user_borrow_count_placeholder"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="@+id/tvHomeStatus"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvHomeStatus" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -271,7 +260,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView67" />
 
     <Button
-        android:id="@+id/btnListRefresh"
+        android:id="@+id/btnProfileRefresh"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_35sdp"
         android:fontFamily="@font/poppins_bold"
@@ -304,7 +293,7 @@
         app:layout_constraintBottom_toTopOf="@+id/cardView7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnListRefresh"
+        app:layout_constraintTop_toBottomOf="@+id/btnProfileRefresh"
         tools:listitem="@layout/rv_profile" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

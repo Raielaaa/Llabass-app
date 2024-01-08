@@ -33,12 +33,19 @@ class ProfileFragment : Fragment() {
         initBottomNavDrawer()
         initNavigationDrawer()
         initRV()
+        initRefreshButton()
 
         return binding.root
     }
 
+    private fun initRefreshButton() {
+        binding.btnProfileRefresh.setOnClickListener {
+            profileViewModel.displayRealTimeProfileInfoToRV(this@ProfileFragment, binding.rvProfileList, binding)
+        }
+    }
+
     private fun initRV() {
-        profileViewModel.displayRealTimeProfileInfoToRV(this@ProfileFragment, binding.rvProfileList)
+        profileViewModel.displayRealTimeProfileInfoToRV(this@ProfileFragment, binding.rvProfileList, binding)
     }
 
     private fun initNavigationDrawer() {
