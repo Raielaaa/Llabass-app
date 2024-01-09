@@ -1,6 +1,5 @@
 package com.example.lab_ass_app.ui.main.student_teacher.profile
 
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,9 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentProfileBinding
-import com.example.lab_ass_app.utils.Helper
-import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
-import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModel
+import com.example.lab_ass_app.utils.`object`.Helper
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

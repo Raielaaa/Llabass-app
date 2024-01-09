@@ -14,7 +14,7 @@ import com.example.lab_ass_app.R
 import com.example.lab_ass_app.ui.account.login.google_facebook_bottom_dialog.FacebookAuthActivity
 import com.example.lab_ass_app.ui.account.register.google_facebook.TermsOfServiceDialogGoogle
 import com.example.lab_ass_app.utils.Constants
-import com.example.lab_ass_app.utils.Helper
+import com.example.lab_ass_app.utils.`object`.Helper
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth

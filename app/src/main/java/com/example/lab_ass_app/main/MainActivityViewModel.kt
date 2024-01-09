@@ -1,19 +1,17 @@
-package com.example.lab_ass_app
+package com.example.lab_ass_app.main
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.net.NetworkInfo
-import android.net.wifi.WifiManager
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
+import com.example.lab_ass_app.R
 import com.example.lab_ass_app.utils.Constants
-import com.example.lab_ass_app.utils.Helper
+import com.example.lab_ass_app.utils.`object`.Helper
 import com.example.lab_ass_app.utils.models.ItemInfoModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

@@ -1,6 +1,11 @@
 package com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog
 
 import android.app.Activity
+import android.app.AlarmManager
+import android.app.AlertDialog
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -9,11 +14,14 @@ import com.example.lab_ass_app.R
 import com.example.lab_ass_app.ui.main.student_teacher.home.HomeViewModel
 import com.example.lab_ass_app.ui.main.student_teacher.list.ListViewModel
 import com.example.lab_ass_app.utils.Constants
-import com.example.lab_ass_app.utils.Helper
+import com.example.lab_ass_app.utils.notification.Notification
+import com.example.lab_ass_app.utils.`object`.Helper
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.text.DateFormat
+import java.util.Date
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -38,6 +46,8 @@ class BorrowReturnDialogViewModel @Inject constructor(
                         .document(borrowModel.modelItemCode)
                         .update("modelStatus", "Unavailable:${borrowModel.modelLRN}-${borrowModel.modelEmail}-${borrowModel.modelUserType}")
                         .addOnSuccessListener {
+                            setUpNotification(activity, borrowModel)
+                            
                             updateBorrowedItemBorrowCount(
                                 listViewModel,
                                 borrowModel,
@@ -62,6 +72,47 @@ class BorrowReturnDialogViewModel @Inject constructor(
                 endTaskNotify(exception, hostFragment)
             }
     }
+
+    private fun setUpNotification(activity: Activity, borrowModel: BorrowModel) {
+        val intent = Intent(activity.applicationContext, Notification::class.java)
+        val title = "Return Reminder: ${borrowModel.modelItemName}"
+        val message = "Friendly reminder to return ${borrowModel.modelItemName} within 12 hours. If already returned, you can ignore this notification. Thanks!"
+        intent.putExtra(Constants.titleExtra, title)
+        intent.putExtra(Constants.messageExtra, message)
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            activity.applicationContext,
+            Constants.notificationID,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val alarmManager = activity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val time = Helper.getTimeForNotification(null, borrowModel.modelBorrowDeadlineDateTime)
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            time,
+            pendingIntent
+        )
+        Log.d(Constants.TAG, "setUpNotification: ${Helper.getTimeForNotification(null, borrowModel.modelBorrowDeadlineDateTime)}")
+        
+//        showAlert(time, title, message, activity)
+    }
+
+//    private fun showAlert(time: Long, title: String, message: String, activity: Activity) {
+//        val date = Date(time)
+//        val dateFormat = android.text.format.DateFormat.getLongDateFormat(activity.applicationContext)
+//        val timeFormat = android.text.format.DateFormat.getTimeFormat(activity.applicationContext)
+//
+//        AlertDialog.Builder(activity)
+//            .setTitle("Notification Scheduled")
+//            .setMessage(
+//                "Title: " + title +
+//                "\nMessage: " + message +
+//                "\nAt: " + dateFormat.format(date) + " " + timeFormat.format(date)
+//            ).setPositiveButton("Okay") {_,_ -> }
+//            .show()
+//    }
 
     private fun updateBorrowedItemBorrowCount(
         listViewModel: ListViewModel,

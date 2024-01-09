@@ -1,4 +1,4 @@
-package com.example.lab_ass_app.utils
+package com.example.lab_ass_app.utils.`object`
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -29,7 +29,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import com.bumptech.glide.Glide
-import com.example.lab_ass_app.MainActivity
+import com.example.lab_ass_app.main.MainActivity
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentHomeBinding
 import com.example.lab_ass_app.databinding.FragmentListBinding
@@ -39,6 +39,7 @@ import com.example.lab_ass_app.ui.account.login.google_facebook_bottom_dialog.In
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.BorrowReturnDialogFragment
 import com.example.lab_ass_app.ui.main.student_teacher.home.HomeViewModel
 import com.example.lab_ass_app.ui.main.student_teacher.list.ListViewModel
+import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.models.ItemFullInfoModel
 import com.example.lab_ass_app.utils.models.ItemInfoModel
 import com.facebook.login.LoginManager
@@ -50,6 +51,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import java.lang.ref.WeakReference
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import kotlin.system.exitProcess
@@ -683,11 +685,11 @@ object Helper {
         lrn: String,
         userType: String
     ) {
-        this.lrn = lrn
-        this.userType = userType
+        Helper.lrn = lrn
+        Helper.userType = userType
     }
 
-    fun getBorrowTimeDifference(modelBorrowDateTime: String, modelBorrowDeadlineDateTime: String): String {
+    fun getBorrowTimeDifference(modelBorrowDateTime: String? = null, modelBorrowDeadlineDateTime: String): String {
         val borrowDeadlineDateTime = modelBorrowDeadlineDateTime.split(",")
 
         val borrowDeadlineDateTimeFinal = "${borrowDeadlineDateTime[0]} ${borrowDeadlineDateTime[1].replace("\\s*:\\s*".toRegex(), ":")}"
@@ -708,6 +710,31 @@ object Helper {
 
         // Convert milliseconds to minutes
         return timeDifference / (60 * 1000)
+    }
+
+    //  Functions for notification
+    fun getTimeForNotification(modelBorrowDateTime: String? = null, modelBorrowDeadlineDateTime: String): Long {
+        val borrowDeadlineDateTime = modelBorrowDeadlineDateTime.split(",")
+
+        val borrowDeadlineDateTimeFinal =
+            "${borrowDeadlineDateTime[0]} ${borrowDeadlineDateTime[1].replace("\\s*:\\s*".toRegex(), ":")}"
+
+        // Calculate 12 hours before the deadline
+        return getTwelveHoursBeforeDeadline(borrowDeadlineDateTimeFinal)
+    }
+
+    private fun getTwelveHoursBeforeDeadline(deadlineDateTime: String): Long {
+        val dateFormat = SimpleDateFormat("d/M/yyyy hh:mm a", Locale.getDefault())
+        val deadlineCalendar = Calendar.getInstance()
+
+        // Parse the deadline date-time string to Calendar
+        deadlineCalendar.time = dateFormat.parse(deadlineDateTime)!!
+
+        // Subtract 12 hours from the deadline
+        deadlineCalendar.add(Calendar.HOUR_OF_DAY, -12)
+
+        // Return the result as a long value representing time in milliseconds
+        return deadlineCalendar.timeInMillis
     }
 
     private var userFilter: String = ""

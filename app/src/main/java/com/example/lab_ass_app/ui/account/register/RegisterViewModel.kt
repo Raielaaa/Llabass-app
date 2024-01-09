@@ -1,6 +1,5 @@
 package com.example.lab_ass_app.ui.account.register
 
-import android.app.Activity
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
@@ -9,10 +8,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentRegisterBinding
-import com.example.lab_ass_app.utils.Helper
+import com.example.lab_ass_app.utils.`object`.Helper
 import com.example.lab_ass_app.ui.account.register.user_account_initial.UserAccountInitialModel
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

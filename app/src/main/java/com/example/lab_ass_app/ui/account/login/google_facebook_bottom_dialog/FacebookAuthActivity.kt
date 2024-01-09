@@ -1,19 +1,15 @@
 package com.example.lab_ass_app.ui.account.login.google_facebook_bottom_dialog
 
 import android.content.Intent
-import android.content.SharedPreferences
-import android.content.SharedPreferences.Editor
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.example.lab_ass_app.MainActivity
+import com.example.lab_ass_app.main.MainActivity
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.ui.account.register.google_facebook.FacebookGoogleDataModel
 import com.example.lab_ass_app.utils.Constants
-import com.example.lab_ass_app.utils.Helper
+import com.example.lab_ass_app.utils.`object`.Helper
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -21,7 +17,6 @@ import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.firebase.auth.FacebookAuthProvider
-import java.util.Arrays
 
 @Suppress("DEPRECATION")
 class FacebookAuthActivity() : MainActivity() {

@@ -10,7 +10,7 @@ import android.widget.Toast
 import com.example.lab_ass_app.databinding.FragmentInputLRNBinding
 import com.example.lab_ass_app.ui.account.login.LoginFragment
 import com.example.lab_ass_app.ui.account.login.LoginViewModel
-import com.example.lab_ass_app.utils.Helper
+import com.example.lab_ass_app.utils.`object`.Helper
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class InputLRNFragment(

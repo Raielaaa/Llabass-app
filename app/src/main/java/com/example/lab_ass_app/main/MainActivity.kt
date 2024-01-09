@@ -1,5 +1,7 @@
-package com.example.lab_ass_app
+package com.example.lab_ass_app.main
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
@@ -15,10 +17,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
+import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.ActivityMainBinding
 import com.example.lab_ass_app.ui.account.register.google_facebook.FacebookGoogleDataModel
 import com.example.lab_ass_app.utils.Constants
-import com.example.lab_ass_app.utils.Helper
+import com.example.lab_ass_app.utils.`object`.Helper
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -103,8 +106,19 @@ open class MainActivity : AppCompatActivity() {
             )
         }
 
+        //  Notification configurations
+        createNotificationChannel()
+
         //  Disabling drawer layout automatic opening (swiping from left edge going to right)
         binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+    }
+
+    private fun createNotificationChannel() {
+        val importance = NotificationManager.IMPORTANCE_HIGH
+        val channel = NotificationChannel(Constants.channelID, Constants.notificationName, importance)
+        channel.description = Constants.notificationDescription
+        val notificationManager: NotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
     }
 
     private fun initObjectValues() {
