@@ -57,7 +57,7 @@ class BorrowReturnDialogViewModel @Inject constructor(
                             )
                             Toast.makeText(
                                 hostFragment.requireContext(),
-                                "Borrow Successful: Kindly check your profile status.",
+                                "Borrow Successful: Kindly refresh your profile status.",
                                 Toast.LENGTH_LONG
                             ).show()
                         }.addOnFailureListener { exception ->
@@ -159,7 +159,7 @@ class BorrowReturnDialogViewModel @Inject constructor(
             .addOnSuccessListener { documentSnapshot ->
                 val availability = documentSnapshot.get("modelStatus")
 
-                if (availability.toString().contains("Available")) {
+                if (availability == "Available") {
                     firebaseFireStore.collection("labass-app-borrow-log")
                         .whereGreaterThanOrEqualTo(FieldPath.documentId(), filter)
                         .whereLessThan(FieldPath.documentId(), filter + '\uF7FF')
@@ -234,7 +234,7 @@ class BorrowReturnDialogViewModel @Inject constructor(
                         }.addOnFailureListener { exception ->
                             Log.e(Constants.TAG, "checksTheNumberOfBorrows: ${exception.message}")
                         }
-                } else if (availability == "Unavailable") {
+                } else if (availability.toString().contains("Unavailable")) {
                     Helper.dismissDialog()
                     Helper.displayCustomDialog(
                         activity,

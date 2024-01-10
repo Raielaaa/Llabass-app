@@ -75,7 +75,13 @@ class HomeAdapter(
 
                     val itemsToBeShown = ItemFullInfoModel(
                         imageLink,
-                        itemName, itemSize, itemCategory, itemStatus, itemDescription, itemBorrowCount, itemCode
+                        itemName,
+                        itemSize,
+                        itemCategory,
+                        itemStatus.split(":")[0],
+                        itemDescription,
+                        itemBorrowCount,
+                        itemCode
                     )
 
                     //  Dismisses the loading dialog first before showing the selected item dialog

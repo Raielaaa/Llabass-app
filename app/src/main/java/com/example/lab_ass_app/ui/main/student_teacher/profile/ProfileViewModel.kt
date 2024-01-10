@@ -2,6 +2,7 @@ package com.example.lab_ass_app.ui.main.student_teacher.profile
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -76,6 +77,16 @@ class ProfileViewModel @Inject constructor(
 
                 adapter.setList(DataCache.rvBorrowInfoProfile)
                 rvProfileList.adapter = adapter
+
+                binding.apply {
+                    if (adapter.getListSize() == 0) {
+                        rvProfileList.visibility = View.INVISIBLE
+                        ivNoDataFound.visibility = View.VISIBLE
+                    } else {
+                        rvProfileList.visibility = View.VISIBLE
+                        ivNoDataFound.visibility = View.INVISIBLE
+                    }
+                }
                 Helper.dismissDialog()
             }.addOnFailureListener { exception ->
                 endTaskException(exception, hostFragment)

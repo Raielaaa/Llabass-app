@@ -59,6 +59,8 @@ class ProfileAdapter(
         notifyDataSetChanged()
     }
 
+    fun getListSize() = collection.size
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
         val binding = RvProfileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ProfileViewHolder(binding)
