@@ -161,7 +161,7 @@
             android:padding="@dimen/_10sdp">
 
             <ImageView
-                android:id="@+id/imageView9"
+                android:id="@+id/ivUserImage"
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/user"
@@ -181,7 +181,7 @@
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView9"
+                app:layout_constraintStart_toEndOf="@+id/ivUserImage"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

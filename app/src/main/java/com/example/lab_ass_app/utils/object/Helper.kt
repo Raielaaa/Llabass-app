@@ -3,11 +3,14 @@ package com.example.lab_ass_app.utils.`object`
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Context.WINDOW_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.DisplayMetrics
@@ -19,6 +22,9 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
@@ -49,6 +55,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import java.io.ByteArrayOutputStream
 import java.lang.ref.WeakReference
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -84,6 +92,8 @@ object Helper {
     var hostFragmentInstanceForFacebookLogin: Fragment? = null
     @SuppressLint("StaticFieldLeak")
     var navControllerFromMain: NavController? = null
+
+    var userImageProfile: Uri? = null
 
     @SuppressLint("ObsoleteSdkInt")
     fun displayCustomDialog(
@@ -794,5 +804,93 @@ object Helper {
                     }
                 }
         }
+    }
+
+    // Initialize the activity result launcher
+    fun chooseImage(ivUserImage: ImageView, pickMediaLauncher: ActivityResultLauncher<PickVisualMediaRequest>) {
+        ivUserImage.setOnClickListener {
+            // Launch the photo picker and let the user choose only images.
+            pickMediaLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
+    }
+
+    fun uploadImageToFireStore(
+        uri: Uri,
+        ivUserImage: ImageView,
+        firebaseStorage: StorageReference,
+        storage: FirebaseStorage,
+        hostFragment: Fragment,
+        firebaseAuth: FirebaseAuth
+    ) {
+        displayCustomDialog(
+            hostFragment.requireActivity(),
+            R.layout.custom_dialog_loading
+        )
+        val imagePath = "user_image/${firebaseAuth.currentUser!!.uid}"
+
+        // Resize the image before uploading
+        val resizedBitmap = resizeImage(uri, hostFragment.requireActivity().contentResolver)
+
+        // Convert the resized bitmap to a byte array
+        val baos = ByteArrayOutputStream()
+        resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+
+        firebaseStorage.child(imagePath)
+            .putBytes(data)
+            .continueWithTask { task ->
+                if (!task.isSuccessful) {
+                    throw task.exception!!
+                }
+                return@continueWithTask firebaseStorage.child(imagePath).downloadUrl
+            }
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val downloadURL = task.result
+                    ivUserImage.setImageURI(downloadURL)
+                    userImageProfile = downloadURL
+
+                    val gsReference = storage.getReferenceFromUrl("gs://labass-app.appspot.com/$imagePath")
+                    Glide.with(hostFragment.requireContext())
+                        .load(gsReference)
+                        .into(ivUserImage)
+
+                    dismissDialog()
+                } else {
+                    Toast.makeText(
+                        hostFragment.requireContext(),
+                        "Error: ${task.exception?.localizedMessage}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    Log.e(Constants.TAG, "uploadImageToFireStore: ${task.exception?.message}")
+                    dismissDialog()
+                }
+            }
+    }
+
+    private fun resizeImage(uri: Uri, contentResolver: ContentResolver): Bitmap {
+        val originalBitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
+
+        // Calculate the new dimensions to keep the aspect ratio
+        val maxWidth = 300f
+        val maxHeight = 300f
+        val scale = Math.min(maxWidth / originalBitmap.width, maxHeight / originalBitmap.height)
+
+        val newWidth = (originalBitmap.width * scale).toInt()
+        val newHeight = (originalBitmap.height * scale).toInt()
+
+        return Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true)
+    }
+
+    fun bitmapToUri(bitmap: Bitmap, activity: Activity): Uri {
+        val bytes = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(
+            activity.applicationContext.contentResolver,
+            bitmap,
+            "Title",
+            null
+        )
+        return Uri.parse(path)
     }
 }

@@ -139,9 +139,10 @@
             android:padding="@dimen/_10sdp">
 
             <ImageView
-                android:id="@+id/imageView9"
+                android:scaleType="centerCrop"
+                android:id="@+id/ivUserImage"
                 android:layout_width="@dimen/_50sdp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:src="@drawable/user"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -158,7 +159,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/imageView9"
+                app:layout_constraintStart_toEndOf="@+id/ivUserImage"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.cardview.widget.CardView
@@ -192,7 +193,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_8ssp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView9"
+                app:layout_constraintBottom_toBottomOf="@+id/ivUserImage"
                 app:layout_constraintStart_toStartOf="@+id/textView29" />
 
             <TextView
