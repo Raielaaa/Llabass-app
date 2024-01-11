@@ -14,6 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
 object DataCache {
+    var seeAllData: ArrayList<HomeModelLive> = ArrayList()
     var rvItemsForTools: ArrayList<HomeModelLive> = ArrayList()
     var rvItemsForChemicals: ArrayList<HomeModelLive> = ArrayList()
     @SuppressLint("StaticFieldLeak")

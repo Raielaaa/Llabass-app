@@ -10,6 +10,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
@@ -57,6 +59,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.lang.ref.WeakReference
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -860,14 +865,6 @@ object Helper {
                             // Handle failures
                             exception.printStackTrace()
                         }
-//                    val downloadURL = task.result
-//                    ivUserImage.setImageURI(downloadURL)
-//                    userImageProfile = downloadURL
-//
-//                    val gsReference = storage.getReferenceFromUrl("gs://labass-app.appspot.com/$imagePath")
-//                    Glide.with(hostFragment.requireContext())
-//                        .load(gsReference)
-//                        .into(ivUserImage)
                 } else {
                     Toast.makeText(
                         hostFragment.requireContext(),
@@ -883,26 +880,65 @@ object Helper {
     private fun resizeImage(uri: Uri, contentResolver: ContentResolver): Bitmap {
         val originalBitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
 
+        // Get the absolute path from the Uri
+        val path = getRealPathFromURI(uri, contentResolver)
+
+        // Get the image orientation
+        val exif = ExifInterface(path)
+        val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
+
+        // Rotate the bitmap based on the orientation
+        val rotatedBitmap = when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(originalBitmap, 90f)
+            ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(originalBitmap, 180f)
+            ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(originalBitmap, 270f)
+            else -> originalBitmap
+        }
+
         // Calculate the new dimensions to keep the aspect ratio
         val maxWidth = 300f
         val maxHeight = 300f
-        val scale = Math.min(maxWidth / originalBitmap.width, maxHeight / originalBitmap.height)
+        val scale = Math.min(maxWidth / rotatedBitmap.width, maxHeight / rotatedBitmap.height)
 
-        val newWidth = (originalBitmap.width * scale).toInt()
-        val newHeight = (originalBitmap.height * scale).toInt()
+        val newWidth = (rotatedBitmap.width * scale).toInt()
+        val newHeight = (rotatedBitmap.height * scale).toInt()
 
-        return Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true)
+        return Bitmap.createScaledBitmap(rotatedBitmap, newWidth, newHeight, true)
     }
 
+    private fun getRealPathFromURI(uri: Uri, contentResolver: ContentResolver): String {
+        var path = ""
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = contentResolver.query(uri, projection, null, null, null)
+        if (cursor != null) {
+            val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            if (cursor.moveToFirst()) {
+                path = cursor.getString(columnIndex)
+            }
+            cursor.close()
+        }
+        return path
+    }
+
+
+    private fun rotateImage(bitmap: Bitmap, degree: Float): Bitmap {
+        val matrix = Matrix()
+        matrix.postRotate(degree)
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    }
+
+
     fun bitmapToUri(bitmap: Bitmap, activity: Activity): Uri {
-        val bytes = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = MediaStore.Images.Media.insertImage(
-            activity.applicationContext.contentResolver,
-            bitmap,
-            "Title",
-            null
-        )
-        return Uri.parse(path)
+        val filename = "labass-app-profile-pic.jpg" // Set a fixed filename
+        val file = File(activity.externalCacheDir, filename)
+        try {
+            val fileOutputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
+            fileOutputStream.flush()
+            fileOutputStream.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return Uri.fromFile(file)
     }
 }

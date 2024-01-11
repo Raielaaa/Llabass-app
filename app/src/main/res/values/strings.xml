@@ -160,7 +160,7 @@
     <string name="st_home_pending_placeholder">Tools - Beaker</string>
     <string name="st_home_status">Status: </string>
     <string name="st_home_status_placeholder">On-borrow</string>
-    <string name="st_home_top_borrows">Top Borrows</string>
+    <string name="st_home_top_borrows">Top 10 Borrows</string>
     <string name="st_home_see_all">SEE ALL</string>
     <string name="st_home_item_placeholder">Beaker</string>
     <string name="st_home_borrows_placeholder">14 Borrows</string>

@@ -95,6 +95,11 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
         initObjectValues()
         initColorTransitionForCategory()
         initUserImageDisplay()
+        initSeeAllButton()
+    }
+
+    private fun initSeeAllButton() {
+        homeViewModel.showSeeAllFunction(binding.btnHomeSeeAll, this@HomeFragment, fireStore)
     }
 
     private fun initImageResourceChooser() {
