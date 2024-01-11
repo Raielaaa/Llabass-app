@@ -35,6 +35,36 @@
         android:fitsSystemWindows="false"
         app:menu="@menu/drawer_menu"
         app:headerLayout="@layout/navigation_drawer_header"
-        android:layout_gravity="start" />
+        android:layout_gravity="start" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:id="@+id/imageView9"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_120sdp"
+                app:srcCompat="@drawable/school_logo" />
+
+            <TextView
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:textAlignment="center"
+                android:layout_weight="1"
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/Theme.color.main"
+                android:textSize="@dimen/_8ssp"
+                android:textAllCaps="true"
+                android:fontFamily="@font/poppins"
+                android:textStyle="bold"
+                android:text="All rights reserved" />
+        </LinearLayout>
+    </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
