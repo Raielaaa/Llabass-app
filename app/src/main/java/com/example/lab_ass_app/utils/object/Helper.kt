@@ -846,16 +846,28 @@ object Helper {
             }
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val downloadURL = task.result
-                    ivUserImage.setImageURI(downloadURL)
-                    userImageProfile = downloadURL
+                    firebaseStorage.child("user_image/${firebaseAuth.currentUser!!.uid}")
+                        .getBytes(Long.MAX_VALUE)
+                        .addOnSuccessListener { bytes ->
+                            // Convert the byte array to a Bitmap and set it in the ImageView
+                            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
 
-                    val gsReference = storage.getReferenceFromUrl("gs://labass-app.appspot.com/$imagePath")
-                    Glide.with(hostFragment.requireContext())
-                        .load(gsReference)
-                        .into(ivUserImage)
+                            userImageProfile = bitmapToUri(bitmap, hostFragment.requireActivity())
+                            ivUserImage.setImageBitmap(bitmap)
 
-                    dismissDialog()
+                            dismissDialog()
+                        }.addOnFailureListener { exception ->
+                            // Handle failures
+                            exception.printStackTrace()
+                        }
+//                    val downloadURL = task.result
+//                    ivUserImage.setImageURI(downloadURL)
+//                    userImageProfile = downloadURL
+//
+//                    val gsReference = storage.getReferenceFromUrl("gs://labass-app.appspot.com/$imagePath")
+//                    Glide.with(hostFragment.requireContext())
+//                        .load(gsReference)
+//                        .into(ivUserImage)
                 } else {
                     Toast.makeText(
                         hostFragment.requireContext(),
