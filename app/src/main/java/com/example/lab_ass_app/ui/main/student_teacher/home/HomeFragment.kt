@@ -119,18 +119,20 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
         if (Helper.userImageProfile != null) {
             binding.ivUserImage.setImageURI(Helper.userImageProfile)
         } else {
-            firebaseStorage.child("user_image/${firebaseAuth.currentUser!!.uid}")
-                .getBytes(Long.MAX_VALUE)
-                .addOnSuccessListener { bytes ->
-                    // Convert the byte array to a Bitmap and set it in the ImageView
-                    val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+            if (firebaseAuth.currentUser != null) {
+                firebaseStorage.child("user_image/${firebaseAuth.currentUser!!.uid}")
+                    .getBytes(Long.MAX_VALUE)
+                    .addOnSuccessListener { bytes ->
+                        // Convert the byte array to a Bitmap and set it in the ImageView
+                        val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
 
-                    Helper.userImageProfile = Helper.bitmapToUri(bitmap, requireActivity())
-                    binding.ivUserImage.setImageBitmap(bitmap)
-                }.addOnFailureListener { exception ->
-                    // Handle failures
-                    exception.printStackTrace()
-                }
+                        Helper.userImageProfile = Helper.bitmapToUri(bitmap, requireActivity())
+                        binding.ivUserImage.setImageBitmap(bitmap)
+                    }.addOnFailureListener { exception ->
+                        // Handle failures
+                        exception.printStackTrace()
+                    }
+            }
         }
 
         initImageResourceChooser()

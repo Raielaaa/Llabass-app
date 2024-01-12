@@ -756,6 +756,7 @@ object Helper {
 
     fun checkPastDue(auth: FirebaseAuth, firebaseFireStore: FirebaseFirestore, cvPastDueExist: CardView) {
         if (userFilter.isEmpty()) {
+            Log.d(Constants.TAG, "checkPastDue: empty")
             val userID = auth.currentUser?.uid
 
             firebaseFireStore.collection("labass-app-user-account-initial")
@@ -785,15 +786,18 @@ object Helper {
                                         cvPastDueExist.visibility = View.VISIBLE
                                     }
                                 }
+                                Log.d(Constants.TAG, "checkPastDue: empty-end")
                             }
                         }
                 }
         } else {
+            Log.d(Constants.TAG, "checkPastDue: not-empty")
             firebaseFireStore.collection("labass-app-borrow-log")
                 .whereGreaterThanOrEqualTo(FieldPath.documentId(), userFilter)
                 .whereLessThan(FieldPath.documentId(), userFilter + '\uF7FF')
                 .get()
                 .addOnSuccessListener { querySnapshot ->
+                    Log.d(Constants.TAG, "checkPastDue: ${querySnapshot.documents.isNotEmpty()}")
                     if (querySnapshot.documents.isNotEmpty()) {
                         val itemDeadlines: ArrayList<String> = ArrayList()
 
@@ -806,7 +810,10 @@ object Helper {
                                 cvPastDueExist.visibility = View.VISIBLE
                             }
                         }
+                        Log.d(Constants.TAG, "checkPastDue: not-empty-end")
                     }
+                }.addOnFailureListener { exception ->
+                    Log.e(Constants.TAG, "checkPastDue-not-empty: ${exception.message}", )
                 }
         }
     }
