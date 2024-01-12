@@ -429,6 +429,20 @@
             app:exitAnim="@anim/push_right_out"
             app:popEnterAnim="@anim/push_left_in"
             app:popExitAnim="@anim/push_left_out" />
+        <action
+            android:id="@+id/action_adminPrivacyFragment_to_adminTOSFragment"
+            app:destination="@id/adminTOSFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_adminPrivacyFragment_to_adminPPFragment"
+            app:destination="@id/adminPPFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/adminListFragment"
@@ -499,6 +513,32 @@
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminPPFragment"
+        android:name="com.example.lab_ass_app.ui.main.admin.privacy.AdminPPFragment"
+        android:label="fragment_admin_p_p"
+        tools:layout="@layout/fragment_admin_p_p" >
+        <action
+            android:id="@+id/action_adminPPFragment_to_adminPrivacyFragment"
+            app:destination="@id/adminPrivacyFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminTOSFragment"
+        android:name="com.example.lab_ass_app.ui.main.admin.privacy.AdminTOSFragment"
+        android:label="fragment_admin_t_o_s"
+        tools:layout="@layout/fragment_admin_t_o_s" >
+        <action
+            android:id="@+id/action_adminTOSFragment_to_adminPrivacyFragment"
+            app:destination="@id/adminPrivacyFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"

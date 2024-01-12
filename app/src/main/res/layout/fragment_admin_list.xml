@@ -231,6 +231,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etListSearch">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clCategoryTools"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:padding="@dimen/_10sdp">
@@ -284,6 +285,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cvCategoryChe"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/_10sdp"
@@ -294,6 +296,7 @@
         app:layout_constraintTop_toTopOf="@+id/cvCategoryTools">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clCategoryChem"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/home_top_bg"

@@ -12,7 +12,7 @@
         app:tint="#ee404c"
         android:backgroundTint="@color/white"
         android:layout_marginBottom="@dimen/_20sdp"
-        android:id="@+id/fabExperiments"
+        android:id="@+id/fabReports"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -99,28 +99,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.32" />
+        app:layout_constraintGuide_percent="0.34" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.68" />
+        app:layout_constraintGuide_percent="0.66" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.375" />
+        app:layout_constraintGuide_percent="0.365" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.625" />
+        app:layout_constraintGuide_percent="0.635" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -346,6 +346,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cvTop3"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:cardBackgroundColor="@android:color/transparent"
@@ -417,7 +418,7 @@
         android:id="@+id/cvCategoryTools"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         app:cardBackgroundColor="@color/Theme.color.main"
         app:cardCornerRadius="10dp"
@@ -426,6 +427,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cvTop1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clCategoryTools"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:padding="@dimen/_10sdp">
@@ -479,6 +481,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cvCategoryChem"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/_10sdp"
@@ -489,6 +492,7 @@
         app:layout_constraintTop_toTopOf="@+id/cvCategoryTools">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clCategoryChem"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/home_top_bg"

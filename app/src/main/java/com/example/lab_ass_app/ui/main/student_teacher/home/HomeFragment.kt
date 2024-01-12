@@ -163,12 +163,12 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
     }
 
     private fun initTopBorrows() {
-        homeViewModel.initTopBorrowDisplay(binding, requireContext(), this@HomeFragment, binding.btnHomeSeeAll)
+        homeViewModel.initTopBorrowDisplay(null, binding, requireContext(), this@HomeFragment, binding.btnHomeSeeAll)
         initTopBorrowsSelected()
     }
 
     private fun initTopBorrowsSelected() {
-        homeViewModel.initTopBorrowDisplaySelected(binding, requireActivity())
+        homeViewModel.initTopBorrowDisplaySelected(null, binding, requireActivity())
     }
 
     private fun initUserType() {

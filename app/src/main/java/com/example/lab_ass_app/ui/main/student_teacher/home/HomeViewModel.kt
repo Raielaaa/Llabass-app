@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.lab_ass_app.R
+import com.example.lab_ass_app.databinding.FragmentHomeAdminBinding
 import com.example.lab_ass_app.databinding.FragmentHomeBinding
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.BorrowModel
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
@@ -51,9 +52,21 @@ class HomeViewModel @Inject constructor(
         Helper.takeQR(activity)
     }
 
-    fun initTopBorrowDisplay(binding: FragmentHomeBinding, context: Context, hostFragment: Fragment, btnSeeAll: Button? = null) {
+    fun initTopBorrowDisplay(
+        adminBinding: FragmentHomeAdminBinding?,
+        binding: FragmentHomeBinding?,
+        context: Context, hostFragment:
+        Fragment, btnSeeAll:
+        Button? = null
+    ) {
         if (DataCache.topThreeList.isNotEmpty()) {
-            binding.apply {
+            binding?.apply {
+                displayItemToTopBorrow(tvTitleTop1, tvBorrowCountTop1, DataCache.topThreeList[0], context, ivTop1)
+                displayItemToTopBorrow(tvTitleTop2, tvBorrowCountTop2, DataCache.topThreeList[1], context, ivTop2)
+                displayItemToTopBorrow(tvTitleTop3, tvBorrowCountTop3, DataCache.topThreeList[2], context, ivTop3)
+            }
+
+            adminBinding?.apply {
                 displayItemToTopBorrow(tvTitleTop1, tvBorrowCountTop1, DataCache.topThreeList[0], context, ivTop1)
                 displayItemToTopBorrow(tvTitleTop2, tvBorrowCountTop2, DataCache.topThreeList[1], context, ivTop2)
                 displayItemToTopBorrow(tvTitleTop3, tvBorrowCountTop3, DataCache.topThreeList[2], context, ivTop3)
@@ -101,7 +114,13 @@ class HomeViewModel @Inject constructor(
 
 //                    initSeeAllButtonRV(hostFragment, btnSeeAll)
 
-                    binding.apply {
+                    binding?.apply {
+                        displayItemToTopBorrow(tvTitleTop1, tvBorrowCountTop1, topThreeList[0], context, ivTop1)
+                        displayItemToTopBorrow(tvTitleTop2, tvBorrowCountTop2, topThreeList[1], context, ivTop2)
+                        displayItemToTopBorrow(tvTitleTop3, tvBorrowCountTop3, topThreeList[2], context, ivTop3)
+                    }
+
+                    adminBinding?.apply {
                         displayItemToTopBorrow(tvTitleTop1, tvBorrowCountTop1, topThreeList[0], context, ivTop1)
                         displayItemToTopBorrow(tvTitleTop2, tvBorrowCountTop2, topThreeList[1], context, ivTop2)
                         displayItemToTopBorrow(tvTitleTop3, tvBorrowCountTop3, topThreeList[2], context, ivTop3)
@@ -112,8 +131,24 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun initTopBorrowDisplaySelected(binding: FragmentHomeBinding, activity: Activity) {
-        binding.apply {
+    fun initTopBorrowDisplaySelected(
+        adminBinding: FragmentHomeAdminBinding?,
+        binding: FragmentHomeBinding?,
+        activity: Activity
+    ) {
+        binding?.apply {
+            cvTop1.setOnClickListener {
+                displaySelectedItemCustomDialog(DataCache.topThreeListFullInfo[0], activity)
+            }
+            cvTop2.setOnClickListener {
+                displaySelectedItemCustomDialog(DataCache.topThreeListFullInfo[1], activity)
+            }
+            cvTop3.setOnClickListener {
+                displaySelectedItemCustomDialog(DataCache.topThreeListFullInfo[2], activity)
+            }
+        }
+
+        adminBinding?.apply {
             cvTop1.setOnClickListener {
                 displaySelectedItemCustomDialog(DataCache.topThreeListFullInfo[0], activity)
             }
