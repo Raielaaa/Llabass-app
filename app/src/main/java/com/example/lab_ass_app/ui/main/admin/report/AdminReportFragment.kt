@@ -9,7 +9,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentAdminReportBinding
+import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
+@AndroidEntryPoint
 class AdminReportFragment : Fragment() {
     private lateinit var binding: FragmentAdminReportBinding
     private lateinit var adminReportViewModel: AdminReportViewModel
@@ -29,10 +34,19 @@ class AdminReportFragment : Fragment() {
     private fun initComponents() {
         initBackButton()
         initRV()
+        initCurrentDate()
+    }
+
+    private fun initCurrentDate() {
+        //  Init date for TextView
+        val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(Calendar.getInstance().time)
+        val dateToBeDisplayed = "Updated as of $formattedDate"
+        binding.tvCurrentDate.text = dateToBeDisplayed
     }
 
     private fun initRV() {
-        adminReportViewModel.initRV()
+        adminReportViewModel.initRV(binding.rvReport, this@AdminReportFragment)
     }
 
     private fun initBackButton() {

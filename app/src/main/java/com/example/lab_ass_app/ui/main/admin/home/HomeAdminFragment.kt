@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.provider.SyncStateContract.Constants
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,7 +65,7 @@ class HomeAdminFragment : Fragment() {
 
     private fun initReport() {
         binding.fabReports.setOnClickListener {
-            findNavController().navigate(R.id.action_homeAdminFragment_to_adminReportFragment)
+            Helper.navControllerFromMain?.navigate(R.id.action_homeAdminFragment_to_adminReportFragment)
         }
     }
 

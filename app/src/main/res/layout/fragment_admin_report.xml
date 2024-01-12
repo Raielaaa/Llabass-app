@@ -97,15 +97,16 @@
         app:layout_constraintTop_toTopOf="@+id/tvCurrentDate" />
 
     <androidx.recyclerview.widget.RecyclerView
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:orientation="vertical"
-        tools:listitem="@layout/rv_report"
+        android:id="@+id/rvReport"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_10sdp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline20"
         app:layout_constraintStart_toStartOf="@+id/guideline19"
-        app:layout_constraintTop_toBottomOf="@+id/btnListRefresh" />
+        app:layout_constraintTop_toBottomOf="@+id/btnListRefresh"
+        tools:listitem="@layout/rv_report" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
