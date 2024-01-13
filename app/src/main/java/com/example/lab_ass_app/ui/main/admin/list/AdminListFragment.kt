@@ -1,8 +1,12 @@
 package com.example.lab_ass_app.ui.main.admin.list
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -30,7 +34,7 @@ class AdminListFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var binding: FragmentAdminListBinding
-    private lateinit var mViewModel: AdminListViewModel
+    private lateinit var adminListViewModel: AdminListViewModel
     private var isToolsSelected: Boolean = true
 
     override fun onCreateView(
@@ -38,7 +42,7 @@ class AdminListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAdminListBinding.inflate(inflater, container, false)
-        mViewModel = ViewModelProvider(this)[AdminListViewModel::class.java]
+        adminListViewModel = ViewModelProvider(this)[AdminListViewModel::class.java]
         homeViewModel = ViewModelProvider(this@AdminListFragment)[HomeViewModel::class.java]
 
         initComponents()
@@ -50,6 +54,48 @@ class AdminListFragment : Fragment() {
         initColorTransitionForCategory()
         initNavigation()
         initListRV()
+        initSearchFunction()
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun initSearchFunction() {
+        binding.apply {
+            etListSearch.setOnTouchListener { _, event ->
+                if (event.action == MotionEvent.ACTION_UP) {
+                    val drawableEnd = 2 // Index for the drawable end
+                    val extraPadding = 60 // Drawable padding in dp
+                    val drawableEndBounds = etListSearch.compoundDrawablesRelative[drawableEnd].bounds
+
+                    // Adjusting for drawable padding
+                    val drawableEndWithPadding = etListSearch.right - drawableEndBounds.width() - extraPadding
+                    if (event.rawX >= drawableEndWithPadding) {
+                        // Clicked on the drawable end
+                        etListSearch.setText("")
+                        return@setOnTouchListener true
+                    }
+                }
+                false
+            }
+
+            etListSearch.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                    TODO("Not yet implemented")
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    val inputtedText: String = p0.toString()
+
+                    adminListViewModel.initSearchFunction(
+                        inputtedText,
+                        isToolsSelected
+                    )
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+//                    TODO("Not yet implemented")
+                }
+            })
+        }
     }
 
     private fun initNavigation() {

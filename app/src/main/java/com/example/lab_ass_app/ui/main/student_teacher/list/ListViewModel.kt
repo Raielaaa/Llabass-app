@@ -46,7 +46,9 @@ class ListViewModel : ViewModel() {
     ) {
         listToBeDisplayedToRV.clear()
         for (item in listToBeFiltered) {
-            if (item.itemNameModel.lowercase().contains(inputtedText.lowercase())) {
+            if (item.itemNameModel.lowercase().contains(inputtedText.lowercase()) ||
+                item.itemCodeModel.lowercase().contains(inputtedText.lowercase())
+                ) {
                 listToBeDisplayedToRV.add(item)
             }
         }
