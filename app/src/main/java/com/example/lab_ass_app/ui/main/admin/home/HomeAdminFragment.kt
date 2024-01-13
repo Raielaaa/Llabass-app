@@ -2,6 +2,7 @@ package com.example.lab_ass_app.ui.main.admin.home
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.SyncStateContract.Constants
@@ -11,6 +12,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -24,7 +28,10 @@ import com.example.lab_ass_app.ui.main.student_teacher.home.HomeViewModel
 import com.example.lab_ass_app.utils.`object`.DataCache
 import com.example.lab_ass_app.utils.`object`.Helper
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,6 +46,17 @@ class HomeAdminFragment : Fragment() {
     @Inject
     @Named("FirebaseFireStore.Instance")
     lateinit var fireStore: FirebaseFirestore
+
+    @Inject
+    @Named("FirebaseAuth.Instance")
+    lateinit var firebaseAuth: FirebaseAuth
+
+    @Inject
+    @Named("FirebaseStorage.Instance")
+    lateinit var firebaseStorage: StorageReference
+
+    //  Image chooser
+    private lateinit var pickMediaLauncher: ActivityResultLauncher<PickVisualMediaRequest>
 
     private lateinit var binding: FragmentHomeAdminBinding
     private lateinit var homeAdminViewModel: HomeAdminViewModel
@@ -58,6 +76,59 @@ class HomeAdminFragment : Fragment() {
         return binding.root
     }
 
+    private fun initComponents() {
+        initNavigation()
+        initColorTransitionForCategory()
+        initTopBorrows()
+        initBottomRvList()
+        initReport()
+        initUserTopStatus()
+        initIVHomeExpand()
+        initUserImageDisplay()
+        initSeeAllButton()
+    }
+
+    private fun initSeeAllButton() {
+        homeViewModel.showSeeAllFunction(binding.btnHomeSeeAll, this@HomeAdminFragment, fireStore)
+    }
+
+    private fun initImageResourceChooser() {
+        pickMediaLauncher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            // Callback is invoked after the user selects a media item or closes the
+            // photo picker.
+            if (uri != null) {
+                val storage = FirebaseStorage.getInstance()
+                Helper.uploadImageToFireStore(uri, binding.ivUserImage, firebaseStorage, storage, this@HomeAdminFragment, firebaseAuth)
+            } else {
+                Toast.makeText(requireContext(), "No media selected", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun initUserImageDisplay() {
+        if (Helper.userImageProfile != null) {
+            binding.ivUserImage.setImageURI(Helper.userImageProfile)
+        } else {
+            if (firebaseAuth.currentUser != null) {
+                firebaseStorage.child("user_image/${firebaseAuth.currentUser!!.uid}")
+                    .getBytes(Long.MAX_VALUE)
+                    .addOnSuccessListener { bytes ->
+                        // Convert the byte array to a Bitmap and set it in the ImageView
+                        val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+
+                        Helper.userImageProfile = Helper.bitmapToUri(bitmap, requireActivity())
+                        binding.ivUserImage.setImageBitmap(bitmap)
+                    }.addOnFailureListener { exception ->
+                        // Handle failures
+                        exception.printStackTrace()
+                    }
+            }
+        }
+
+        initImageResourceChooser()
+        Helper.chooseImage(binding.ivUserImage, pickMediaLauncher)
+    }
+
     private fun initOnBackPress() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -68,16 +139,6 @@ class HomeAdminFragment : Fragment() {
                 ).show()
             }
         })
-    }
-
-    private fun initComponents() {
-        initNavigation()
-        initColorTransitionForCategory()
-        initTopBorrows()
-        initBottomRvList()
-        initReport()
-        initUserTopStatus()
-        initIVHomeExpand()
     }
 
     private fun initIVHomeExpand() {

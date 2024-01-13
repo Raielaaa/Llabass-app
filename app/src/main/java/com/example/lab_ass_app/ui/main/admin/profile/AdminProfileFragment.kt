@@ -1,6 +1,7 @@
 package com.example.lab_ass_app.ui.main.admin.profile
 
 import android.annotation.SuppressLint
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,6 +9,10 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -18,13 +23,28 @@ import com.example.lab_ass_app.databinding.FragmentAdminProfileBinding
 import com.example.lab_ass_app.ui.main.admin.util.DataCache
 import com.example.lab_ass_app.utils.`object`.Helper
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+import javax.inject.Named
 
 @AndroidEntryPoint
 class AdminProfileFragment : Fragment() {
+    @Inject
+    @Named("FirebaseAuth.Instance")
+    lateinit var firebaseAuth: FirebaseAuth
+
+    @Inject
+    @Named("FirebaseStorage.Instance")
+    lateinit var firebaseStorage: StorageReference
+
+    //  Image chooser
+    private lateinit var pickMediaLauncher: ActivityResultLauncher<PickVisualMediaRequest>
+
     private lateinit var binding: FragmentAdminProfileBinding
     private lateinit var adminProfileViewModel: AdminProfileViewModel
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +64,44 @@ class AdminProfileFragment : Fragment() {
         initRefreshButton()
         initSearchButton()
         initBorrowCount()
+        initUserImageDisplay()
+    }
+
+    private fun initImageResourceChooser() {
+        pickMediaLauncher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            // Callback is invoked after the user selects a media item or closes the
+            // photo picker.
+            if (uri != null) {
+                val storage = FirebaseStorage.getInstance()
+                Helper.uploadImageToFireStore(uri, binding.ivUserImage, firebaseStorage, storage, this@AdminProfileFragment, firebaseAuth)
+            } else {
+                Toast.makeText(requireContext(), "No media selected", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun initUserImageDisplay() {
+        if (Helper.userImageProfile != null) {
+            binding.ivUserImage.setImageURI(Helper.userImageProfile)
+        } else {
+            if (firebaseAuth.currentUser != null) {
+                firebaseStorage.child("user_image/${firebaseAuth.currentUser!!.uid}")
+                    .getBytes(Long.MAX_VALUE)
+                    .addOnSuccessListener { bytes ->
+                        // Convert the byte array to a Bitmap and set it in the ImageView
+                        val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+
+                        Helper.userImageProfile = Helper.bitmapToUri(bitmap, requireActivity())
+                        binding.ivUserImage.setImageBitmap(bitmap)
+                    }.addOnFailureListener { exception ->
+                        // Handle failures
+                        exception.printStackTrace()
+                    }
+            }
+        }
+
+        initImageResourceChooser()
+        Helper.chooseImage(binding.ivUserImage, pickMediaLauncher)
     }
 
     private fun initBorrowCount() {

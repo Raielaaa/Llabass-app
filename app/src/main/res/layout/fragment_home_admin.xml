@@ -154,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:fontFamily="@font/david_libre"
-                android:text="@string/st_home_greetings_placeholder"
+                android:text="Hello, Admin!"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold"
