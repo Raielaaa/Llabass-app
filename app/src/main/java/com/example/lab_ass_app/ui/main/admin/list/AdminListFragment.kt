@@ -55,6 +55,13 @@ class AdminListFragment : Fragment() {
         initNavigation()
         initListRV()
         initSearchFunction()
+        initRefreshButton()
+    }
+
+    private fun initRefreshButton() {
+        binding.btnListRefresh.setOnClickListener {
+            adminListViewModel.refreshRV(isToolsSelected, this@AdminListFragment, binding.rvListListItem)
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
