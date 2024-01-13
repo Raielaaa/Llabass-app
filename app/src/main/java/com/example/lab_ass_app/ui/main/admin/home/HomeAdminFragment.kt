@@ -9,6 +9,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -51,8 +53,21 @@ class HomeAdminFragment : Fragment() {
         homeViewModel = ViewModelProvider(this@HomeAdminFragment)[HomeViewModel::class.java]
 
         initComponents()
+        initOnBackPress()
 
         return binding.root
+    }
+
+    private fun initOnBackPress() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Toast.makeText(
+                    requireContext(),
+                    "Back press on Homepage unavailable",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
     }
 
     private fun initComponents() {
@@ -62,6 +77,13 @@ class HomeAdminFragment : Fragment() {
         initBottomRvList()
         initReport()
         initUserTopStatus()
+        initIVHomeExpand()
+    }
+
+    private fun initIVHomeExpand() {
+        binding.ivHomeExpand.setOnClickListener {
+            findNavController().navigate(R.id.action_homeAdminFragment_to_adminProfileFragment)
+        }
     }
 
     private fun initUserTopStatus() {

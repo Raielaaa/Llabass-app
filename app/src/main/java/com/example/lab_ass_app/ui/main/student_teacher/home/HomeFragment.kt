@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -96,6 +97,19 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
         initColorTransitionForCategory()
         initUserImageDisplay()
         initSeeAllButton()
+        initOnBackPress()
+    }
+
+    private fun initOnBackPress() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Toast.makeText(
+                    requireContext(),
+                    "Back press on Homepage unavailable",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
     }
 
     private fun initSeeAllButton() {
