@@ -35,6 +35,13 @@ class AdminReportFragment : Fragment() {
         initBackButton()
         initRV()
         initCurrentDate()
+        initRefreshButton()
+    }
+
+    private fun initRefreshButton() {
+        binding.btnListRefresh.setOnClickListener {
+            initRV()
+        }
     }
 
     private fun initCurrentDate() {
