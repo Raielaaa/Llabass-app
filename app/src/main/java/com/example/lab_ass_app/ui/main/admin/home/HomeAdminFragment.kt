@@ -39,7 +39,7 @@ class HomeAdminFragment : Fragment() {
     lateinit var fireStore: FirebaseFirestore
 
     private lateinit var binding: FragmentHomeAdminBinding
-    private lateinit var mViewModel: HomeAdminViewModel
+    private lateinit var homeAdminViewModel: HomeAdminViewModel
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
@@ -47,7 +47,7 @@ class HomeAdminFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeAdminBinding.inflate(inflater, container, false)
-        mViewModel = ViewModelProvider(this)[HomeAdminViewModel::class.java]
+        homeAdminViewModel = ViewModelProvider(this)[HomeAdminViewModel::class.java]
         homeViewModel = ViewModelProvider(this@HomeAdminFragment)[HomeViewModel::class.java]
 
         initComponents()
@@ -61,6 +61,11 @@ class HomeAdminFragment : Fragment() {
         initTopBorrows()
         initBottomRvList()
         initReport()
+        initUserTopStatus()
+    }
+
+    private fun initUserTopStatus() {
+        homeAdminViewModel.initUserTopStatus(this@HomeAdminFragment, binding.cvHomeStatus)
     }
 
     private fun initReport() {
