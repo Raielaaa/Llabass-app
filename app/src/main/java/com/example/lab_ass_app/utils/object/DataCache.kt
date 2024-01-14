@@ -7,6 +7,7 @@ import com.example.lab_ass_app.R
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.BorrowModel
 import com.example.lab_ass_app.ui.main.student_teacher.home.HomeViewModel
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
+import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModelDisplay
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModelLive
 import com.example.lab_ass_app.utils.models.ItemFullInfoModel
 import com.example.lab_ass_app.utils.models.PopularModel
@@ -15,8 +16,8 @@ import com.google.firebase.storage.FirebaseStorage
 
 object DataCache {
     var seeAllData: ArrayList<HomeModelLive> = ArrayList()
-    var rvItemsForTools: ArrayList<HomeModelLive> = ArrayList()
-    var rvItemsForChemicals: ArrayList<HomeModelLive> = ArrayList()
+    var rvItemsForTools: ArrayList<HomeModelDisplay> = ArrayList()
+    var rvItemsForChemicals: ArrayList<HomeModelDisplay> = ArrayList()
     @SuppressLint("StaticFieldLeak")
     lateinit var adapter: HomeAdapter
 

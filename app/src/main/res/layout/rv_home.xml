@@ -74,20 +74,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
-                android:text="@string/st_home_list_tool_code"
+                android:text="@string/st_home_list_inventory"
                 android:textSize="@dimen/_8ssp"
-                app:layout_constraintBottom_toTopOf="@+id/tvHomeBorrowCount"
+                app:layout_constraintBottom_toTopOf="@+id/textView34"
                 app:layout_constraintStart_toStartOf="@+id/tvHomeName" />
 
             <TextView
                 android:id="@+id/tvHomeBorrowCount"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
+                android:fontFamily="@font/poppins_bold"
                 android:text="@string/st_home_list_borrow_count"
                 android:textSize="@dimen/_8ssp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textView69" />
+                app:layout_constraintBottom_toBottomOf="@+id/textView34"
+                app:layout_constraintStart_toEndOf="@+id/textView34"
+                app:layout_constraintTop_toTopOf="@+id/textView34" />
 
             <TextView
                 android:id="@+id/tvHomeCode"
@@ -117,6 +119,16 @@
                 android:src="@drawable/expand_colored"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/textView34"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/st_home_list_status"
+                android:fontFamily="@font/poppins"
+                android:textSize="@dimen/_8ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView69" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,7 @@ import com.example.lab_ass_app.databinding.FragmentHomeBinding
 import com.example.lab_ass_app.databinding.FragmentListBinding
 import com.example.lab_ass_app.ui.main.student_teacher.home.HomeViewModel
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
+import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModelDisplay
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModelLive
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.`object`.DataCache
@@ -40,20 +41,20 @@ class ListViewModel : ViewModel() {
     }
 
     private fun filterItems(
-        listToBeFiltered: ArrayList<HomeModelLive>,
+        listToBeFiltered: ArrayList<HomeModelDisplay>,
         inputtedText: String,
         isToolsSelected: Boolean
     ) {
-        listToBeDisplayedToRV.clear()
-        for (item in listToBeFiltered) {
-            if (item.itemNameModel.lowercase().contains(inputtedText.lowercase()) ||
-                item.itemCodeModel.lowercase().contains(inputtedText.lowercase())
-                ) {
-                listToBeDisplayedToRV.add(item)
-            }
-        }
-
-        DataCache.adapter.setItem(listToBeDisplayedToRV)
+//        listToBeDisplayedToRV.clear()
+//        for (item in listToBeFiltered) {
+//            if (item.itemNameModel.lowercase().contains(inputtedText.lowercase()) ||
+//                item.itemCodeModel.lowercase().contains(inputtedText.lowercase())
+//                ) {
+//                listToBeDisplayedToRV.add(item)
+//            }
+//        }
+//
+//        DataCache.adapter.setItem(listToBeDisplayedToRV)
 
         if (inputtedText.isEmpty()) {
             if (isToolsSelected) {
@@ -130,7 +131,7 @@ class ListViewModel : ViewModel() {
                         )
                     )
                 }
-                DataCache.rvItemsForTools = retrievedToolsInfo
+//                DataCache.rvItemsForTools = retrievedToolsInfo
 
                 fireStore.collection("labass-app-item-description")
                     .whereEqualTo("modelCategory", "Chemicals")
@@ -155,7 +156,7 @@ class ListViewModel : ViewModel() {
                                 )
                             )
                         }
-                        DataCache.rvItemsForChemicals = retrievedChemicalsInfo
+//                        DataCache.rvItemsForChemicals = retrievedChemicalsInfo
 
                         updateListForListFragment(activity, listFragment, fireStore, fragmentListBinding)
                         updateListForHomeFragment(activity, listFragment, fireStore, fragmentHomeBinding)

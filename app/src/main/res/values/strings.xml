@@ -170,7 +170,8 @@
     <string name="st_home_list_item">List Items</string>
     <string name="st_home_type_placeholder">TOOLS</string>
     <string name="st_home_list_title">PETRI DISH</string>
-    <string name="st_home_list_tool_code">Item code: </string>
+    <string name="st_home_list_inventory">Inventory: </string>
+    <string name="st_home_list_status">Status: </string>
     <string name="st_home_list_tool_code_placeholder">384024</string>
     <string name="st_home_list_borrow_count">14 Borrows</string>
     <string name="dateTimeDialog_setTime_header">Set Time</string>

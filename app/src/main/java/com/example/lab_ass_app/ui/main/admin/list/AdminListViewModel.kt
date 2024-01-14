@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
+import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModelDisplay
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModelLive
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.`object`.DataCache
@@ -21,7 +22,7 @@ class AdminListViewModel @Inject constructor(
     @Named("FirebaseFireStore.Instance")
     private val firebaseFireStore: FirebaseFirestore
 ) : ViewModel() {
-    private var listToBeDisplayedToRV: ArrayList<HomeModelLive> = ArrayList()
+    private var listToBeDisplayedToRV: ArrayList<HomeModelDisplay> = ArrayList()
     private var firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
 
     fun initSearchFunction(
@@ -38,18 +39,18 @@ class AdminListViewModel @Inject constructor(
     }
 
     private fun filterItems(
-        listToBeFiltered: ArrayList<HomeModelLive>,
+        listToBeFiltered: ArrayList<HomeModelDisplay>,
         inputtedText: String,
         isToolsSelected: Boolean
     ) {
         listToBeDisplayedToRV.clear()
-        for (item in listToBeFiltered) {
-            if (item.itemNameModel.lowercase().contains(inputtedText.lowercase()) ||
-                item.itemCodeModel.lowercase().contains(inputtedText.lowercase())
-                ) {
-                listToBeDisplayedToRV.add(item)
-            }
-        }
+//        for (item in listToBeFiltered) {
+//            if (item.itemNameModel.lowercase().contains(inputtedText.lowercase()) ||
+//                item.itemCodeModel.lowercase().contains(inputtedText.lowercase())
+//                ) {
+//                listToBeDisplayedToRV.add(item)
+//            }
+//        }
 
         DataCache.adapter.setItem(listToBeDisplayedToRV)
 
@@ -117,14 +118,14 @@ class AdminListViewModel @Inject constructor(
                         R.layout.custom_dialog_loading
                     )
                 }
-                adapter.setItem(retrievedInfo)
-                rvListItem.adapter = adapter
-
-                if (selectedCategory == "Tools") {
-                    DataCache.rvItemsForTools = retrievedInfo
-                } else {
-                    DataCache.rvItemsForChemicals = retrievedInfo
-                }
+//                adapter.setItem(retrievedInfo)
+//                rvListItem.adapter = adapter
+//
+//                if (selectedCategory == "Tools") {
+//                    DataCache.rvItemsForTools = retrievedInfo
+//                } else {
+//                    DataCache.rvItemsForChemicals = retrievedInfo
+//                }
                 Helper.dismissDialog()
             }.addOnFailureListener { exception ->
                 Log.e(Constants.TAG, "refreshRV: ", exception)

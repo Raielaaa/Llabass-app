@@ -25,26 +25,36 @@ class HomeAdapter(
     private val context: Context,
     private val clickedListener: () -> Unit
 ) : RecyclerView.Adapter<HomeAdapter.HomeAdapterViewModel>() {
-    private val collections: ArrayList<HomeModelLive> = ArrayList()
+    private val collections: ArrayList<HomeModelDisplay> = ArrayList()
     @SuppressLint("NotifyDataSetChanged")
-    fun setItem(list: ArrayList<HomeModelLive>) {
+    fun setItem(list: ArrayList<HomeModelDisplay>) {
         collections.clear()
         collections.addAll(list)
         this.notifyDataSetChanged()
     }
 
-    fun getItem() : ArrayList<HomeModelLive> {
+    fun getItem() : ArrayList<HomeModelDisplay> {
         return collections
     }
 
     inner class HomeAdapterViewModel(private val binding: RvHomeBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(items: HomeModelLive, clickedListener: () -> Unit) {
+        fun bind(items: HomeModelDisplay, clickedListener: () -> Unit) {
             binding.apply {
-                tvHomeName.text = items.itemNameModel
-                tvHomeCode.text = items.itemCodeModel
-                tvHomeBorrowCount.text = "${items.itemBorrowCountModel} Borrows"
+                tvHomeName.text = items.itemName
+                tvHomeCode.text = "${items.availableCount} / ${items.unavailableCount}"
+
+                val count = items.availableCount
+                tvHomeBorrowCount.text = if (count == 0) "AVAILABLE" else "UNAVAILABLE"
+                if (count <= 0) {
+                    tvHomeBorrowCount.text = "OUT OF STOCK"
+                    tvHomeBorrowCount.setTextColor(ContextCompat.getColor(context, R.color.Theme_light_red))
+                } else {
+                    tvHomeBorrowCount.text = "AVAILABLE"
+                    tvHomeBorrowCount.setTextColor(ContextCompat.getColor(context, R.color.Theme_green))
+                }
+
                 cvHomeStatus.setCardBackgroundColor(
-                    ContextCompat.getColor(context, if (items.itemStatusModel == "Available") R.color.Theme_green else R.color.Theme_light_red)
+                    ContextCompat.getColor(context, if (count > 0) R.color.Theme_green else R.color.Theme_light_red)
                 )
 
                 val gsReference = storage.getReferenceFromUrl("gs://labass-app.appspot.com/${items.imageLink}.jpg")
@@ -59,9 +69,9 @@ class HomeAdapter(
             }
         }
 
-        private fun displayDialogForSelectedItem(items: HomeModelLive) {
+        private fun displayDialogForSelectedItem(items: HomeModelDisplay) {
             fireStore.collection("labass-app-item-description")
-                .document(items.itemCodeModel)
+                .document(items.imageLink.split("/")[1])
                 .get()
                 .addOnSuccessListener { documentSnapshot ->
                     val imageLink = documentSnapshot.get("modelImageLink").toString()

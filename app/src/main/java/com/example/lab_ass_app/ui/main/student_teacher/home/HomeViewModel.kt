@@ -18,6 +18,7 @@ import com.example.lab_ass_app.databinding.FragmentHomeAdminBinding
 import com.example.lab_ass_app.databinding.FragmentHomeBinding
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.BorrowModel
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
+import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModelDisplay
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModelLive
 import com.example.lab_ass_app.ui.main.student_teacher.home.see_all.SeeAllDialog
 import com.example.lab_ass_app.ui.main.student_teacher.list.ListViewModel
@@ -236,32 +237,43 @@ class HomeViewModel @Inject constructor(
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val documents = task.result.documents
-                    val retrievedData: ArrayList<HomeModelLive> = ArrayList()
+                    val mergedItemInfoList = arrayListOf<HomeModelDisplay>()
 
-                    for (document in documents) {
-                        val imageLink = document.get("modelImageLink").toString()
-                        val itemName = document.get("modelName").toString()
-                        val itemCode = document.get("modelCode").toString()
-                        val itemBorrowCount = document.get("modelBorrowCount").toString()
-                        val itemStatus = document.get("modelStatus").toString()
 
-                        retrievedData.add(
-                            HomeModelLive(
-                                imageLink,
-                                itemName,
-                                itemCode,
-                                itemBorrowCount,
-                                itemStatus
-                            )
-                        )
+                    // Filter out items with "Unavailable" status
+                    val availableItems = documents.filter {
+                        it.get("modelStatus").toString() == "Available"
                     }
+
+                    val itemCounts = availableItems.groupBy { it.get("modelName").toString() }
+                        .mapValues { it.value.size }
+
+                    val itemCountsWithUnavailable = documents.groupBy { it.get("modelName").toString() }
+                        .mapValues { it.value.size }
+
+                    for (itemName in itemCounts.keys.union(itemCountsWithUnavailable.keys)) {
+                        val availableCount = itemCounts[itemName] ?: 0
+                        val unavailableCount = itemCountsWithUnavailable[itemName] ?: 0
+
+                        val imageLink = documents.find { it.get("modelName").toString() == itemName }
+                            ?.get("modelImageLink").toString()
+
+                        val mergedItemInfo = HomeModelDisplay(
+                            itemName,
+                            availableCount,
+                            unavailableCount,
+                            imageLink
+                        )
+                        mergedItemInfoList.add(mergedItemInfo)
+                    }
+
 
                     if (category == "Tools") {
                         DataCache.rvItemsForTools.clear()
-                        DataCache.rvItemsForTools.addAll(retrievedData)
+                        DataCache.rvItemsForTools.addAll(mergedItemInfoList)
                     } else if (category == "Chemicals") {
                         DataCache.rvItemsForChemicals.clear()
-                        DataCache.rvItemsForChemicals.addAll(retrievedData)
+                        DataCache.rvItemsForChemicals.addAll(mergedItemInfoList)
                     }
 
                     val adapter = HomeAdapter(hostFragment.requireActivity(), firebaseFireStore, storage, hostFragment.requireContext()) {
@@ -270,7 +282,7 @@ class HomeViewModel @Inject constructor(
                             R.layout.custom_dialog_loading
                         )
                     }
-                    adapter.setItem(retrievedData)
+                    adapter.setItem(mergedItemInfoList)
                     rvListItems.adapter = adapter
 
                     Helper.dismissDialog()
@@ -279,6 +291,65 @@ class HomeViewModel @Inject constructor(
                 endTaskNotify(exception, hostFragment)
             }
     }
+
+
+
+
+//    fun initListItemRV(rvListItems: RecyclerView, hostFragment: Fragment, category: String) {
+//        Helper.displayCustomDialog(
+//            hostFragment.requireActivity(),
+//            R.layout.custom_dialog_loading
+//        )
+//
+//        firebaseFireStore.collection("labass-app-item-description")
+//            .whereEqualTo("modelCategory", category)
+//            .get()
+//            .addOnCompleteListener { task ->
+//                if (task.isSuccessful) {
+//                    val documents = task.result.documents
+//                    val retrievedData: ArrayList<HomeModelLive> = ArrayList()
+//
+//                    for (document in documents) {
+//                        val imageLink = document.get("modelImageLink").toString()
+//                        val itemName = document.get("modelName").toString()
+//                        val itemCode = document.get("modelCode").toString()
+//                        val itemBorrowCount = document.get("modelBorrowCount").toString()
+//                        val itemStatus = document.get("modelStatus").toString()
+//
+//                        retrievedData.add(
+//                            HomeModelLive(
+//                                imageLink,
+//                                itemName,
+//                                itemCode,
+//                                itemBorrowCount,
+//                                itemStatus
+//                            )
+//                        )
+//                    }
+//
+//                    if (category == "Tools") {
+//                        DataCache.rvItemsForTools.clear()
+//                        DataCache.rvItemsForTools.addAll(retrievedData)
+//                    } else if (category == "Chemicals") {
+//                        DataCache.rvItemsForChemicals.clear()
+//                        DataCache.rvItemsForChemicals.addAll(retrievedData)
+//                    }
+//
+//                    val adapter = HomeAdapter(hostFragment.requireActivity(), firebaseFireStore, storage, hostFragment.requireContext()) {
+//                        Helper.displayCustomDialog(
+//                            hostFragment.requireActivity(),
+//                            R.layout.custom_dialog_loading
+//                        )
+//                    }
+//                    adapter.setItem(retrievedData)
+//                    rvListItems.adapter = adapter
+//
+//                    Helper.dismissDialog()
+//                }
+//            }.addOnFailureListener { exception ->
+//                endTaskNotify(exception, hostFragment)
+//            }
+//    }
 
 //    private fun initSeeAllButtonRV(hostFragment: Fragment, seeAllButton: Button?) {
 //        val storage = FirebaseStorage.getInstance()
@@ -450,65 +521,65 @@ class HomeViewModel @Inject constructor(
         hostFragment: Fragment,
         firebaseFireStore: FirebaseFirestore
     ) {
-        btnHomeSeeAll.setOnClickListener {
-            Helper.displayCustomDialog(
-                hostFragment.requireActivity(),
-                R.layout.custom_dialog_loading
-            )
-
-            firebaseFireStore.collection("labass-app-item-description")
-                .orderBy("modelBorrowCount", Query.Direction.DESCENDING)
-                .limit(10)
-                .get()
-                .addOnSuccessListener { querySnapshot ->
-                    if (DataCache.seeAllData.isEmpty()) {
-                        val dataToBeDisplayed: ArrayList<HomeModelLive> = ArrayList()
-
-
-                        querySnapshot.forEachIndexed { _, queryDocumentSnapshot ->
-                            val imageLink = queryDocumentSnapshot.get("modelImageLink").toString()
-                            val itemName = queryDocumentSnapshot.get("modelName").toString()
-                            val itemBorrowCount = queryDocumentSnapshot.get("modelBorrowCount").toString()
-                            val itemCode = queryDocumentSnapshot.get("modelCode").toString()
-                            val itemStatus = queryDocumentSnapshot.get("modelStatus").toString()
-
-                            dataToBeDisplayed.add(
-                                HomeModelLive(
-                                    imageLink,
-                                    itemName,
-                                    itemCode,
-                                    itemBorrowCount,
-                                    itemStatus
-                                )
-                            )
-                        }
-
-                        DataCache.seeAllData = dataToBeDisplayed
-                    }
-
-                    Helper.dismissDialog()
-
-                    val seeAllAdapter = HomeAdapter(
-                        hostFragment.requireActivity(),
-                        firebaseFireStore,
-                        storage,
-                        hostFragment.requireContext()
-                    ) {
-                        Helper.displayCustomDialog(
-                            hostFragment.requireActivity(),
-                            R.layout.selected_item_dialog
-                        )
-                    }
-                    seeAllAdapter.setItem(DataCache.seeAllData)
-                    SeeAllDialog(seeAllAdapter).show(hostFragment.parentFragmentManager, "SeeAllDialog_Top10")
-                }.addOnFailureListener { exception ->
-                    Toast.makeText(
-                        hostFragment.requireContext(),
-                        "Error: ${exception.localizedMessage}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    Log.e(Constants.TAG, "showSeeAllFunction: ${exception.message}", )
-                }
-        }
+//        btnHomeSeeAll.setOnClickListener {
+//            Helper.displayCustomDialog(
+//                hostFragment.requireActivity(),
+//                R.layout.custom_dialog_loading
+//            )
+//
+//            firebaseFireStore.collection("labass-app-item-description")
+//                .orderBy("modelBorrowCount", Query.Direction.DESCENDING)
+//                .limit(10)
+//                .get()
+//                .addOnSuccessListener { querySnapshot ->
+//                    if (DataCache.seeAllData.isEmpty()) {
+//                        val dataToBeDisplayed: ArrayList<HomeModelLive> = ArrayList()
+//
+//
+//                        querySnapshot.forEachIndexed { _, queryDocumentSnapshot ->
+//                            val imageLink = queryDocumentSnapshot.get("modelImageLink").toString()
+//                            val itemName = queryDocumentSnapshot.get("modelName").toString()
+//                            val itemBorrowCount = queryDocumentSnapshot.get("modelBorrowCount").toString()
+//                            val itemCode = queryDocumentSnapshot.get("modelCode").toString()
+//                            val itemStatus = queryDocumentSnapshot.get("modelStatus").toString()
+//
+//                            dataToBeDisplayed.add(
+//                                HomeModelLive(
+//                                    imageLink,
+//                                    itemName,
+//                                    itemCode,
+//                                    itemBorrowCount,
+//                                    itemStatus
+//                                )
+//                            )
+//                        }
+//
+//                        DataCache.seeAllData = dataToBeDisplayed
+//                    }
+//
+//                    Helper.dismissDialog()
+//
+//                    val seeAllAdapter = HomeAdapter(
+//                        hostFragment.requireActivity(),
+//                        firebaseFireStore,
+//                        storage,
+//                        hostFragment.requireContext()
+//                    ) {
+//                        Helper.displayCustomDialog(
+//                            hostFragment.requireActivity(),
+//                            R.layout.selected_item_dialog
+//                        )
+//                    }
+//                    seeAllAdapter.setItem(DataCache.seeAllData)
+//                    SeeAllDialog(seeAllAdapter).show(hostFragment.parentFragmentManager, "SeeAllDialog_Top10")
+//                }.addOnFailureListener { exception ->
+//                    Toast.makeText(
+//                        hostFragment.requireContext(),
+//                        "Error: ${exception.localizedMessage}",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                    Log.e(Constants.TAG, "showSeeAllFunction: ${exception.message}", )
+//                }
+//        }
     }
 }
