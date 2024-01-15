@@ -41,7 +41,6 @@ class AdminProfileAdapter (
                 tvProfileBorrowDate.text = data.modelBorrowDateTime
                 tvProfileBorrowDeadline.text = data.modelBorrowDeadlineDateTime
                 tvProfileItemName.text = data.modelItemName
-                tvItemSize.text = data.modelItemSize
 
                 val gsReference = storage.getReferenceFromUrl("gs://labass-app.appspot.com/${data.modelItemCategory.lowercase()}/${data.modelItemCode}.jpg")
                 Glide.with(context)

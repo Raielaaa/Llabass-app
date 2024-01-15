@@ -189,28 +189,6 @@
                 app:layout_constraintStart_toEndOf="@+id/textView32"
                 app:layout_constraintTop_toTopOf="@+id/textView32" />
 
-            <TextView
-                android:id="@+id/textView35"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_3sdp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="-"
-                app:layout_constraintBottom_toBottomOf="@+id/tvProfileItemName"
-                app:layout_constraintStart_toEndOf="@+id/tvProfileItemName"
-                app:layout_constraintTop_toTopOf="@+id/tvProfileItemName" />
-
-            <TextView
-                android:id="@+id/tvItemSize"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="250 ml"
-                android:layout_marginStart="@dimen/_3sdp"
-                android:fontFamily="@font/poppins_bold"
-                app:layout_constraintBottom_toBottomOf="@+id/textView35"
-                app:layout_constraintStart_toEndOf="@+id/textView35"
-                app:layout_constraintTop_toTopOf="@+id/textView35" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

@@ -79,6 +79,7 @@ object Helper {
     var homeBinding: FragmentHomeBinding? = null
 
     //  ListBinding for UI update
+    @SuppressLint("StaticFieldLeak")
     var listBinding: FragmentListBinding? = null
 
     fun setActivityReference(activity: Activity) {
@@ -514,7 +515,7 @@ object Helper {
 //                )
                 Toast.makeText(
                     hostFragment.requireContext(),
-                    "Return Successful: Kindly check your profile status.",
+                    "Return Successful: Kindly refresh your profile status.",
                     Toast.LENGTH_LONG
                 ).show()
             }.addOnFailureListener { exception ->
@@ -665,11 +666,13 @@ object Helper {
         context: Context,
         message: String?
     ) {
-        Toast.makeText(
-            context,
-            message,
-            Toast.LENGTH_SHORT
-        ).show()
+        try {
+            Toast.makeText(
+                context,
+                message,
+                Toast.LENGTH_SHORT
+            ).show()
+        } catch (ignored: Exception) { }
     }
 
     fun dismissDialog() {

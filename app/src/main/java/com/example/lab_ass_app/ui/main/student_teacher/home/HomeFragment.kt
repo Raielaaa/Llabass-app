@@ -31,6 +31,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -177,13 +182,18 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
             fireStore
         )
 
-        DataCache.cacheDataForCategory(
-            "Tools",
-            homeViewModel,
-            binding.rvListItems,
-            this@HomeFragment,
-            fireStore
-        )
+        CoroutineScope(Dispatchers.IO).launch {
+            delay(1000)
+            withContext(Dispatchers.Main) {
+                DataCache.cacheDataForCategory(
+                    "Tools",
+                    homeViewModel,
+                    binding.rvListItems,
+                    this@HomeFragment,
+                    fireStore
+                )
+            }
+        }
     }
 
     private fun initTopBorrows() {
