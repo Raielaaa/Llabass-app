@@ -25,7 +25,7 @@ import java.util.Calendar
 import java.util.Locale
 
 class ListViewModel : ViewModel() {
-    private var listToBeDisplayedToRV: ArrayList<HomeModelLive> = ArrayList()
+    private var listToBeDisplayedToRV: ArrayList<HomeModelDisplay> = ArrayList()
 
     fun initSearchFunction(
         inputtedText: String,
@@ -45,16 +45,17 @@ class ListViewModel : ViewModel() {
         inputtedText: String,
         isToolsSelected: Boolean
     ) {
-//        listToBeDisplayedToRV.clear()
-//        for (item in listToBeFiltered) {
-//            if (item.itemNameModel.lowercase().contains(inputtedText.lowercase()) ||
-//                item.itemCodeModel.lowercase().contains(inputtedText.lowercase())
-//                ) {
-//                listToBeDisplayedToRV.add(item)
-//            }
-//        }
-//
-//        DataCache.adapter.setItem(listToBeDisplayedToRV)
+        listToBeDisplayedToRV.clear()
+        for (item in listToBeFiltered) {
+            if (item.itemName.lowercase().contains(inputtedText.lowercase()) ||
+                item.availableCount.toString().contains(inputtedText.lowercase()) ||
+                item.unavailableCount.toString().contains(inputtedText.lowercase())
+                ) {
+                listToBeDisplayedToRV.add(item)
+            }
+        }
+
+        DataCache.adapter.setItem(listToBeDisplayedToRV)
 
         if (inputtedText.isEmpty()) {
             if (isToolsSelected) {
