@@ -20,6 +20,7 @@ import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.Borr
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModelDisplay
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModelLive
+import com.example.lab_ass_app.ui.main.student_teacher.home.see_all.SeeAllAdapter
 import com.example.lab_ass_app.ui.main.student_teacher.home.see_all.SeeAllDialog
 import com.example.lab_ass_app.ui.main.student_teacher.list.ListViewModel
 import com.example.lab_ass_app.utils.Constants
@@ -521,65 +522,57 @@ class HomeViewModel @Inject constructor(
         hostFragment: Fragment,
         firebaseFireStore: FirebaseFirestore
     ) {
-//        btnHomeSeeAll.setOnClickListener {
-//            Helper.displayCustomDialog(
-//                hostFragment.requireActivity(),
-//                R.layout.custom_dialog_loading
-//            )
-//
-//            firebaseFireStore.collection("labass-app-item-description")
-//                .orderBy("modelBorrowCount", Query.Direction.DESCENDING)
-//                .limit(10)
-//                .get()
-//                .addOnSuccessListener { querySnapshot ->
-//                    if (DataCache.seeAllData.isEmpty()) {
-//                        val dataToBeDisplayed: ArrayList<HomeModelLive> = ArrayList()
-//
-//
-//                        querySnapshot.forEachIndexed { _, queryDocumentSnapshot ->
-//                            val imageLink = queryDocumentSnapshot.get("modelImageLink").toString()
-//                            val itemName = queryDocumentSnapshot.get("modelName").toString()
-//                            val itemBorrowCount = queryDocumentSnapshot.get("modelBorrowCount").toString()
-//                            val itemCode = queryDocumentSnapshot.get("modelCode").toString()
-//                            val itemStatus = queryDocumentSnapshot.get("modelStatus").toString()
-//
-//                            dataToBeDisplayed.add(
-//                                HomeModelLive(
-//                                    imageLink,
-//                                    itemName,
-//                                    itemCode,
-//                                    itemBorrowCount,
-//                                    itemStatus
-//                                )
-//                            )
-//                        }
-//
-//                        DataCache.seeAllData = dataToBeDisplayed
-//                    }
-//
-//                    Helper.dismissDialog()
-//
-//                    val seeAllAdapter = HomeAdapter(
-//                        hostFragment.requireActivity(),
-//                        firebaseFireStore,
-//                        storage,
-//                        hostFragment.requireContext()
-//                    ) {
-//                        Helper.displayCustomDialog(
-//                            hostFragment.requireActivity(),
-//                            R.layout.selected_item_dialog
-//                        )
-//                    }
-//                    seeAllAdapter.setItem(DataCache.seeAllData)
-//                    SeeAllDialog(seeAllAdapter).show(hostFragment.parentFragmentManager, "SeeAllDialog_Top10")
-//                }.addOnFailureListener { exception ->
-//                    Toast.makeText(
-//                        hostFragment.requireContext(),
-//                        "Error: ${exception.localizedMessage}",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                    Log.e(Constants.TAG, "showSeeAllFunction: ${exception.message}", )
-//                }
-//        }
+        btnHomeSeeAll.setOnClickListener {
+            Helper.displayCustomDialog(
+                hostFragment.requireActivity(),
+                R.layout.custom_dialog_loading
+            )
+
+            firebaseFireStore.collection("labass-app-item-description")
+                .orderBy("modelBorrowCount", Query.Direction.DESCENDING)
+                .limit(10)
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    if (DataCache.seeAllData.isEmpty()) {
+                        val dataToBeDisplayed: ArrayList<HomeModelLive> = ArrayList()
+
+                        querySnapshot.forEachIndexed { _, queryDocumentSnapshot ->
+                            val imageLink = queryDocumentSnapshot.get("modelImageLink").toString()
+                            val itemName = queryDocumentSnapshot.get("modelName").toString()
+                            val itemBorrowCount = queryDocumentSnapshot.get("modelBorrowCount").toString()
+                            val itemCode = queryDocumentSnapshot.get("modelCode").toString()
+                            val itemStatus = queryDocumentSnapshot.get("modelStatus").toString()
+
+                            dataToBeDisplayed.add(
+                                HomeModelLive(
+                                    imageLink,
+                                    itemName,
+                                    itemCode,
+                                    itemBorrowCount,
+                                    itemStatus
+                                )
+                            )
+                        }
+
+                        DataCache.seeAllData = dataToBeDisplayed
+                    }
+
+                    Helper.dismissDialog()
+
+                    val seeAllAdapter = SeeAllAdapter(
+                        hostFragment.requireContext(),
+                        storage,
+                    )
+                    seeAllAdapter.setList(DataCache.seeAllData)
+                    SeeAllDialog(seeAllAdapter).show(hostFragment.parentFragmentManager, "SeeAllDialog_Top10")
+                }.addOnFailureListener { exception ->
+                    Toast.makeText(
+                        hostFragment.requireContext(),
+                        "Error: ${exception.localizedMessage}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    Log.e(Constants.TAG, "showSeeAllFunction: ${exception.message}", )
+                }
+        }
     }
 }

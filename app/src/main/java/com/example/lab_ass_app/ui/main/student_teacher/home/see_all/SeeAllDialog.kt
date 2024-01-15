@@ -9,7 +9,7 @@ import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class SeeAllDialog(
-    private val adapter: HomeAdapter
+    private val adapter: SeeAllAdapter
 ) : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentSeeAllDialogBinding
 
