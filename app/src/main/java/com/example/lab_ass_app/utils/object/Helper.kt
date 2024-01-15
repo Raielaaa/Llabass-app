@@ -46,6 +46,7 @@ import com.example.lab_ass_app.ui.account.login.LoginViewModel
 import com.example.lab_ass_app.ui.account.login.google_facebook_bottom_dialog.InputLRNFragment
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.BorrowReturnDialogFragment
 import com.example.lab_ass_app.ui.main.student_teacher.home.HomeViewModel
+import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModelDisplay
 import com.example.lab_ass_app.ui.main.student_teacher.list.ListViewModel
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.models.ItemFullInfoModel
@@ -248,9 +249,6 @@ object Helper {
                         setCancelable(true)
                         findViewById<ConstraintLayout>(R.id.clMain)?.minWidth = minWidth
                         findViewById<ConstraintLayout>(R.id.clMainSelectedItem)?.minWidth = minWidth
-//                        findViewById<ConstraintLayout>(R.id.clMain)?.setOnClickListener {
-//                            dismiss()
-//                        }
                         findViewById<ImageView>(R.id.ivExitDialog)?.setOnClickListener {
                             dismiss()
                         }
@@ -261,14 +259,29 @@ object Helper {
                         Glide.with(activity.applicationContext)
                             .load(gsReference)
                             .into(selectedItemImage)
+
+                        var sourceInfo: HomeModelDisplay? = null
+                        if (itemFullInfoModel.itemCategory == "Tools") {
+                            for (data in DataCache.rvItemsForTools) {
+                                if (itemFullInfoModel.itemName == data.itemName) sourceInfo = data
+                            }
+                        } else if (itemFullInfoModel.itemCategory == "Chemicals") {
+                            for (data in DataCache.rvItemsForChemicals) {
+                                if (itemFullInfoModel.itemName == data.itemName) sourceInfo = data
+                            }
+                        }
+
+                        findViewById<TextView>(R.id.tvInventory).text = "${sourceInfo?.availableCount} / ${sourceInfo?.unavailableCount}"
                         findViewById<TextView>(R.id.tvSelectedItemTitle).text = itemFullInfoModel.itemName
                         findViewById<TextView>(R.id.tvSelectedItemCategory).text = itemFullInfoModel.itemCategory
                         findViewById<TextView>(R.id.tvSelectedItemContent).text = itemFullInfoModel.itemDescription
-                        findViewById<TextView>(R.id.tvSelectedItemStatus).text = itemFullInfoModel.itemStatus
-                        if (itemFullInfoModel.itemStatus == "Available") {
+
+                        if (sourceInfo?.availableCount!! > 0) {
                             findViewById<TextView>(R.id.tvSelectedItemStatus).setTextColor(ContextCompat.getColor(activity, R.color.Theme_green))
+                            findViewById<TextView>(R.id.tvSelectedItemStatus).text = "Available"
                         } else {
                             findViewById<TextView>(R.id.tvSelectedItemStatus).setTextColor(ContextCompat.getColor(activity, R.color.Theme_light_red))
+                            findViewById<TextView>(R.id.tvSelectedItemStatus).text = "Unavailable"
                         }
 
                         try {

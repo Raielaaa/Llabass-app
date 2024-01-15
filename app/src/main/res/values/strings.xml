@@ -29,7 +29,7 @@
 
     <!-- SelectedItemDialog -->
     <string name="selected_item_title">PETRI DISH</string>
-    <string name="selected_item_category">Category</string>
+    <string name="selected_item_category">Category: </string>
     <string name="selected_item_category_placeholder">Tools</string>
     <string name="selected_item_status">Status: </string>
     <string name="selected_item_status_placeholder">Available</string>

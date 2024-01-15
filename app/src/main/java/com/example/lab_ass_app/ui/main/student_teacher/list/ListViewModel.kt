@@ -111,57 +111,85 @@ class ListViewModel : ViewModel() {
         fireStore.collection("labass-app-item-description")
             .whereEqualTo("modelCategory", "Tools")
             .get()
-            .addOnSuccessListener { querySnapshot ->
-                val retrievedToolsInfo: ArrayList<HomeModelLive> = ArrayList()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val documentsTools = task.result.documents
+                    val mergedItemInfoListTools = arrayListOf<HomeModelDisplay>()
 
-                for (document in querySnapshot) {
-                    val modelBorrowCount = document.get("modelBorrowCount").toString()
-                    val modelCode = document.get("modelCode").toString()
-                    val modelImageLink = document.get("modelImageLink").toString()
-                    val modelName = document.get("modelName").toString()
-                    val modelStatus = document.get("modelStatus").toString()
+                    // Filter out items with "Unavailable" status
+                    val availableItems = documentsTools.filter {
+                        it.get("modelStatus").toString() == "Available"
+                    }
 
-                    retrievedToolsInfo.add(
-                        HomeModelLive(
-                            modelImageLink,
-                            modelName,
-                            modelCode,
-                            modelBorrowCount,
-                            modelStatus
+                    val itemCounts = availableItems.groupBy { it.get("modelName").toString() }
+                        .mapValues { it.value.size }
+
+                    val itemCountsWithUnavailable = documentsTools.groupBy { it.get("modelName").toString() }
+                        .mapValues { it.value.size }
+
+                    for (itemName in itemCounts.keys.union(itemCountsWithUnavailable.keys)) {
+                        val availableCount = itemCounts[itemName] ?: 0
+                        val unavailableCount = itemCountsWithUnavailable[itemName] ?: 0
+
+                        val imageLink = documentsTools.find { it.get("modelName").toString() == itemName }
+                            ?.get("modelImageLink").toString()
+
+                        val mergedItemInfoTools = HomeModelDisplay(
+                            itemName,
+                            availableCount,
+                            unavailableCount,
+                            imageLink
                         )
-                    )
+                        mergedItemInfoListTools.add(mergedItemInfoTools)
+                    }
+
+                    DataCache.rvItemsForTools.clear()
+                    DataCache.rvItemsForTools.addAll(mergedItemInfoListTools)
                 }
-//                DataCache.rvItemsForTools = retrievedToolsInfo
 
                 fireStore.collection("labass-app-item-description")
                     .whereEqualTo("modelCategory", "Chemicals")
                     .get()
-                    .addOnSuccessListener { querySnapshot ->
-                        val retrievedChemicalsInfo: ArrayList<HomeModelLive> = ArrayList()
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val documentsChemicals = task.result.documents
+                            val mergedItemInfoListChemicals = arrayListOf<HomeModelDisplay>()
 
-                        for (document in querySnapshot) {
-                            val modelImageLink = document.getString("modelImageLink")!!
-                            val modelName = document.getString("modelName")!!
-                            val modelCode = document.getString("modelCode")!!
-                            val modelBorrowCount = document.getString("modelBorrowCount")!!
-                            val modelStatus = document.getString("modelStatus")!!
+                            // Filter out items with "Unavailable" status
+                            val availableItems = documentsChemicals.filter {
+                                it.get("modelStatus").toString() == "Available"
+                            }
 
-                            retrievedChemicalsInfo.add(
-                                HomeModelLive(
-                                    modelImageLink,
-                                    modelName,
-                                    modelCode,
-                                    modelBorrowCount,
-                                    modelStatus
+                            val itemCounts = availableItems.groupBy { it.get("modelName").toString() }
+                                .mapValues { it.value.size }
+
+                            val itemCountsWithUnavailable = documentsChemicals.groupBy { it.get("modelName").toString() }
+                                .mapValues { it.value.size }
+
+                            for (itemName in itemCounts.keys.union(itemCountsWithUnavailable.keys)) {
+                                val availableCount = itemCounts[itemName] ?: 0
+                                val unavailableCount = itemCountsWithUnavailable[itemName] ?: 0
+
+                                val imageLink = documentsChemicals.find { it.get("modelName").toString() == itemName }
+                                    ?.get("modelImageLink").toString()
+
+                                val mergedItemInfoChemicals = HomeModelDisplay(
+                                    itemName,
+                                    availableCount,
+                                    unavailableCount,
+                                    imageLink
                                 )
-                            )
+                                mergedItemInfoListChemicals.add(mergedItemInfoChemicals)
+                            }
+
+                            DataCache.rvItemsForChemicals.clear()
+                            DataCache.rvItemsForChemicals.addAll(mergedItemInfoListChemicals)
+
+                            updateListForListFragment(activity, listFragment, fireStore, fragmentListBinding)
+                            updateListForHomeFragment(activity, listFragment, fireStore, fragmentHomeBinding)
+
+                            Helper.dismissDialog()
                         }
-//                        DataCache.rvItemsForChemicals = retrievedChemicalsInfo
-
-                        updateListForListFragment(activity, listFragment, fireStore, fragmentListBinding)
-                        updateListForHomeFragment(activity, listFragment, fireStore, fragmentHomeBinding)
-
-                        Helper.dismissDialog()
                     }.addOnFailureListener { exception ->
                         Helper.dismissDialog()
                         Log.e(Constants.TAG, "initRefreshButtonAndTV: ${exception.message}")
@@ -208,8 +236,8 @@ class ListViewModel : ViewModel() {
                 )
             }
 
-            fragmentHomeBinding?.rvListItems?.adapter = toolsAdapter
             toolsAdapter.setItem(DataCache.rvItemsForTools)
+            fragmentHomeBinding?.rvListItems?.adapter = toolsAdapter
         } else {
             val firebaseStorage = FirebaseStorage.getInstance()
             val toolsAdapter = HomeAdapter(
@@ -224,8 +252,8 @@ class ListViewModel : ViewModel() {
                 )
             }
 
-            fragmentHomeBinding?.rvListItems?.adapter = toolsAdapter
             toolsAdapter.setItem(DataCache.rvItemsForChemicals)
+            fragmentHomeBinding?.rvListItems?.adapter = toolsAdapter
         }
     }
 
@@ -249,8 +277,8 @@ class ListViewModel : ViewModel() {
                 )
             }
 
-            fragmentListBinding?.rvListListItem?.adapter = toolsAdapter
             toolsAdapter.setItem(DataCache.rvItemsForTools)
+            fragmentListBinding?.rvListListItem?.adapter = toolsAdapter
         } else {
             val firebaseStorage = FirebaseStorage.getInstance()
             val toolsAdapter = HomeAdapter(
@@ -265,8 +293,8 @@ class ListViewModel : ViewModel() {
                 )
             }
 
-            fragmentListBinding?.rvListListItem?.adapter = toolsAdapter
             toolsAdapter.setItem(DataCache.rvItemsForChemicals)
+            fragmentListBinding?.rvListListItem?.adapter = toolsAdapter
         }
     }
 }

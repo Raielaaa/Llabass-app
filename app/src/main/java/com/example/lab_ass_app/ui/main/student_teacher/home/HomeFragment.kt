@@ -170,6 +170,14 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
     private fun initBottomRvList() {
         //  Initial display
         DataCache.cacheDataForCategory(
+            "Chemicals",
+            homeViewModel,
+            binding.rvListItems,
+            this@HomeFragment,
+            fireStore
+        )
+
+        DataCache.cacheDataForCategory(
             "Tools",
             homeViewModel,
             binding.rvListItems,
