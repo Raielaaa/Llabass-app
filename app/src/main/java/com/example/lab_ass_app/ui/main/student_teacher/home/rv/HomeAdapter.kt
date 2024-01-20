@@ -65,11 +65,15 @@ class HomeAdapter(
             binding.root.setOnClickListener {
                 clickedListener()
 
-                displayDialogForSelectedItem(items)
+                displayDialogForSelectedItem(
+                    items,
+                    items.itemName.split("-")[1].replace(" ", ""),
+                    if (items.availableCount == 0) "Unavailable" else "Available"
+                )
             }
         }
 
-        private fun displayDialogForSelectedItem(items: HomeModelDisplay) {
+        private fun displayDialogForSelectedItem(items: HomeModelDisplay, sizeLocal: String, statusLocal: String) {
             fireStore.collection("labass-app-item-description")
                 .document(items.imageLink.split("/")[1])
                 .get()
@@ -81,14 +85,13 @@ class HomeAdapter(
                     val itemCategory = documentSnapshot.get("modelCategory").toString()
                     val itemDescription = documentSnapshot.get("modelDescription").toString()
                     val itemSize = documentSnapshot.get("modelSize").toString()
-                    val itemStatus = documentSnapshot.get("modelStatus").toString()
 
                     val itemsToBeShown = ItemFullInfoModel(
                         imageLink,
-                        itemName,
+                        "${itemName.split("-")[0]}- $sizeLocal",
                         itemSize,
                         itemCategory,
-                        itemStatus.split(":")[0],
+                        statusLocal,
                         itemDescription,
                         itemBorrowCount,
                         itemCode
@@ -127,6 +130,7 @@ class HomeAdapter(
         // Display an error message, log the exception, and dismiss the loading dialog
         displayToastMessage("Error: ${exception.localizedMessage}", activity)
         Log.e(Constants.TAG, "isCredentialsWithUserTypeExist: ${exception.message}")
+        Log.e(Constants.TAG, "isCredentialsWithUserTypeExist: ${exception}")
         Helper.dismissDialog()
     }
 
