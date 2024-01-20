@@ -170,10 +170,10 @@ class LoginViewModel @Inject constructor(
         activity.startActivityForResult(signInIntent, Constants.GOOGLE_SIGN_IN)
     }
 
-    fun facebookLogin(hostFragment: Fragment) {
-        val intent: Intent = Intent(hostFragment.requireActivity(), FacebookAuthActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
-        intent.putExtra("navigateToHomeFragment", true)
-        hostFragment.requireActivity().startActivity(intent)
-    }
+//    fun facebookLogin(hostFragment: Fragment) {
+//        val intent: Intent = Intent(hostFragment.requireActivity(), FacebookAuthActivity::class.java)
+//        intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
+//        intent.putExtra("navigateToHomeFragment", true)
+//        hostFragment.requireActivity().startActivity(intent)
+//    }
 }

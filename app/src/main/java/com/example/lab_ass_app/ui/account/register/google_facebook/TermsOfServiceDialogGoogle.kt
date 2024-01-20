@@ -54,9 +54,6 @@ class TermsOfServiceDialogGoogle(
                             commit()
                         }
                     }
-                    "facebook" -> {
-                        loginViewModel.facebookLogin(hostFragment)
-                    }
                     else -> {
                         Toast.makeText(
                             hostFragment.requireContext(),

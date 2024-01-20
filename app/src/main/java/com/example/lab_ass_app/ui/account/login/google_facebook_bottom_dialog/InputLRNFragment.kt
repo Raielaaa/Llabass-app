@@ -28,8 +28,8 @@ class InputLRNFragment(
         // Inflate the layout for this fragment
         binding = FragmentInputLRNBinding.inflate(inflater, container, false)
 
-        //  Configure process icon
-        changeIcon()
+//        //  Configure process icon
+//        changeIcon()
 
         binding.apply {
             cvProceed.setOnClickListener {
@@ -49,11 +49,11 @@ class InputLRNFragment(
         return binding.root
     }
 
-    private fun changeIcon() {
-        if (loginProcess == "facebook") {
-            binding.ivProcessIcon.setImageURI(
-                Uri.parse("android.resource://com.example.lab_ass_app/drawable/facebook")
-            )
-        }
-    }
+//    private fun changeIcon() {
+//        if (loginProcess == "facebook") {
+//            binding.ivProcessIcon.setImageURI(
+//                Uri.parse("android.resource://com.example.lab_ass_app/drawable/facebook")
+//            )
+//        }
+//    }
 }
