@@ -100,6 +100,7 @@ class HomeAdapter(
                     //  Dismisses the loading dialog first before showing the selected item dialog
                     Helper.dismissDialog()
 
+                    Log.d(Constants.TAG, "displayDialogForSelectedItem: $itemsToBeShown")
                     Helper.displayCustomDialog(
                         activity,
                         R.layout.selected_item_dialog,

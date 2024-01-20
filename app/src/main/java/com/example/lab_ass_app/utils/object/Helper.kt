@@ -254,6 +254,7 @@ object Helper {
                             dismiss()
                         }
 
+                        Log.d(TAG, "displayCustomDialog: 1")
                         //  Content
                         val gsReference = storage.getReferenceFromUrl("gs://labass-app.appspot.com/${itemFullInfoModel.itemImageLink}.jpg")
                         val selectedItemImage = findViewById<ImageView>(R.id.ivSelectedItemSize)
@@ -261,6 +262,7 @@ object Helper {
                             .load(gsReference)
                             .into(selectedItemImage)
 
+                        Log.d(TAG, "displayCustomDialog: 2")
                         var sourceInfo: HomeModelDisplay? = null
                         if (itemFullInfoModel.itemCategory == "Tools") {
                             for (data in DataCache.rvItemsForTools) {
@@ -272,24 +274,28 @@ object Helper {
                             }
                         }
 
+                        Log.d(TAG, "displayCustomDialog: 3")
                         findViewById<TextView>(R.id.tvInventory).text = "${sourceInfo?.availableCount} / ${sourceInfo?.unavailableCount}"
                         findViewById<TextView>(R.id.tvSelectedItemTitle).text = itemFullInfoModel.itemName
                         findViewById<TextView>(R.id.tvSelectedItemCategory).text = itemFullInfoModel.itemCategory
                         findViewById<TextView>(R.id.tvSelectedItemContent).text = itemFullInfoModel.itemDescription
 
-                        if (sourceInfo?.availableCount!! > 0) {
+                        Log.d(TAG, "displayCustomDialog: 4")
+                        if (itemFullInfoModel.itemStatus == "Available") {
                             findViewById<TextView>(R.id.tvSelectedItemStatus).setTextColor(ContextCompat.getColor(activity, R.color.Theme_green))
                             findViewById<TextView>(R.id.tvSelectedItemStatus).text = "Available"
                         } else {
                             findViewById<TextView>(R.id.tvSelectedItemStatus).setTextColor(ContextCompat.getColor(activity, R.color.Theme_light_red))
                             findViewById<TextView>(R.id.tvSelectedItemStatus).text = "Unavailable"
                         }
+                        Log.d(TAG, "displayCustomDialog: 5")
 
                         try {
                             findViewById<CardView>(R.id.cvQR).setOnClickListener {
                                 takeQR(getActivityReference()!!)
                             }
                         } catch (ignored: Exception) { }
+                        Log.d(TAG, "displayCustomDialog: 6")
                     }
                     show()
                 }
@@ -298,7 +304,7 @@ object Helper {
             Log.e(TAG, "displayCustomDialog: ${err.message}")
             displayToastMessage(
                 activity,
-                "Error: ${err.localizedMessage}"
+                "Error14: ${err.localizedMessage}"
             )
         }
     }
