@@ -68,18 +68,27 @@ class HomeAdapter(
                 displayDialogForSelectedItem(
                     items,
                     items.itemName.split("-")[1].replace(" ", ""),
-                    if (items.availableCount == 0) "Unavailable" else "Available"
+                    if (items.availableCount == 0) "Unavailable" else "Available",
+                    items.itemName,
+                    items.availableCount.toString(),
+                    items.unavailableCount.toString()
                 )
             }
         }
 
-        private fun displayDialogForSelectedItem(items: HomeModelDisplay, sizeLocal: String, statusLocal: String) {
+        private fun displayDialogForSelectedItem(
+            items: HomeModelDisplay,
+            sizeLocal: String,
+            statusLocal: String,
+            nameLocal: String,
+            availableCountLocal: String,
+            unavailableCountLocal: String
+        ) {
             fireStore.collection("labass-app-item-description")
                 .document(items.imageLink.split("/")[1])
                 .get()
                 .addOnSuccessListener { documentSnapshot ->
                     val imageLink = documentSnapshot.get("modelImageLink").toString()
-                    val itemName = documentSnapshot.get("modelName").toString()
                     val itemBorrowCount = documentSnapshot.get("modelBorrowCount").toString()
                     val itemCode = documentSnapshot.get("modelCode").toString()
                     val itemCategory = documentSnapshot.get("modelCategory").toString()
@@ -88,12 +97,12 @@ class HomeAdapter(
 
                     val itemsToBeShown = ItemFullInfoModel(
                         imageLink,
-                        "${itemName.split("-")[0]}- $sizeLocal",
+                        "${nameLocal.split("-")[0]}- $sizeLocal",
                         itemSize,
                         itemCategory,
                         statusLocal,
                         itemDescription,
-                        itemBorrowCount,
+                        "$availableCountLocal / $unavailableCountLocal",
                         itemCode
                     )
 

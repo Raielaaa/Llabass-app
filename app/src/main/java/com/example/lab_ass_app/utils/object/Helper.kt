@@ -262,7 +262,6 @@ object Helper {
                             .load(gsReference)
                             .into(selectedItemImage)
 
-                        Log.d(TAG, "displayCustomDialog: 2")
                         var sourceInfo: HomeModelDisplay? = null
                         if (itemFullInfoModel.itemCategory == "Tools") {
                             for (data in DataCache.rvItemsForTools) {
@@ -274,13 +273,11 @@ object Helper {
                             }
                         }
 
-                        Log.d(TAG, "displayCustomDialog: 3")
-                        findViewById<TextView>(R.id.tvInventory).text = "${sourceInfo?.availableCount} / ${sourceInfo?.unavailableCount}"
+                        findViewById<TextView>(R.id.tvInventory).text = itemFullInfoModel.itemBorrowCount
                         findViewById<TextView>(R.id.tvSelectedItemTitle).text = itemFullInfoModel.itemName
                         findViewById<TextView>(R.id.tvSelectedItemCategory).text = itemFullInfoModel.itemCategory
                         findViewById<TextView>(R.id.tvSelectedItemContent).text = itemFullInfoModel.itemDescription
 
-                        Log.d(TAG, "displayCustomDialog: 4")
                         if (itemFullInfoModel.itemStatus == "Available") {
                             findViewById<TextView>(R.id.tvSelectedItemStatus).setTextColor(ContextCompat.getColor(activity, R.color.Theme_green))
                             findViewById<TextView>(R.id.tvSelectedItemStatus).text = "Available"
@@ -288,14 +285,12 @@ object Helper {
                             findViewById<TextView>(R.id.tvSelectedItemStatus).setTextColor(ContextCompat.getColor(activity, R.color.Theme_light_red))
                             findViewById<TextView>(R.id.tvSelectedItemStatus).text = "Unavailable"
                         }
-                        Log.d(TAG, "displayCustomDialog: 5")
 
                         try {
                             findViewById<CardView>(R.id.cvQR).setOnClickListener {
                                 takeQR(getActivityReference()!!)
                             }
                         } catch (ignored: Exception) { }
-                        Log.d(TAG, "displayCustomDialog: 6")
                     }
                     show()
                 }
