@@ -409,6 +409,7 @@ class HomeViewModel @Inject constructor(
         // Display an error message, log the exception, and dismiss the loading dialog
         displayToastMessage("Error: ${exception.localizedMessage}", hostFragment)
         Log.e(Constants.TAG, "isCredentialsWithUserTypeExist: ${exception.message}")
+        Helper.dismissDialog()
     }
 
     // Display toast message
@@ -474,13 +475,17 @@ class HomeViewModel @Inject constructor(
                                 Helper.homeBinding
                             )
                         } catch (exception: Exception) {
-                            Log.e(Constants.TAG, "retrieveBorrowedItemInfoFromDB: ${exception.message}", )
+                             Log.e(Constants.TAG, "retrieveBorrowedItemInfoFromDB: ${exception.message}", )
                         }
                     }.addOnFailureListener { exception ->
-                        endTaskNotify(exception, hostFragment)
+                        // Display an error message, log the exception, and dismiss the loading dialog
+                        displayToastMessage("Error: ${exception.localizedMessage}", hostFragment)
+                        Log.e(Constants.TAG, "isCredentialsWithUserTypeExist: ${exception.message}")
                     }
             }.addOnFailureListener { exception ->
-                endTaskNotify(exception, hostFragment)
+                // Display an error message, log the exception, and dismiss the loading dialog
+                displayToastMessage("Error: ${exception.localizedMessage}", hostFragment)
+                Log.e(Constants.TAG, "isCredentialsWithUserTypeExist: ${exception.message}")
             }
     }
 
