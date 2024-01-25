@@ -236,6 +236,8 @@ class HomeViewModel @Inject constructor(
             .whereEqualTo("modelCategory", category)
             .get()
             .addOnCompleteListener { task ->
+                Helper.dismissDialog()
+
                 if (task.isSuccessful) {
                     val documents = task.result.documents
                     val mergedItemInfoList = arrayListOf<HomeModelDisplay>()
@@ -407,7 +409,6 @@ class HomeViewModel @Inject constructor(
         // Display an error message, log the exception, and dismiss the loading dialog
         displayToastMessage("Error: ${exception.localizedMessage}", hostFragment)
         Log.e(Constants.TAG, "isCredentialsWithUserTypeExist: ${exception.message}")
-        Helper.dismissDialog()
     }
 
     // Display toast message

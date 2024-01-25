@@ -77,8 +77,8 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
         editor = sharedPreferences.edit()
         sharedPreferences.registerOnSharedPreferenceChangeListener(this@HomeFragment)
 
-        //  Dismiss dialog for assurance
-        Helper.dismissDialog()
+//        //  Dismiss dialog for assurance
+//        Helper.dismissDialog()
 
         //  Database retrieving functions
         initDataRetrievalFromFirebase()
@@ -174,25 +174,30 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
 
     private fun initBottomRvList() {
         //  Initial display
-        DataCache.cacheDataForCategory(
-            "Chemicals",
-            homeViewModel,
-            binding.rvListItems,
-            this@HomeFragment,
-            fireStore
-        )
+//        DataCache.cacheDataForCategory(
+//            "Chemicals",
+//            homeViewModel,
+//            binding.rvListItems,
+//            this@HomeFragment,
+//            fireStore
+//        )
+//
+//        DataCache.cacheDataForCategory(
+//            "Tools",
+//            homeViewModel,
+//            binding.rvListItems,
+//            this@HomeFragment,
+//            fireStore
+//        )
 
+        val storage = FirebaseStorage.getInstance()
         CoroutineScope(Dispatchers.IO).launch {
-            delay(1000)
-            withContext(Dispatchers.Main) {
-                DataCache.cacheDataForCategory(
-                    "Tools",
-                    homeViewModel,
-                    binding.rvListItems,
-                    this@HomeFragment,
-                    fireStore
-                )
-            }
+            DataCache.cacheDataForCategories(
+                binding.rvListItems,
+                this@HomeFragment,
+                fireStore,
+                storage
+            )
         }
     }
 
