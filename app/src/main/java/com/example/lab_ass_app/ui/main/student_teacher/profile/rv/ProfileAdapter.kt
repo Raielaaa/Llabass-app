@@ -2,20 +2,25 @@ package com.example.lab_ass_app.ui.main.student_teacher.profile.rv
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.RvProfileBinding
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.BorrowModel
+import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.`object`.Helper
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
 class ProfileAdapter(
     private val context: Context,
-    private val storage: FirebaseStorage
+    private val storage: FirebaseStorage,
+    private val fireStore: FirebaseFirestore
 ) : RecyclerView.Adapter<ProfileAdapter.ProfileViewHolder>() {
     inner class ProfileViewHolder(private val binding: RvProfileBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(itemInfo: BorrowModel) {
@@ -24,14 +29,24 @@ class ProfileAdapter(
                 tvProfileBorrowDate.text = itemInfo.modelBorrowDateTime
                 tvProfileBorrowDeadline.text = itemInfo.modelBorrowDeadlineDateTime
 
-                val gsReference = storage.getReferenceFromUrl("gs://labass-app.appspot.com/${
-                    itemInfo.modelItemCategory.lowercase()
-                }/${
-                    itemInfo.modelItemCode
-                }.jpg")
-                Glide.with(context)
-                    .load(gsReference)
-                    .into(ivProfileImage)
+                fireStore.collection("labass-app-item-description")
+                    .document(itemInfo.modelItemCode)
+                    .get()
+                    .addOnSuccessListener { documentSnapshot ->
+                        val imageLink = documentSnapshot.get("modelImageLink")
+
+                        val gsReference = storage.getReferenceFromUrl("gs://labass-app.appspot.com/$imageLink.jpg")
+                        Glide.with(context)
+                            .load(gsReference)
+                            .into(ivProfileImage)
+                    }.addOnFailureListener { exception ->
+                        Log.e(Constants.TAG, "ProfileAdapter: ", exception)
+                        Toast.makeText(
+                            context,
+                            "An error occurred: ${exception.localizedMessage}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
 
                 val timeDifferenceInMinutes = Helper.getBorrowTimeDifference(itemInfo.modelBorrowDateTime, itemInfo.modelBorrowDeadlineDateTime)
                 tvProfileBorrowStatus.text = timeDifferenceInMinutes

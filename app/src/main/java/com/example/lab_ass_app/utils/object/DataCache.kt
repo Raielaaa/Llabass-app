@@ -73,7 +73,6 @@ object DataCache {
         fireStore: FirebaseFirestore,
         storage: FirebaseStorage
     ) {
-        Log.d("MyTag", "cacheDataForCategories: check-1")
         Helper.displayCustomDialog(
             hostFragment.requireActivity(),
             R.layout.custom_dialog_loading

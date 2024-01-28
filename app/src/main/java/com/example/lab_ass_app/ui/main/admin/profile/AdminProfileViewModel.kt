@@ -52,7 +52,7 @@ class AdminProfileViewModel @Inject constructor(
                             )
                         )
                     }
-                    val adapter = AdminProfileAdapter(adminProfileFragment.requireContext(), storage)
+                    val adapter = AdminProfileAdapter(adminProfileFragment.requireContext(), storage, firebaseFireStore)
                     adapter.setList(itemsToBeDisplayed)
                     rvProfileList.adapter = adapter
 
@@ -64,7 +64,7 @@ class AdminProfileViewModel @Inject constructor(
                     Helper.dismissDialog()
                 }
         } else {
-            val adapter = AdminProfileAdapter(adminProfileFragment.requireContext(), storage)
+            val adapter = AdminProfileAdapter(adminProfileFragment.requireContext(), storage, firebaseFireStore)
             adapter.setList(DataCache.profileList)
             rvProfileList.adapter = adapter
         }
@@ -85,7 +85,7 @@ class AdminProfileViewModel @Inject constructor(
             }
         }
 
-        val adapter = AdminProfileAdapter(hostFragment.requireContext(), storage)
+        val adapter = AdminProfileAdapter(hostFragment.requireContext(), storage, firebaseFireStore)
         adapter.setList(itemsToBeDisplayed)
         rvProfileList.adapter = adapter
 

@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -14,11 +15,13 @@ import com.example.lab_ass_app.databinding.RvProfileAdminBinding
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.BorrowModel
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.`object`.Helper
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
 class AdminProfileAdapter (
     private val context: Context,
     private val storage: FirebaseStorage,
+    private val fireStore: FirebaseFirestore
 ) : RecyclerView.Adapter<AdminProfileAdapter.AdminProfileViewHolder>() {
 
     private val collections: ArrayList<BorrowModel> = ArrayList()
@@ -42,10 +45,24 @@ class AdminProfileAdapter (
                 tvProfileBorrowDeadline.text = data.modelBorrowDeadlineDateTime
                 tvProfileItemName.text = data.modelItemName
 
-                val gsReference = storage.getReferenceFromUrl("gs://labass-app.appspot.com/${data.modelItemCategory.lowercase()}/${data.modelItemCode}.jpg")
-                Glide.with(context)
-                    .load(gsReference)
-                    .into(ivProfileImage)
+                fireStore.collection("labass-app-item-description")
+                    .document(data.modelItemCode)
+                    .get()
+                    .addOnSuccessListener { documentSnapshot ->
+                        val imageLink = documentSnapshot.get("modelImageLink")
+
+                        val gsReference = storage.getReferenceFromUrl("gs://labass-app.appspot.com/$imageLink.jpg")
+                        Glide.with(context)
+                            .load(gsReference)
+                            .into(ivProfileImage)
+                    }.addOnFailureListener { exception ->
+                        Log.e(Constants.TAG, "AdminProfileAdapter: ", exception)
+                        Toast.makeText(
+                            context,
+                            "An error occurred: ${exception.localizedMessage}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
 
                 Log.e(Constants.TAG, "bind: ${data.modelBorrowDeadlineDateTime}")
                 val timeDifference = getTimeDifference(data.modelBorrowDeadlineDateTime)

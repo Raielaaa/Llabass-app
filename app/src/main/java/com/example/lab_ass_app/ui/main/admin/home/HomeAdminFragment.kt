@@ -173,13 +173,15 @@ class HomeAdminFragment : Fragment() {
 
     private fun initBottomRvList() {
         //  Initial display
-        DataCache.cacheDataForCategory(
-            "Tools",
-            homeViewModel,
-            binding.rvListItems,
-            this@HomeAdminFragment,
-            fireStore
-        )
+        val storage = FirebaseStorage.getInstance()
+        CoroutineScope(Dispatchers.IO).launch {
+            DataCache.cacheDataForCategories(
+                binding.rvListItems,
+                this@HomeAdminFragment,
+                fireStore,
+                storage
+            )
+        }
     }
 
     private fun initBottomNavigationDrawer() {

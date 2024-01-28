@@ -273,7 +273,9 @@ object Helper {
                             }
                         }
 
-                        findViewById<TextView>(R.id.tvInventory).text = itemFullInfoModel.itemBorrowCount
+                        try {
+                            findViewById<TextView>(R.id.tvInventory).text = itemFullInfoModel.itemBorrowCount
+                        } catch (ignored: Exception) { }
                         findViewById<TextView>(R.id.tvSelectedItemTitle).text = itemFullInfoModel.itemName
                         findViewById<TextView>(R.id.tvSelectedItemCategory).text = itemFullInfoModel.itemCategory
                         findViewById<TextView>(R.id.tvSelectedItemContent).text = itemFullInfoModel.itemDescription

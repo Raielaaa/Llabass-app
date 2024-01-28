@@ -196,7 +196,7 @@ class HomeViewModel @Inject constructor(
                 Helper.dismissDialog()
                 Helper.displayCustomDialog(
                     activity,
-                    R.layout.selected_item_dialog,
+                    R.layout.selected_item_dialog_top_borrow,
                     itemInfo,
                     storage
                 )
@@ -477,6 +477,7 @@ class HomeViewModel @Inject constructor(
                         } catch (exception: Exception) {
                              Log.e(Constants.TAG, "retrieveBorrowedItemInfoFromDB: ${exception.message}", )
                         }
+
                     }.addOnFailureListener { exception ->
                         // Display an error message, log the exception, and dismiss the loading dialog
                         displayToastMessage("Error: ${exception.localizedMessage}", hostFragment)

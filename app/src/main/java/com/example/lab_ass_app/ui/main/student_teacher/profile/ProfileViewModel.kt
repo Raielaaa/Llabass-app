@@ -72,7 +72,8 @@ class ProfileViewModel @Inject constructor(
                 initHomeUserStatusUI(binding, hostFragment)
                 val adapter = ProfileAdapter(
                     hostFragment.requireContext(),
-                    FirebaseStorage.getInstance()
+                    FirebaseStorage.getInstance(),
+                    fireStore
                 )
 
                 adapter.setList(DataCache.rvBorrowInfoProfile)
