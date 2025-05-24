@@ -14,12 +14,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.text.color
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.R
 import com.example.lab_ass_app.databinding.FragmentLoginBinding
+import com.example.lab_ass_app.utils.`object`.BiometricHelper
 import com.example.lab_ass_app.utils.`object`.Helper
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -61,8 +63,40 @@ class LoginFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
         initLoginButton()
         initPasswordVisibility()
         initGoogleFacebookLogin()
+        initFingerPrintLogin()
 
         return binding.root
+    }
+
+    private fun initFingerPrintLogin() {
+        if (BiometricHelper.isBiometricAvailable(requireContext())) {
+            BiometricHelper.authenticateUser(
+                this,
+                onSuccess = {
+                    // Get saved user credentials
+                    val savedEmail = sharedPreferences.getString("email", null)
+                    val savedPassword = sharedPreferences.getString("password", null)
+                    val savedUserType = sharedPreferences.getString("user_type", null)
+
+                    if (savedEmail != null && savedPassword != null && savedUserType != null) {
+                        loginViewModel.loginUsingFirebase(
+                            binding.etEmail.apply { setText(savedEmail) },
+                            binding.tilPassword.apply { setText(savedPassword) },
+                            savedUserType,
+                            this,
+                            editor
+                        )
+                    } else {
+                        Toast.makeText(requireContext(), "No saved credentials", Toast.LENGTH_SHORT).show()
+                    }
+                },
+                onError = {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                }
+            )
+        } else {
+            Toast.makeText(requireContext(), "Biometric authentication not available", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun initGoogleFacebookLogin() {
@@ -71,13 +105,6 @@ class LoginFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeList
                 //  Display a notice dialog during registration
                 displayDialog("google")
             }
-//            ivFacebook.setOnClickListener {
-//                //  Display a notice dialog during registration
-//                displayDialog("facebook")
-//
-//                //  Facebook login
-//                Helper.hostFragmentInstanceForFacebookLogin = this@LoginFragment
-//            }
         }
     }
 

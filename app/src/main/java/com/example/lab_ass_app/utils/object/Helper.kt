@@ -70,6 +70,51 @@ import java.util.Date
 import java.util.Locale
 import kotlin.system.exitProcess
 
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import java.util.concurrent.Executor
+
+object BiometricHelper {
+    fun isBiometricAvailable(context: Context): Boolean {
+        val biometricManager = BiometricManager.from(context)
+        return biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK) ==
+                BiometricManager.BIOMETRIC_SUCCESS
+    }
+
+    fun authenticateUser(
+        fragment: Fragment,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
+        val executor: Executor = ContextCompat.getMainExecutor(fragment.requireContext())
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Fingerprint Login")
+            .setSubtitle("Use your fingerprint to log in")
+            .setNegativeButtonText("Cancel")
+            .build()
+
+        val biometricPrompt = BiometricPrompt(fragment, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    onSuccess()
+                }
+
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    onError(errString.toString())
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    onError("Authentication failed. Try again.")
+                }
+            })
+
+        biometricPrompt.authenticate(promptInfo)
+    }
+}
+
 object Helper {
     //  Encapsulation principle for Activity reference
     var mainActivityInstance: WeakReference<Activity>? = null

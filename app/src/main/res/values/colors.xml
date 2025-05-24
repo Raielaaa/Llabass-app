@@ -3,6 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="grey">#FFD9D9D9</color>
+    <color name="main_color">#2F2B51</color>
     <color name="Theme.color.main">#2F2B51</color>
     <color name="Theme.credentials.placeholder.bg">#f7f7f9</color>
     <color name="Theme.disabled">#b3b3b3</color>

@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/accountOpeningFragment">
+    app:startDestination="@id/openingFirstPageFragment">
 
     <fragment
         android:id="@+id/accountOpeningFragment"
         android:name="com.example.lab_ass_app.ui.account.home.AccountOpeningFragment"
         android:label="fragment_account_opening"
-        tools:layout="@layout/fragment_account_opening" >
+        tools:layout="@layout/fragment_account_opening">
         <action
             android:id="@+id/action_accountOpeningFragment_to_registerFragment"
             app:destination="@id/registerFragment"
@@ -29,7 +29,7 @@
         android:id="@+id/registerFragment"
         android:name="com.example.lab_ass_app.ui.account.register.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
+        tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_registerFragment_to_accountOpeningFragment"
             app:destination="@id/accountOpeningFragment" />
@@ -54,12 +54,15 @@
             app:exitAnim="@anim/push_right_out"
             app:popEnterAnim="@anim/push_left_in"
             app:popExitAnim="@anim/push_left_out" />
+        <action
+            android:id="@+id/action_registerFragment_to_sendNumberFragment"
+            app:destination="@id/sendNumberFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.lab_ass_app.ui.main.student_teacher.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_termsOfServiceDialog"
             app:destination="@id/termsOfServiceDialog"
@@ -124,7 +127,7 @@
         android:id="@+id/termsOfServiceDialog"
         android:name="com.example.lab_ass_app.ui.account.register.TermsOfServiceDialog"
         android:label="fragment_register_terms_of_service"
-        tools:layout="@layout/fragment_register_terms_of_service" >
+        tools:layout="@layout/fragment_register_terms_of_service">
         <action
             android:id="@+id/action_termsOfServiceDialog_to_registerFragment"
             app:destination="@id/registerFragment"
@@ -144,7 +147,7 @@
         android:id="@+id/privacyFragment"
         android:name="com.example.lab_ass_app.ui.main.student_teacher.privacy.PrivacyFragment"
         android:label="fragment_privacy"
-        tools:layout="@layout/fragment_privacy" >
+        tools:layout="@layout/fragment_privacy">
         <action
             android:id="@+id/action_privacyFragment_to_homeFragment"
             app:destination="@id/homeFragment"
@@ -186,7 +189,7 @@
         android:id="@+id/TOSFragment"
         android:name="com.example.lab_ass_app.ui.main.student_teacher.privacy.TOSFragment"
         android:label="fragment_t_o_s"
-        tools:layout="@layout/fragment_t_o_s" >
+        tools:layout="@layout/fragment_t_o_s">
         <action
             android:id="@+id/action_TOSFragment_to_privacyFragment"
             app:destination="@id/privacyFragment"
@@ -199,7 +202,7 @@
         android:id="@+id/PPFragment"
         android:name="com.example.lab_ass_app.ui.main.student_teacher.privacy.PPFragment"
         android:label="fragment_p_p"
-        tools:layout="@layout/fragment_p_p" >
+        tools:layout="@layout/fragment_p_p">
         <action
             android:id="@+id/action_PPFragment_to_privacyFragment"
             app:destination="@id/privacyFragment"
@@ -212,7 +215,7 @@
         android:id="@+id/listFragment"
         android:name="com.example.lab_ass_app.ui.main.student_teacher.list.ListFragment"
         android:label="fragment_list"
-        tools:layout="@layout/fragment_list" >
+        tools:layout="@layout/fragment_list">
         <action
             android:id="@+id/action_listFragment_to_homeFragment"
             app:destination="@id/homeFragment"
@@ -239,7 +242,7 @@
         android:id="@+id/profileFragment"
         android:name="com.example.lab_ass_app.ui.main.student_teacher.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_homeFragment"
             app:destination="@id/homeFragment"
@@ -273,7 +276,7 @@
         android:id="@+id/experimentsFragment"
         android:name="com.example.lab_ass_app.ui.main.student_teacher.experiments.homeList.ExperimentsFragment"
         android:label="fragment_experiments"
-        tools:layout="@layout/fragment_experiments" >
+        tools:layout="@layout/fragment_experiments">
         <action
             android:id="@+id/action_experimentsFragment_to_homeFragment"
             app:destination="@id/homeFragment"
@@ -293,7 +296,7 @@
         android:id="@+id/experimentsItemFragment"
         android:name="com.example.lab_ass_app.ui.main.student_teacher.experiments.info.ExperimentsItemFragment"
         android:label="fragment_experiments_item"
-        tools:layout="@layout/fragment_experiments_item" >
+        tools:layout="@layout/fragment_experiments_item">
         <action
             android:id="@+id/action_experimentsItemFragment_to_experimentsFragment"
             app:destination="@id/experimentsFragment"
@@ -306,7 +309,7 @@
         android:id="@+id/borrowReturnDialogFragment"
         android:name="com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.BorrowReturnDialogFragment"
         android:label="fragment_borrow_return_dialog"
-        tools:layout="@layout/fragment_borrow_return_dialog" >
+        tools:layout="@layout/fragment_borrow_return_dialog">
         <action
             android:id="@+id/action_borrowReturnDialogFragment_to_homeFragment"
             app:destination="@id/homeFragment"
@@ -326,7 +329,7 @@
         android:id="@+id/reportFragment"
         android:name="com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.report.ReportFragment"
         android:label="fragment_report"
-        tools:layout="@layout/fragment_report" >
+        tools:layout="@layout/fragment_report">
         <action
             android:id="@+id/action_reportFragment_to_homeFragment"
             app:destination="@id/homeFragment"
@@ -339,7 +342,7 @@
         android:id="@+id/homeAdminFragment"
         android:name="com.example.lab_ass_app.ui.main.admin.home.HomeAdminFragment"
         android:label="fragment_home_admin"
-        tools:layout="@layout/fragment_home_admin" >
+        tools:layout="@layout/fragment_home_admin">
         <action
             android:id="@+id/action_homeAdminFragment_to_adminReportFragment"
             app:destination="@id/adminReportFragment"
@@ -380,7 +383,7 @@
         android:id="@+id/adminProfileFragment"
         android:name="com.example.lab_ass_app.ui.main.admin.profile.AdminProfileFragment"
         android:label="fragment_admin_profile"
-        tools:layout="@layout/fragment_admin_profile" >
+        tools:layout="@layout/fragment_admin_profile">
         <action
             android:id="@+id/action_adminProfileFragment_to_homeAdminFragment"
             app:destination="@id/homeAdminFragment"
@@ -407,7 +410,7 @@
         android:id="@+id/adminPrivacyFragment"
         android:name="com.example.lab_ass_app.ui.main.admin.privacy.AdminPrivacyFragment"
         android:label="fragment_admin_privacy"
-        tools:layout="@layout/fragment_admin_privacy" >
+        tools:layout="@layout/fragment_admin_privacy">
         <action
             android:id="@+id/action_adminPrivacyFragment_to_homeAdminFragment"
             app:destination="@id/homeAdminFragment"
@@ -448,7 +451,7 @@
         android:id="@+id/adminListFragment"
         android:name="com.example.lab_ass_app.ui.main.admin.list.AdminListFragment"
         android:label="fragment_admin_list"
-        tools:layout="@layout/fragment_admin_list" >
+        tools:layout="@layout/fragment_admin_list">
         <action
             android:id="@+id/action_adminListFragment_to_homeAdminFragment"
             app:destination="@id/homeAdminFragment"
@@ -475,7 +478,7 @@
         android:id="@+id/adminReportFragment"
         android:name="com.example.lab_ass_app.ui.main.admin.report.AdminReportFragment"
         android:label="fragment_admin_report"
-        tools:layout="@layout/fragment_admin_report" >
+        tools:layout="@layout/fragment_admin_report">
         <action
             android:id="@+id/action_adminReportFragment_to_homeAdminFragment"
             app:destination="@id/homeAdminFragment"
@@ -488,7 +491,7 @@
         android:id="@+id/loginFragment"
         android:name="com.example.lab_ass_app.ui.account.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_accountOpeningFragment"
             app:destination="@id/accountOpeningFragment"
@@ -522,7 +525,7 @@
         android:id="@+id/adminPPFragment"
         android:name="com.example.lab_ass_app.ui.main.admin.privacy.AdminPPFragment"
         android:label="fragment_admin_p_p"
-        tools:layout="@layout/fragment_admin_p_p" >
+        tools:layout="@layout/fragment_admin_p_p">
         <action
             android:id="@+id/action_adminPPFragment_to_adminPrivacyFragment"
             app:destination="@id/adminPrivacyFragment"
@@ -535,7 +538,7 @@
         android:id="@+id/adminTOSFragment"
         android:name="com.example.lab_ass_app.ui.main.admin.privacy.AdminTOSFragment"
         android:label="fragment_admin_t_o_s"
-        tools:layout="@layout/fragment_admin_t_o_s" >
+        tools:layout="@layout/fragment_admin_t_o_s">
         <action
             android:id="@+id/action_adminTOSFragment_to_adminPrivacyFragment"
             app:destination="@id/adminPrivacyFragment"
@@ -543,5 +546,126 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/openingFirstPageFragment"
+        android:name="com.example.lab_ass_app.ui.main.opening.OpeningFirstPageFragment"
+        android:label="fragment_opening_first_page"
+        tools:layout="@layout/fragment_opening_first_page">
+        <action
+            android:id="@+id/action_openingFirstPageFragment_to_openingSecondPageFragment"
+            app:destination="@id/openingSecondPageFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/openingSecondPageFragment"
+        android:name="com.example.lab_ass_app.ui.main.opening.OpeningSecondPageFragment"
+        android:label="fragment_opening_second_page"
+        tools:layout="@layout/fragment_opening_second_page">
+        <action
+            android:id="@+id/action_openingSecondPageFragment_to_openingThirdPageFragment"
+            app:destination="@id/openingThirdPageFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_openingSecondPageFragment_to_openingFirstPageFragment"
+            app:destination="@id/openingFirstPageFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/openingThirdPageFragment"
+        android:name="com.example.lab_ass_app.ui.main.opening.OpeningThirdPageFragment"
+        android:label="fragment_opening_third_page"
+        tools:layout="@layout/fragment_opening_third_page">
+        <action
+            android:id="@+id/action_openingThirdPageFragment_to_openingFourthPageFragment"
+            app:destination="@id/openingFourthPageFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_openingThirdPageFragment_to_openingSecondPageFragment"
+            app:destination="@id/openingSecondPageFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/openingFourthPageFragment"
+        android:name="com.example.lab_ass_app.ui.main.opening.OpeningFourthPageFragment"
+        android:label="fragment_opening_fourth_page"
+        tools:layout="@layout/fragment_opening_fourth_page">
+        <action
+            android:id="@+id/action_openingFourthPageFragment_to_openingFifthPageFragment"
+            app:destination="@id/openingFifthPageFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_openingFourthPageFragment_to_openingThirdPageFragment"
+            app:destination="@id/openingThirdPageFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/openingFifthPageFragment"
+        android:name="com.example.lab_ass_app.ui.main.opening.OpeningFifthPageFragment"
+        android:label="fragment_opening_fifth_page"
+        tools:layout="@layout/fragment_opening_fifth_page">
+
+        <action
+            android:id="@+id/action_openingFifthPageFragment_to_accountOpeningFragment"
+            app:destination="@id/accountOpeningFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_openingFifthPageFragment_to_openingFourthPageFragment"
+            app:destination="@id/openingFourthPageFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/sendNumberFragment"
+        android:name="com.example.lab_ass_app.ui.account.register.otp.SendNumberFragment"
+        android:label="fragment_send_number"
+        tools:layout="@layout/fragment_send_number">
+        <action
+            android:id="@+id/action_sendNumberFragment_to_verifyOTPFragment"
+            app:destination="@id/verifyOTPFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/verifyOTPFragment"
+        android:name="com.example.lab_ass_app.ui.account.register.otp.VerifyOTPFragment"
+        android:label="fragment_verify_o_t"
+        tools:layout="@layout/fragment_verify_o_t">
+        <action
+            android:id="@+id/action_verifyOTPFragment_to_successPageFragment"
+            app:destination="@id/successPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/successPageFragment"
+        android:name="com.example.lab_ass_app.ui.account.register.otp.SuccessPageFragment"
+        android:label="fragment_success_page"
+        tools:layout="@layout/fragment_success_page">
+        <action
+            android:id="@+id/action_successPageFragment_to_termsOfServiceDialog"
+            app:destination="@id/termsOfServiceDialog" />
     </fragment>
 </navigation>

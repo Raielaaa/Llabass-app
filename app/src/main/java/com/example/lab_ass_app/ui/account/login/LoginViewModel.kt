@@ -114,23 +114,33 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun handleNavigation(userType: String, hostFragment: Fragment, editor: Editor) {
+        // Save credentials (for demo only — encrypt in production)
+        val email = (hostFragment.view?.findViewById<EditText>(R.id.etEmail))?.text.toString()
+        val password = (hostFragment.view?.findViewById<TextInputEditText>(R.id.tilPassword))?.text.toString()
+
+        editor.apply {
+            putString("user_type", userType)
+            putString("email", email)
+            putString("password", password)
+            apply()
+        }
+
         when (userType) {
             "ADMIN" -> {
                 hostFragment.findNavController().navigate(R.id.action_loginFragment_to_homeAdminFragment2)
             }
-            "STUDENT" -> {
-                hostFragment.findNavController().navigate(R.id.action_loginFragment_to_homeFragment, bundleOf(Pair("user_type", "STUDENT")))
-                insertUserTypeToSharedPref(userType, editor)
-            }
-            "TEACHER" -> {
-                hostFragment.findNavController().navigate(R.id.action_loginFragment_to_homeFragment, bundleOf(Pair("user_type", "TEACHER")))
-                insertUserTypeToSharedPref(userType, editor)
+            "STUDENT", "TEACHER" -> {
+                hostFragment.findNavController().navigate(
+                    R.id.action_loginFragment_to_homeFragment,
+                    bundleOf(Pair("user_type", userType))
+                )
             }
         }
-        // Dismiss the loading dialog and display a success message
+
         Helper.dismissDialog()
         displayToastMessage("Login successful", hostFragment)
     }
+
 
     // Function to insert the user type into shared preferences
     private fun insertUserTypeToSharedPref(userType: String, editor: Editor) {

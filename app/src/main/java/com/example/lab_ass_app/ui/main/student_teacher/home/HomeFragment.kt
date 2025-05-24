@@ -53,7 +53,7 @@ class HomeFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListe
     @Named("FirebaseFireStore.Instance")
     lateinit var fireStore: FirebaseFirestore
 
-    //  Binding and ViewModel
+    //  Binding and ViewModel1
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeViewModel: HomeViewModel
 

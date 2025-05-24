@@ -5,6 +5,8 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="android:textSize">@dimen/_10ssp</item>
         <item name="colorPrimary">@color/Theme.color.main</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:colorBackground">@android:color/white</item>
     </style>
 
     <style name="Theme.Labassapp" parent="Base.Theme.Labassapp" />

@@ -3,6 +3,24 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!-- Carousel -->
+    <string name="carousel_first_page_header">Inventory Overview</string>
+    <string name="carousel_first_page_subheader">Easily view, track, and manage all inventory items to ensure accurate stock control.</string>
+
+    <string name="carousel_second_page_header">Item Details</string>
+    <string name="carousel_second_page_subheader">Access comprehensive information for each inventory item, including specifications and status.</string>
+
+    <string name="carousel_third_page_header">QR Code Booking</string>
+    <string name="carousel_third_page_subheader">Book items effortlessly by scanning unique QR codes for fast and reliable tracking.</string>
+
+    <string name="carousel_fourth_page_header">Booking Management</string>
+    <string name="carousel_fourth_page_subheader">Efficiently monitor, modify, and manage both active and historical booking records.</string>
+
+    <string name="carousel_fifth_page_header">Laboratory Access</string>
+    <string name="carousel_fifth_page_subheader">Schedule, authorize, and manage secure access to laboratory resources and equipment.</string>
+
+    <string name="carousel_previous_button_text">Previous</string>
+    <string name="carousel_next_button_text">Next</string>
     <!-- General -->
     <string name="dialog_no_internet_connection">No Internet connection found. Please check your connection and try again.</string>
     <string name="dialog_confirm_return_confirm">CONFIRM</string>
