@@ -118,4 +118,7 @@ dependencies {
 
     //  Gson
     implementation("com.google.code.gson:gson:2.9.0")
+
+    //  OTP View
+    implementation("com.github.mukeshsolanki:android-otpview-pinview:3.1.0")
 }

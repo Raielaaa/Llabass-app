@@ -360,4 +360,20 @@
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent purus tortor, scelerisque quis mattis vel, feugiat sed est. Aenean fringilla purus ac est lobortis, a accumsan mauris blandit. Duis viverra, dui ac finibus imperdiet, ligula massa imperdiet nisi, maximus ultricies nunc diam in neque. Mauris varius ipsum eu elit mollis, a scelerisque massa pretium.
     </string>
     <string name="admin_report_mark">ALREADY RESOLVED?</string>
+
+    <string name="otp_header">Almost there!</string>
+    <string name="otp_subheader">Sign up new account</string>
+    <string name="otp_enter_number">Enter your phone number</string>
+    <string name="otp_number_placeholder">+63</string>
+    <string name="otp_notice">We will send you a 6 digit verification code</string>
+    <string name="otp_button_next">Next</string>
+    
+    <string name="otp_verify_header">Verify your account</string>
+    <string name="otp_verify_subheader">Sign up new account</string>
+    <string name="otp_verify_no_code">Did not receive a code? Resend OTP</string>
+    <string name="otp_verify_button">Verify</string>
+
+    <string name="otp_success_header">Congratulations!</string>
+    <string name="otp_success_subheader">Your account has been created successfully</string>
+    <string name="otp_success_button">Continue</string>
 </resources>

@@ -15,4 +15,5 @@
     <color name="Theme.red">#ff0000</color>
     <color name="Theme.light.red">#ff3200</color>
     <color name="Theme.facebook.color">#1877f2</color>
+    <color name="Theme.otp.input.bg">#f2f2f2</color>
 </resources>
