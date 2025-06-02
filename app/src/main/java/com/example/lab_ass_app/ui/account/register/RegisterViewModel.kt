@@ -3,6 +3,7 @@ package com.example.lab_ass_app.ui.account.register
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.example.lab_ass_app.utils.Constants
@@ -16,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import javax.inject.Named
+import com.example.lab_ass_app.utils.`object`.DataCache
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
@@ -35,7 +37,6 @@ class RegisterViewModel @Inject constructor(
 
     // Insert User credentials to Firebase auth and FireStore
     fun insertDataToAuth(
-        lrn: String,
         email: String,
         password: String,
         userType: String,
@@ -56,9 +57,10 @@ class RegisterViewModel @Inject constructor(
                     // Storing user credentials to UserAccountInitial data class
                     val userAccountInitial = UserAccountInitialModel(
                         userID.toString(),
-                        lrn,
+                        "",
                         email,
-                        userType
+                        userType,
+                        DataCache.inputtedMobileNumber
                     )
 
                     // Insert UserID, LRN, Email, and UserType to FireStore
@@ -94,7 +96,8 @@ class RegisterViewModel @Inject constructor(
 
     // Function for validating/inserting inputted data to Firebase auth
     fun validateEntries(
-        etLRN: EditText,
+        firstName: String,
+        lastName: String,
         etEmail: EditText,
         tilPassword: TextInputEditText,
         tilConfirmPassword: TextInputEditText,
@@ -102,21 +105,25 @@ class RegisterViewModel @Inject constructor(
         registerViewModel: RegisterViewModel,
         registerBinding: FragmentRegisterBinding
     ) {
-        val lrn = etLRN.text.toString()
         val email = etEmail.text.toString()
         val password = tilPassword.text.toString()
         val confirmPassword = tilConfirmPassword.text.toString()
 
         // Checks if LRN, Email, Password, and Confirm password are not empty
-        if (lrn.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()) {
+        if (
+            email.isNotEmpty() &&
+            password.isNotEmpty() &&
+            confirmPassword.isNotEmpty() &&
+            firstName.isNotEmpty() &&
+            lastName.isNotEmpty()
+        ) {
             // Checks if Password matches with Confirm password
             if (password == confirmPassword) {
                 // Show Terms of Service Dialog for confirmation
-                TermsOfServiceDialog(
-                    registerFragment,
-                    registerViewModel,
-                    registerBinding
-                ).show(registerFragment.parentFragmentManager, "Register_BottomDialog")
+                DataCache.registerFragment = registerFragment
+                DataCache.registerViewModel = registerViewModel
+                DataCache.registerBinding = registerBinding
+                registerFragment.findNavController().navigate(R.id.action_registerFragment_to_sendNumberFragment)
             } else {
                 // Sets the password and confirm password field to empty if they do not match
                 tilPassword.setText("")

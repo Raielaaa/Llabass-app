@@ -6,6 +6,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab_ass_app.R
+import com.example.lab_ass_app.databinding.FragmentRegisterBinding
+import com.example.lab_ass_app.ui.account.register.RegisterFragment
+import com.example.lab_ass_app.ui.account.register.RegisterViewModel
 import com.example.lab_ass_app.ui.main.student_teacher.borrow_return_dialog.BorrowModel
 import com.example.lab_ass_app.ui.main.student_teacher.home.HomeViewModel
 import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeAdapter
@@ -14,6 +17,7 @@ import com.example.lab_ass_app.ui.main.student_teacher.home.rv.HomeModelLive
 import com.example.lab_ass_app.utils.Constants
 import com.example.lab_ass_app.utils.models.ItemFullInfoModel
 import com.example.lab_ass_app.utils.models.PopularModel
+import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.Dispatchers
@@ -218,4 +222,12 @@ object DataCache {
             Toast.LENGTH_LONG
         ).show()
     }
+
+    var registerFragment: RegisterFragment? = null
+    var registerViewModel: RegisterViewModel? = null
+    var registerBinding: FragmentRegisterBinding? = null
+    var inputtedMobileNumber = ""
+    var verificationId: String = ""
+    var resendToken: PhoneAuthProvider.ForceResendingToken? = null
+    var inputtedMobileNumber = ""
 }

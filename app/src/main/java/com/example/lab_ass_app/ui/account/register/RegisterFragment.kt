@@ -49,7 +49,8 @@ class RegisterFragment : Fragment() {
         binding.apply {
             btnSignUp.setOnClickListener {
                 registerViewModel.validateEntries(
-                    etLRN,
+                    etFirstName.text.toString(),
+                    etLastName.text.toString(),
                     etEmail,
                     tilPassword,
                     tilConfirmPassword,

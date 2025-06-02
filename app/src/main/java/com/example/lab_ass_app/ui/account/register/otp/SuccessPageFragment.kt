@@ -6,13 +6,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.lab_ass_app.R
+import com.example.lab_ass_app.databinding.FragmentSuccessPageBinding
+import com.example.lab_ass_app.ui.account.register.TermsOfServiceDialog
+import com.example.lab_ass_app.utils.`object`.DataCache
 
 class SuccessPageFragment : Fragment() {
+    private lateinit var binding: FragmentSuccessPageBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_success_page, container, false)
+        binding = FragmentSuccessPageBinding.inflate(inflater, container, false)
+
+        binding.apply {
+            btnLogin.setOnClickListener {
+                TermsOfServiceDialog(
+                    DataCache.registerFragment!!,
+                    DataCache.registerViewModel!!,
+                    DataCache.registerBinding!!
+                ).show(DataCache.registerFragment.parentFragmentManager, "Register_BottomDialog")
+            }
+        }
+
+        return binding.root
     }
 }

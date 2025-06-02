@@ -56,7 +56,11 @@
             app:popExitAnim="@anim/push_left_out" />
         <action
             android:id="@+id/action_registerFragment_to_sendNumberFragment"
-            app:destination="@id/sendNumberFragment" />
+            app:destination="@id/sendNumberFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -648,7 +652,18 @@
         tools:layout="@layout/fragment_send_number">
         <action
             android:id="@+id/action_sendNumberFragment_to_verifyOTPFragment"
-            app:destination="@id/verifyOTPFragment" />
+            app:destination="@id/verifyOTPFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_sendNumberFragment_to_registerFragment"
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
     </fragment>
     <fragment
         android:id="@+id/verifyOTPFragment"
@@ -657,7 +672,18 @@
         tools:layout="@layout/fragment_verify_o_t">
         <action
             android:id="@+id/action_verifyOTPFragment_to_successPageFragment"
-            app:destination="@id/successPageFragment" />
+            app:destination="@id/successPageFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_verifyOTPFragment_to_sendNumberFragment"
+            app:destination="@id/sendNumberFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
     </fragment>
     <fragment
         android:id="@+id/successPageFragment"
@@ -666,6 +692,17 @@
         tools:layout="@layout/fragment_success_page">
         <action
             android:id="@+id/action_successPageFragment_to_termsOfServiceDialog"
-            app:destination="@id/termsOfServiceDialog" />
+            app:destination="@id/termsOfServiceDialog"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_successPageFragment_to_verifyOTPFragment"
+            app:destination="@id/verifyOTPFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
     </fragment>
 </navigation>

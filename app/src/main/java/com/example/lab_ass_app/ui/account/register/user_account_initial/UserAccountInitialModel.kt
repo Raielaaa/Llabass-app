@@ -4,5 +4,6 @@ data class UserAccountInitialModel(
     val userIDModel: String,
     val userLRNModel: String,
     val userEmailModel: String,
-    val userTypeModel: String
+    val userTypeModel: String,
+    val verifiedPhoneNumber: String? = null
 )
