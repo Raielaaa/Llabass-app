@@ -382,6 +382,9 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_homeAdminFragment_to_borrowListFragment"
+            app:destination="@id/borrowListFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminProfileFragment"
@@ -704,5 +707,14 @@
             app:exitAnim="@anim/push_right_out"
             app:popEnterAnim="@anim/push_left_in"
             app:popExitAnim="@anim/push_left_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/borrowListFragment"
+        android:name="com.example.lab_ass_app.ui.main.admin.borrow_list.BorrowListFragment"
+        android:label="fragment_borrow_list"
+        tools:layout="@layout/fragment_borrow_list" >
+        <action
+            android:id="@+id/action_borrowListFragment_to_homeAdminFragment"
+            app:destination="@id/homeAdminFragment" />
     </fragment>
 </navigation>

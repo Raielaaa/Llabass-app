@@ -218,6 +218,7 @@ class HomeAdminFragment : Fragment() {
                 R.id.nav_list -> navigate(R.id.adminListFragment, R.id.nav_list)
                 R.id.nav_user -> navigate(R.id.adminProfileFragment, R.id.nav_user)
                 R.id.nav_privacy -> navigate(R.id.adminPrivacyFragment, R.id.nav_privacy)
+                R.id.nav_borrows_list -> navigate(R.id.borrowListFragment, R.id.nav_borrows_list)
             }
             true
         }

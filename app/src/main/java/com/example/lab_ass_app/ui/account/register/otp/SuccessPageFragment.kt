@@ -19,6 +19,7 @@ class SuccessPageFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentSuccessPageBinding.inflate(inflater, container, false)
+        val registerFragmentFromDataCache = DataCache.registerFragment
 
         binding.apply {
             btnLogin.setOnClickListener {
@@ -26,7 +27,7 @@ class SuccessPageFragment : Fragment() {
                     DataCache.registerFragment!!,
                     DataCache.registerViewModel!!,
                     DataCache.registerBinding!!
-                ).show(DataCache.registerFragment.parentFragmentManager, "Register_BottomDialog")
+                ).show(registerFragmentFromDataCache!!.parentFragmentManager, "Register_BottomDialog")
             }
         }
 

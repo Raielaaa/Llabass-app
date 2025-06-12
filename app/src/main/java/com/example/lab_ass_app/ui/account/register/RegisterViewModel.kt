@@ -63,7 +63,7 @@ class RegisterViewModel @Inject constructor(
                         DataCache.inputtedMobileNumber
                     )
 
-                    // Insert UserID, LRN, Email, and UserType to FireStore
+//                     Insert UserID, LRN, Email, and UserType to FireStore
                     firebaseFireStore.collection("labass-app-user-account-initial")
                         .document(userID ?: "Error: UserID not found")
                         .set(userAccountInitial)
@@ -72,7 +72,7 @@ class RegisterViewModel @Inject constructor(
                             displayToastMessage("Register successful", registerFragment)
 
                             // Navigate to LoginFragment
-                            registerFragment.findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+                            registerFragment.findNavController().navigate(R.id.loginFragment)
 
                             // Dismiss dialog
                             Helper.dismissDialog()

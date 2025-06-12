@@ -31,5 +31,11 @@
             android:layout_height="wrap_content"
             android:icon="@drawable/drawer_privacy_gray"
             android:title="@string/nav_drawer_privacy" />
+        <item
+            android:id="@+id/nav_borrows_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/graph"
+            android:title="Borrowers" />
     </group>
 </menu>

@@ -229,5 +229,4 @@ object DataCache {
     var inputtedMobileNumber = ""
     var verificationId: String = ""
     var resendToken: PhoneAuthProvider.ForceResendingToken? = null
-    var inputtedMobileNumber = ""
 }
