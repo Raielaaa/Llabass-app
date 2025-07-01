@@ -79,8 +79,8 @@ class HomeAdminFragment : Fragment() {
     private fun initComponents() {
         initNavigation()
         initColorTransitionForCategory()
-        initTopBorrows()
-        initBottomRvList()
+//        initTopBorrows()
+//        initBottomRvList()
         initReport()
         initUserTopStatus()
         initIVHomeExpand()
@@ -194,6 +194,9 @@ class HomeAdminFragment : Fragment() {
             }
             btmDrawerUser.setOnClickListener {
                 findNavController().navigate(R.id.action_homeAdminFragment_to_adminProfileFragment)
+            }
+            btmDrawerBorrowerList.setOnClickListener {
+                findNavController().navigate(R.id.action_homeAdminFragment_to_borrowListFragment)
             }
         }
     }

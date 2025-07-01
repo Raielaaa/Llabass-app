@@ -1,13 +1,398 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/main_bg_3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.admin.borrow_list.BorrowListFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+    <androidx.cardview.widget.CardView
+        android:visibility="invisible"
+        app:cardElevation="@dimen/_3sdp"
+        android:id="@+id/cvPastDueExist"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_20sdp"
+        app:cardBackgroundColor="@color/Theme.red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="1dp" >
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_8ssp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="You have a PAST-DUE! Return it now!"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/tosCardView8"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_48sdp"
+        android:backgroundTint="@color/Theme.color.main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivNavDrawer"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/menu_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline12"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.07" />
+
+            <TextView
+                android:id="@+id/textView46"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/list_actionbar_header"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tvCurrentDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/experiments_date_placeholder"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintStart_toStartOf="@+id/guideline17"
+        app:layout_constraintTop_toBottomOf="@+id/tosCardView8" />
+
+    <Button
+        android:id="@+id/btnListRefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_35sdp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/experiments_refresh_button"
+        app:layout_constraintBottom_toBottomOf="@+id/tvCurrentDate"
+        app:layout_constraintEnd_toStartOf="@+id/guideline18"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tvCurrentDate"
+        app:layout_constraintTop_toTopOf="@+id/tvCurrentDate" />
+
+    <EditText
+        android:id="@+id/etListSearch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@drawable/search_bg"
+        android:drawableStart="@drawable/search_resize"
+        android:drawableEnd="@drawable/search_clear_resize"
+        android:drawablePadding="@dimen/_20sdp"
+        android:ems="10"
+        android:fontFamily="@font/poppins"
+        android:hint="Search"
+        android:inputType="text"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_20sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:textColorHint="@color/black"
+        android:textSize="@dimen/_8ssp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline18"
+        app:layout_constraintStart_toStartOf="@+id/guideline17"
+        app:layout_constraintTop_toBottomOf="@+id/btnListRefresh" />
+
+    <TextView
+        android:id="@+id/textView61"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:fontFamily="@font/david_libre"
+        android:text="Current Borrows"
+        android:textColor="@color/Theme.color.main"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline17"
+        app:layout_constraintTop_toBottomOf="@+id/cvCategoryTools" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.07" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.93" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="@dimen/_15sdp"
+        android:layout_height="@dimen/_12sdp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:src="@drawable/right_arrow"
+        app:layout_constraintBottom_toBottomOf="@+id/textView61"
+        app:layout_constraintStart_toEndOf="@+id/textView61"
+        app:layout_constraintTop_toTopOf="@+id/textView61" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView7"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_48sdp"
+        app:cardBackgroundColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/btmDrawerHome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/_17sdp"
+                android:src="@drawable/home_home_white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/_16sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_16sdp">
+
+                <ImageView
+                    android:id="@+id/btmDrawerList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_11sdp"
+                    android:layout_weight="1"
+                    android:src="@drawable/top_tools" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:padding="@dimen/_12sdp"
+                android:layout_weight="1"
+                android:id="@+id/btmDrawerBorrowerList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/graph_with_bg" />
+
+            <ImageView
+                android:id="@+id/btmDrawerUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/_16sdp"
+                android:src="@drawable/home_user_white" />
+
+            <ImageView
+                android:id="@+id/btmDrawerPrivacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/_16sdp"
+                android:src="@drawable/home_privacy_white" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvCategoryTools"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:cardBackgroundColor="@color/Theme.color.main"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline25"
+        app:layout_constraintStart_toStartOf="@+id/guideline17"
+        app:layout_constraintTop_toBottomOf="@+id/etListSearch">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clCategoryTools"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:padding="@dimen/_10sdp">
+
+            <TextView
+                android:id="@+id/tvCategoryToolsCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:fontFamily="@font/david_libre"
+                android:text="@string/st_home_category"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_8ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvCategoryToolsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/st_home_tools"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tvCategoryToolsCategory"
+                app:layout_constraintTop_toBottomOf="@+id/tvCategoryToolsCategory" />
+
+            <ImageView
+                android:id="@+id/ivCategoryToolsArrow"
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:src="@drawable/right_arrow_white"
+                app:layout_constraintBottom_toBottomOf="@+id/tvCategoryToolsCategory"
+                app:layout_constraintStart_toEndOf="@+id/tvCategoryToolsCategory"
+                app:layout_constraintTop_toTopOf="@+id/tvCategoryToolsCategory" />
+
+            <ImageView
+                android:id="@+id/ivCategoryToolsPic"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/top_tools"
+                app:layout_constraintBottom_toBottomOf="@+id/tvCategoryToolsTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivCategoryToolsArrow"
+                app:layout_constraintTop_toTopOf="@+id/ivCategoryToolsArrow" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvCategoryChe"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/cvCategoryTools"
+        app:layout_constraintEnd_toStartOf="@+id/guideline18"
+        app:layout_constraintStart_toStartOf="@+id/guideline25"
+        app:layout_constraintTop_toTopOf="@+id/cvCategoryTools">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clCategoryChem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/home_top_bg"
+            android:padding="@dimen/_10sdp">
+
+            <TextView
+                android:id="@+id/tvCategoryChemCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:fontFamily="@font/david_libre"
+                android:text="@string/st_home_category"
+                android:textColor="@color/Theme.color.main"
+                android:textSize="@dimen/_8ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivCategoryChemArrow"
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:src="@drawable/right_arrow"
+                app:layout_constraintBottom_toBottomOf="@+id/tvCategoryChemCategory"
+                app:layout_constraintStart_toEndOf="@+id/tvCategoryChemCategory"
+                app:layout_constraintTop_toTopOf="@+id/tvCategoryChemCategory" />
+
+            <TextView
+                android:id="@+id/tvCategoryChemTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/st_home_chem"
+                android:textColor="@color/Theme.color.main"
+                android:textSize="@dimen/_13ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tvCategoryChemCategory"
+                app:layout_constraintTop_toBottomOf="@+id/tvCategoryChemCategory" />
+
+            <ImageView
+                android:id="@+id/ivCategoryChemPic"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/top_chem"
+                app:layout_constraintBottom_toBottomOf="@+id/tvCategoryChemTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivCategoryChemArrow"
+                app:layout_constraintTop_toTopOf="@+id/ivCategoryChemArrow" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:scrollbars="vertical"
+        android:id="@+id/rvListListItem"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/cardView7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView61"
+        tools:listitem="@layout/rv_home" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
