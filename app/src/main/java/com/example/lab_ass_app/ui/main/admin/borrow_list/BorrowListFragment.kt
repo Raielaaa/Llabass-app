@@ -29,6 +29,9 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -63,9 +66,23 @@ class BorrowListFragment : Fragment() {
         initListRV()
         initColorTransitionForCategory()
         initSearchButton()
-//        initRefreshButtonAndTV()
+        initRefreshButtonAndTV()
 
         return binding.root
+    }
+
+    private fun initRefreshButtonAndTV() {
+        binding.btnListRefresh.setOnClickListener {
+            //  Init date for TextView
+            val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+            val formattedDate = dateFormat.format(Calendar.getInstance().time)
+            val dateToBeDisplayed = "Updated as of $formattedDate"
+            binding.tvCurrentDate.text = dateToBeDisplayed
+
+            borrowToolsList.clear()
+            borrowChemicalList.clear()
+            initListRV()
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")

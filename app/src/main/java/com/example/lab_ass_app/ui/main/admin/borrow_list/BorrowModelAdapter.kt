@@ -29,6 +29,9 @@ class BorrowModelAdapter(
 ) : RecyclerView.Adapter<BorrowModelAdapter.BorrowViewHolder>() {
 
     inner class BorrowViewHolder(val binding: RvHomeBinding) : RecyclerView.ViewHolder(binding.root) {
+        val storage = FirebaseStorage.getInstance()
+        val fireStore = FirebaseFirestore.getInstance().collection("labass-app-item-description")
+
         fun bind(items: BorrowModel, clickedListener: () -> Unit) {
             binding.apply {
                 tvHomeName.text = items.modelItemName
@@ -41,10 +44,19 @@ class BorrowModelAdapter(
                     ContextCompat.getColor(context, if (isDateTimePast(items.modelBorrowDeadlineDateTime)) R.color.Theme_light_red else R.color.Theme_green)
                 )
 
-//                val gsReference = storage.getReferenceFromUrl("gs://labass-app.appspot.com/${items.}.jpg")
-//                Glide.with(context)
-//                    .load(gsReference)
-//                    .into(ivHomeImage)
+                fireStore.whereEqualTo("modelName", items.modelItemName)
+                    .whereEqualTo("modelCategory", items.modelItemCategory)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        if (!documents.isEmpty) {
+                            val imageLink = documents.documents.first().getString("modelImageLink")
+
+                            val gsReference = storage.getReferenceFromUrl("gs://labass-app.appspot.com/$imageLink.jpg")
+                            Glide.with(context)
+                                .load(gsReference)
+                                .into(ivHomeImage)
+                        }
+                    }
 //            }
 //            binding.root.setOnClickListener {
 //                clickedListener()
