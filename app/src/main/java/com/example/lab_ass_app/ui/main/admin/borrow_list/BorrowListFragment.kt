@@ -60,6 +60,9 @@ class BorrowListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentBorrowListBinding.inflate(inflater, container, false)
+        borrowChemicalList.clear()
+        borrowToolsList.clear()
+        listToBeDisplayedToRV.clear()
 
         initBottomNavDrawer()
         initNavigationDrawer()
@@ -256,7 +259,7 @@ class BorrowListFragment : Fragment() {
     }
 
     private fun displayRV(borrowModelList: ArrayList<BorrowModel>, itemType: String) {
-        val adapter = BorrowModelAdapter(borrowModelList, requireContext()) {
+        val adapter = BorrowModelAdapter(borrowModelList, this@BorrowListFragment) {
             Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show();
         }
         binding.rvListListItem.layoutManager = LinearLayoutManager(requireContext())
@@ -281,13 +284,16 @@ class BorrowListFragment : Fragment() {
     private fun initBottomNavDrawer() {
         binding.apply {
             btmDrawerHome.setOnClickListener {
-                findNavController().navigate(R.id.action_listFragment_to_homeFragment)
+                findNavController().navigate(R.id.action_borrowListFragment_to_homeAdminFragment)
             }
             btmDrawerPrivacy.setOnClickListener {
-                findNavController().navigate(R.id.action_listFragment_to_privacyFragment)
+                findNavController().navigate(R.id.action_borrowListFragment_to_adminPrivacyFragment)
             }
             btmDrawerUser.setOnClickListener {
-                findNavController().navigate(R.id.action_listFragment_to_profileFragment)
+                findNavController().navigate(R.id.action_borrowListFragment_to_adminProfileFragment)
+            }
+            btmDrawerList.setOnClickListener {
+                findNavController().navigate(R.id.action_borrowListFragment_to_adminListFragment)
             }
         }
     }

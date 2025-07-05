@@ -189,6 +189,9 @@ class AdminProfileFragment : Fragment() {
             btmDrawerList.setOnClickListener {
                 findNavController().navigate(R.id.action_adminProfileFragment_to_adminListFragment)
             }
+            btmDrawerBorrowerList.setOnClickListener {
+                findNavController().navigate(R.id.action_adminProfileFragment_to_borrowListFragment)
+            }
         }
     }
 }

@@ -51,6 +51,9 @@ class AdminPrivacyFragment : Fragment() {
             btmDrawerUser.setOnClickListener {
                 findNavController().navigate(R.id.action_adminPrivacyFragment_to_adminProfileFragment)
             }
+            btmDrawerBorrowerList.setOnClickListener {
+                findNavController().navigate(R.id.action_adminPrivacyFragment_to_borrowListFragment)
+            }
         }
     }
 

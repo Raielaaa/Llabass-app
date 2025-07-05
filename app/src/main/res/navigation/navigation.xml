@@ -389,6 +389,13 @@
             app:exitAnim="@anim/push_left_out"
             app:popEnterAnim="@anim/push_right_in"
             app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_homeAdminFragment_to_selectedBorrowInfoFragment"
+            app:destination="@id/selectedBorrowInfoFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
     </fragment>
     <fragment
         android:id="@+id/adminProfileFragment"
@@ -416,6 +423,16 @@
             app:exitAnim="@anim/push_left_out"
             app:popEnterAnim="@anim/push_right_in"
             app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_adminProfileFragment_to_selectedBorrowInfoFragment"
+            app:destination="@id/selectedBorrowInfoFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
+        <action
+            android:id="@+id/action_adminProfileFragment_to_borrowListFragment"
+            app:destination="@id/borrowListFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminPrivacyFragment"
@@ -457,6 +474,20 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_adminPrivacyFragment_to_selectedBorrowInfoFragment"
+            app:destination="@id/selectedBorrowInfoFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
+        <action
+            android:id="@+id/action_adminPrivacyFragment_to_borrowListFragment"
+            app:destination="@id/borrowListFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
     </fragment>
     <fragment
         android:id="@+id/adminListFragment"
@@ -484,6 +515,13 @@
             app:exitAnim="@anim/push_left_out"
             app:popEnterAnim="@anim/push_right_in"
             app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_adminListFragment_to_selectedBorrowInfoFragment"
+            app:destination="@id/selectedBorrowInfoFragment"
+            app:enterAnim="@anim/push_right_in"
+            app:exitAnim="@anim/push_right_out"
+            app:popEnterAnim="@anim/push_left_in"
+            app:popExitAnim="@anim/push_left_out" />
     </fragment>
     <fragment
         android:id="@+id/adminReportFragment"
@@ -719,6 +757,82 @@
         tools:layout="@layout/fragment_borrow_list" >
         <action
             android:id="@+id/action_borrowListFragment_to_homeAdminFragment"
+            app:destination="@id/homeAdminFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_borrowListFragment_to_selectedBorrowInfoFragment"
+            app:destination="@id/selectedBorrowInfoFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_borrowListFragment_to_adminListFragment"
+            app:destination="@id/adminListFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_borrowListFragment_to_adminPrivacyFragment"
+            app:destination="@id/adminPrivacyFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_borrowListFragment_to_adminProfileFragment"
+            app:destination="@id/adminProfileFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_borrowListFragment_to_homeAdminFragment2"
+            app:destination="@id/homeAdminFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectedBorrowInfoFragment"
+        android:name="com.example.lab_ass_app.ui.main.admin.borrow_list.SelectedBorrowInfoFragment"
+        android:label="fragment_selected_borrow_info"
+        tools:layout="@layout/fragment_selected_borrow_info" >
+        <action
+            android:id="@+id/action_selectedBorrowInfoFragment_to_borrowListFragment"
+            app:destination="@id/borrowListFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_selectedBorrowInfoFragment_to_adminListFragment"
+            app:destination="@id/adminListFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_selectedBorrowInfoFragment_to_adminPrivacyFragment"
+            app:destination="@id/adminPrivacyFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_selectedBorrowInfoFragment_to_adminProfileFragment"
+            app:destination="@id/adminProfileFragment"
+            app:enterAnim="@anim/push_left_in"
+            app:exitAnim="@anim/push_left_out"
+            app:popEnterAnim="@anim/push_right_in"
+            app:popExitAnim="@anim/push_right_out" />
+        <action
+            android:id="@+id/action_selectedBorrowInfoFragment_to_homeAdminFragment"
             app:destination="@id/homeAdminFragment"
             app:enterAnim="@anim/push_left_in"
             app:exitAnim="@anim/push_left_out"

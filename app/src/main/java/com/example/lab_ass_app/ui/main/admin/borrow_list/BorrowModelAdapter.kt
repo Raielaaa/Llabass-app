@@ -2,11 +2,16 @@ package com.example.lab_ass_app.ui.main.admin.borrow_list
 
 import android.app.Activity
 import android.content.Context
+import android.health.connect.datatypes.units.Length
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.lab_ass_app.R
@@ -24,7 +29,7 @@ import java.util.Locale
 
 class BorrowModelAdapter(
     private val borrowList: List<BorrowModel>,
-    private val context: Context,
+    private val hostFragment: Fragment,
     private val clickedListener: () -> Unit
 ) : RecyclerView.Adapter<BorrowModelAdapter.BorrowViewHolder>() {
 
@@ -41,7 +46,7 @@ class BorrowModelAdapter(
                 tvHomeBorrowCount.text = items.modelBorrowDateTime
 
                 cvHomeStatus.setCardBackgroundColor(
-                    ContextCompat.getColor(context, if (isDateTimePast(items.modelBorrowDeadlineDateTime)) R.color.Theme_light_red else R.color.Theme_green)
+                    ContextCompat.getColor(hostFragment.requireContext(), if (isDateTimePast(items.modelBorrowDeadlineDateTime)) R.color.Theme_light_red else R.color.Theme_green)
                 )
 
                 fireStore.whereEqualTo("modelName", items.modelItemName)
@@ -52,12 +57,23 @@ class BorrowModelAdapter(
                             val imageLink = documents.documents.first().getString("modelImageLink")
 
                             val gsReference = storage.getReferenceFromUrl("gs://labass-app.appspot.com/$imageLink.jpg")
-                            Glide.with(context)
+                            Glide.with(hostFragment.requireContext())
                                 .load(gsReference)
                                 .into(ivHomeImage)
                         }
                     }
-//            }
+            }
+            binding.root.setOnClickListener {
+                val bundle = bundleOf(
+                    "item_name" to items.modelItemName,
+                    "item_code" to items.modelItemCode,
+                    "borrow_date" to items.modelBorrowDateTime,
+                    "borrow_deadline" to items.modelBorrowDeadlineDateTime,
+                    "borrower_id" to items.modelUserID
+                )
+
+                hostFragment.findNavController().navigate(R.id.action_borrowListFragment_to_selectedBorrowInfoFragment, bundle)
+            }
 //            binding.root.setOnClickListener {
 //                clickedListener()
 //
@@ -70,7 +86,6 @@ class BorrowModelAdapter(
 //                    items.unavailableCount.toString()
 //                )
 //            }
-        }
 
 //        private fun displayDialogForSelectedItem(
 //            items: HomeModelDisplay,
