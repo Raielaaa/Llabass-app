@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LabAss</string>
+    <string name="app_name">LabPro</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -39,7 +39,7 @@
     <string name="dialog_loading_header">Please wait</string>
     <string name="dialog_loading_content">Establishing a secure connection with our servers . . .</string>
 
-    <string name="nav_drawer_title">LabAss</string>
+    <string name="nav_drawer_title">LabPro</string>
     <string name="nav_drawer_dashboard">Dashboard</string>
     <string name="nav_drawer_inventory">Inventory</string>
     <string name="nav_drawer_status">Borrow Status</string>
@@ -61,7 +61,7 @@
     </string>
 
     <!-- Account - Opening -->
-    <string name="account_opening_header_1">LabAss: Elevating Your Borrowing Experience - Scan, Safeguard, Succeed!</string>
+    <string name="account_opening_header_1">LabPro: Elevating Your Borrowing Experience - Scan, Safeguard, Succeed!</string>
     <string name="account_opening_login">Log in</string>
     <string name="account_opening_sign_up">Sign up</string>
     <string name="account_opening_copyright">This app is owned by the rightful owners. All rights reserved.</string>
@@ -108,7 +108,7 @@
 
     <!-- Terms and Conditions -->
     <string name="terms_conditions_header">Terms of Use</string>
-    <string name="terms_condition_app_name">LABASS APP</string>
+    <string name="terms_condition_app_name">LABPRO APP</string>
     <string name="terms_conditions_accept">Accept</string>
     <string name="terms_conditions_decline">Decline</string>
 
@@ -170,7 +170,7 @@
     </string>
 
     <!-- student_teacher (st) - home -->
-    <string name="st_home_header_1">LabAss</string>
+    <string name="st_home_header_1">LabPro</string>
     <string name="st_home_user_type_placeholder">STUDENT</string>
     <string name="st_home_greetings_placeholder">Hello, User!</string>
     <string name="st_home_scan">SCAN</string>

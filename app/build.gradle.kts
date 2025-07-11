@@ -20,7 +20,7 @@ android {
     defaultConfig {
         applicationId = "com.example.lab_ass_app"
         minSdk = 27
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -91,6 +91,8 @@ dependencies {
 
     //  Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:32.4.0"))
+
+//    implementation(platform("com.google.firebase:firebase-bom:33.16.0"))
 
     //  Firebase Authentication
     implementation("com.google.firebase:firebase-auth-ktx")

@@ -107,23 +107,33 @@ class MainActivityViewModel @Inject constructor(
     ) {
         Log.d(Constants.TAG, "camera-path: 9")
         fireStore.collection("labass-app-item-description")
-            .document(itemInfo[0])
+            .whereEqualTo("modelName", "${itemInfo[1]} - ${itemInfo[3]}")
+            .whereEqualTo("modelCategory", itemInfo[2])
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(Constants.TAG, "camera-path: 10")
-                    val retrievedData = task.result.data
+                    val retrievedData = task.result.documents
 
-                    val completeItemInfo: ItemInfoModel = ItemInfoModel(
-                        modelCode = itemInfo[0],
-                        modelName = retrievedData?.get("modelName").toString(),
-                        modelCategory = retrievedData?.get("modelCategory").toString(),
-                        modelStatus = retrievedData?.get("modelStatus").toString(),
-                        modelSize = retrievedData?.get("modelSize").toString(),
-                        modelDescription = retrievedData?.get("modelDescription").toString()
-                    )
+                    val availableDoc = retrievedData.firstOrNull { doc ->
+                        doc.getString("modelStatus") == "Available"
+                    }
+                    Log.d("availability", "is available: ${availableDoc?.getString("modelCode")}")
 
-                    retrieveCurrentUserLRN(mainActivity, imageBitmap, completeItemInfo)
+                    if (availableDoc != null) {
+                        val completeItemInfo = ItemInfoModel(
+                            modelCode = availableDoc.getString("modelCode").orEmpty(),
+                            modelName = availableDoc.getString("modelName").orEmpty(),
+                            modelCategory = availableDoc.getString("modelCategory").orEmpty(),
+                            modelStatus = availableDoc.getString("modelStatus").orEmpty(),
+                            modelSize = availableDoc.getString("modelSize").orEmpty(),
+                            modelDescription = availableDoc.getString("modelDescription").orEmpty()
+                        )
+
+                        retrieveCurrentUserLRN(mainActivity, imageBitmap, completeItemInfo)
+                    } else {
+                        displayToastMessage("No available item found", mainActivity)
+                    }
                 } else {
                     displayToastMessage("Item description not found", mainActivity)
                 }
@@ -146,7 +156,7 @@ class MainActivityViewModel @Inject constructor(
                 if (task.isSuccessful) {
                     val retrievedData = task.result.data
 
-                    val currentUserLRN = retrievedData?.get("userLRNModel").toString()
+                    val currentUserLRN = retrievedData?.get("verifiedPhoneNumber").toString()
                     val currentUserEmail = retrievedData?.get("userEmailModel").toString()
                     val currentUserType = retrievedData?.get("userTypeModel").toString()
 

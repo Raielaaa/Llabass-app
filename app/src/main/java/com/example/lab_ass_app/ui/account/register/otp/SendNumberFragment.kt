@@ -75,7 +75,11 @@ class SendNumberFragment : Fragment() {
 
                 override fun onVerificationFailed(e: FirebaseException) {
                     Helper.dismissDialog()
-                    Log.e("SendNumberFragment", "Verification failed: ${e.message}")
+                    Log.e("SendNumberFragment", "📛 Verification failed: ${e.message}")
+                    Log.e("SendNumberFragment", "📛 Cause: ${e.cause}")
+                    Log.e("SendNumberFragment", "📛 Class: ${e::class.java.name}")
+                    Log.e("SendNumberFragment", Log.getStackTraceString(e))
+
                     displayToastMessage("Verification failed: ${e.localizedMessage}")
                 }
 

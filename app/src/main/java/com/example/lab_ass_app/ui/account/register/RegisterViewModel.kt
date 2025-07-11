@@ -37,6 +37,8 @@ class RegisterViewModel @Inject constructor(
 
     // Insert User credentials to Firebase auth and FireStore
     fun insertDataToAuth(
+        firstName: String,
+        lastName: String,
         email: String,
         password: String,
         userType: String,
@@ -56,8 +58,10 @@ class RegisterViewModel @Inject constructor(
 
                     // Storing user credentials to UserAccountInitial data class
                     val userAccountInitial = UserAccountInitialModel(
+                        firstName,
+                        lastName,
                         userID.toString(),
-                        "",
+                        DataCache.inputtedMobileNumber,
                         email,
                         userType,
                         DataCache.inputtedMobileNumber

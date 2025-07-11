@@ -39,6 +39,8 @@ class TermsOfServiceDialog(
             btnAccept.setOnClickListener {
                 // Insert user data to Firebase FireStore and navigate to the next screen
                 registerViewModel.insertDataToAuth(
+                    registerBinding.etFirstName.text.toString(),
+                    registerBinding.etLastName.text.toString(),
                     registerBinding.etEmail.text.toString(),
                     registerBinding.tilPassword.text.toString(),
                     registerBinding.spUserRegister.selectedItem.toString(),
